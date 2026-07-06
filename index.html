@@ -1,0 +1,2515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MyMuuD® — Premium Sparkling Mood Water | 0 Sugar · 0 Cal · pH Balanced</title>
+<meta name="description" content="MyMuuD PINK — 0 Sugar, 0 Calorie, pH Balance. Drink Your Mood, Refresh Your Mind." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='100' y2='100'%3E%3Cstop offset='0' stop-color='%238B5CF6'/%3E%3Cstop offset='1' stop-color='%2338BDF8'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M20 78 V38 C20 22 42 22 50 40 C58 22 80 22 80 38 V78' stroke='url(%23g)' stroke-width='11' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E" />
+<meta property="og:title" content="MyMuuD — Drink Your Mood" />
+<meta property="og:description" content="0 Sugar · 0 Calorie · pH Balance · 330 mL. Five moods, one you. มาย มู้ด" />
+<meta property="og:type" content="website" />
+<meta name="theme-color" content="#FF3E9A" />
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "MyMuuD PINK Sparkling Mood Water",
+  "description": "Premium sparkling refresher — 0 sugar, 0 calories, pH balanced. 330 mL. Product of Thailand.",
+  "brand": { "@type": "Brand", "name": "MyMuuD" },
+  "offers": { "@type": "Offer", "price": "45", "priceCurrency": "THB", "availability": "https://schema.org/InStock" },
+  "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "2400" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Is MyMuuD really zero sugar?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — sweetened with a balanced stevia blend. No sucrose, no syrup, lab-verified per batch." } },
+    { "@type": "Question", "name": "Is it soda or sparkling water?", "acceptedAnswer": { "@type": "Answer", "text": "pH-balanced sparkling water with natural fruit character — around pH 7 versus pH 2.5 for regular soda." } },
+    { "@type": "Question", "name": "Does MyMuuD contain caffeine?", "acceptedAnswer": { "@type": "Answer", "text": "No. All five moods are completely caffeine-free." } },
+    { "@type": "Question", "name": "Where can I buy MyMuuD?", "acceptedAnswer": { "@type": "Answer", "text": "7-Eleven, Tops, Gourmet Market and Villa Market nationwide, or online with free first delivery." } }
+  ]
+}
+</script>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+
+<script>
+  tailwind.config = { theme: { extend: { fontFamily: {
+    sans:['Outfit','system-ui','sans-serif'], display:['Sora','Outfit','sans-serif'], mono:['Space Grotesk','monospace'],
+  }}}};
+</script>
+
+<style>
+  :root{
+    --c1:#8B5CF6; --c2:#FF3E9A; --c3:#38BDF8; --accent:#FF3E9A; --ink:#08080C;
+    --ease:cubic-bezier(.16,1,.3,1);
+  }
+  *{ -webkit-tap-highlight-color:transparent; }
+  html{ scroll-behavior:smooth; }
+  body{ background:var(--ink); color:#fff; overflow-x:hidden; font-family:'Outfit',sans-serif; transition:background .9s var(--ease); }
+  @media (hover:hover) and (pointer:fine){ body.cc, body.cc *{ cursor:none; } }
+
+  /* Grain */
+  .grain{ position:fixed; inset:-50%; z-index:60; pointer-events:none; opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation:grain 6s steps(6) infinite; opacity:.035; }
+  @keyframes grain{0%{transform:translate(0,0)}10%{transform:translate(-4%,-4%)}30%{transform:translate(3%,-2%)}50%{transform:translate(-2%,4%)}70%{transform:translate(4%,2%)}90%{transform:translate(-3%,3%)}}
+
+  /* Intro — cinematic cutscene: drop → ripple → logo → claims → explosion → split */
+  body.locked{ overflow:hidden; }
+  #intro{ position:fixed; inset:0; z-index:100; overflow:hidden; transition:opacity .7s ease, visibility .7s ease; }
+  #intro.done{ opacity:0; visibility:hidden; }
+  .ihalf{ position:absolute; top:0; bottom:0; width:50.5%; background:#050508; transition:transform 1.05s var(--ease); }
+  .ihalf.l{ left:0; } .ihalf.r{ right:0; }
+  #intro.split .ihalf.l{ transform:translateX(-101%); }
+  #intro.split .ihalf.r{ transform:translateX(101%); }
+  .idrop{ position:absolute; left:50%; top:-40px; width:22px; height:30px; margin-left:-11px; z-index:2;
+    border-radius:50% 50% 60% 60% / 40% 40% 65% 65%;
+    background:radial-gradient(circle at 35% 30%, #ffb7d9, var(--accent) 65%, color-mix(in srgb,var(--accent) 70%,#000));
+    box-shadow:0 0 22px var(--accent), 0 0 46px color-mix(in srgb,var(--accent) 60%,transparent);
+    animation:dropFall 1.25s cubic-bezier(.5,0,.9,.4) .15s forwards; }
+  @keyframes dropFall{ 0%{transform:translateY(0) scaleY(1)} 92%{transform:translateY(calc(50vh + 20px)) scaleY(1.25)}
+    100%{transform:translateY(calc(50vh + 20px)) scaleY(.2) scaleX(2.4); opacity:0} }
+  .iripple{ position:absolute; left:50%; top:50%; width:20px; height:20px; margin:-10px 0 0 -10px; z-index:2;
+    border-radius:50%; border:2px solid var(--accent); opacity:0;
+    box-shadow:0 0 24px color-mix(in srgb,var(--accent) 70%,transparent), inset 0 0 14px color-mix(in srgb,var(--accent) 50%,transparent); }
+  #intro.rippling .iripple{ animation:rip 1.6s var(--ease) forwards; }
+  #intro.rippling .iripple.r2{ animation-delay:.18s; }
+  #intro.rippling .iripple.r3{ animation-delay:.36s; }
+  @keyframes rip{ 0%{transform:scale(.4); opacity:1} 100%{transform:scale(26); opacity:0} }
+  .iscene{ position:absolute; inset:0; z-index:3; display:grid; place-items:center; opacity:0; transform:scale(.985);
+    transition:opacity .45s ease, transform .45s ease; pointer-events:none; }
+  .iscene.on{ opacity:1; transform:none; }
+  .intro-draw path{ stroke-dasharray:400; stroke-dashoffset:400; }
+  .iscene.on .intro-draw path{ animation:draw 1s var(--ease) .05s forwards; }
+  @keyframes draw{ to{stroke-dashoffset:0} }
+  .iscene.on .intro-draw{ animation:logoPulse 2.2s ease-in-out .9s infinite; }
+  @keyframes logoPulse{ 0%,100%{filter:drop-shadow(0 0 12px color-mix(in srgb,var(--accent) 55%,transparent))}
+    50%{filter:drop-shadow(0 0 36px color-mix(in srgb,var(--c1) 90%,transparent))} }
+  .intro-word{ overflow:hidden; }
+  .intro-word span{ display:inline-block; transform:translateY(120%); transition:transform .7s var(--ease) .45s; }
+  .iscene.on .intro-word span{ transform:none; }
+  .punch{ animation:punchIn .5s cubic-bezier(.16,1,.3,1) both; }
+  @keyframes punchIn{ 0%{transform:scale(2.6); opacity:0; filter:blur(14px)} 55%{opacity:1} 100%{transform:scale(1); opacity:1; filter:blur(0)} }
+  .ishock{ position:absolute; left:50%; top:50%; width:60px; height:60px; margin:-30px 0 0 -30px; border-radius:50%; z-index:2;
+    background:radial-gradient(circle, color-mix(in srgb,var(--accent) 90%,#fff), color-mix(in srgb,var(--accent) 50%,transparent) 45%, transparent 70%); opacity:0; }
+  #intro.boom .ishock{ animation:shockOut .9s var(--ease) forwards; }
+  @keyframes shockOut{ 0%{transform:scale(.3); opacity:1} 100%{transform:scale(30); opacity:0} }
+  .cbub{ position:absolute; left:50%; top:50%; border-radius:50%; pointer-events:none; z-index:2;
+    background:radial-gradient(circle at 32% 28%, #fff, color-mix(in srgb,var(--accent) 80%,#fff) 55%, color-mix(in srgb,var(--accent) 25%,transparent) 85%);
+    box-shadow:0 0 12px color-mix(in srgb,var(--accent) 60%,transparent); }
+
+  #progress{ position:fixed; top:0; left:0; height:3px; width:0; z-index:70; background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3)); box-shadow:0 0 12px var(--accent); }
+
+  /* Cursor spotlight */
+  #spot{ position:fixed; left:0; top:0; width:760px; height:760px; margin-left:-380px; margin-top:-380px;
+    z-index:1; pointer-events:none; mix-blend-mode:screen; will-change:transform;
+    background:radial-gradient(circle, color-mix(in srgb,var(--accent) 20%,transparent), transparent 62%); }
+
+  /* Gooey cursor */
+  .goo-wrap{ position:fixed; inset:0; z-index:9998; pointer-events:none; filter:url(#goo); }
+  .goo{ position:fixed; top:0; left:0; border-radius:50%; transform:translate(-50%,-50%); background:var(--accent); mix-blend-mode:screen; will-change:transform; transition:width .3s var(--ease), height .3s var(--ease); }
+  .cursor-dot{ position:fixed; top:0; left:0; width:7px; height:7px; border-radius:50%; background:#fff; z-index:9999; pointer-events:none; transform:translate(-50%,-50%); box-shadow:0 0 10px var(--accent),0 0 20px var(--accent); mix-blend-mode:screen; will-change:transform; }
+
+  .fizz{ position:fixed; border-radius:50%; z-index:9997; pointer-events:none; will-change:transform,opacity; }
+  @keyframes fizzUp{0%{transform:translate(0,0) scale(.3);opacity:0}12%{opacity:1}100%{transform:translate(var(--ex),-100px) scale(1);opacity:0}}
+
+  /* Aurora + canvas */
+  .aurora{ position:fixed; inset:-25%; z-index:0; filter:blur(80px); opacity:.5; pointer-events:none; transition:opacity .9s var(--ease); }
+  .blob{ position:absolute; border-radius:50%; mix-blend-mode:screen; transition:background .9s var(--ease); }
+  .b1{ width:55vw;height:55vw; background:var(--c2); top:-10%; left:-8%; animation:f1 20s ease-in-out infinite; }
+  .b2{ width:48vw;height:48vw; background:var(--c1); top:18%; right:-8%; animation:f2 24s ease-in-out infinite; }
+  .b3{ width:42vw;height:42vw; background:var(--c3); bottom:-18%; left:22%; animation:f3 28s ease-in-out infinite; }
+  @keyframes f1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(6vw,4vh) scale(1.15)}}
+  @keyframes f2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-6vw,5vh) scale(1.1)}}
+  @keyframes f3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(4vw,-6vh) scale(1.2)}}
+  #bgCanvas{ position:fixed; inset:0; z-index:0; pointer-events:none; }
+
+  .grad-text{ background:linear-gradient(100deg,var(--c1),var(--c2) 40%,var(--c3) 70%,var(--c2)); background-size:200% 100%;
+    -webkit-background-clip:text; background-clip:text; color:transparent; animation:gradShift 7s ease-in-out infinite; }
+  @keyframes gradShift{ 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
+
+  .reveal{ opacity:0; transform:translateY(46px); transition:opacity .9s var(--ease),transform .9s var(--ease); }
+  .reveal.show{ opacity:1; transform:none; }
+
+  .btn-glow{ position:relative; isolation:isolate; transition:transform .25s var(--ease),box-shadow .3s ease; }
+  .btn-glow::before{ content:""; position:absolute; inset:-2px; border-radius:inherit; z-index:-1; background:linear-gradient(100deg,var(--c1),var(--c2),var(--c3)); filter:blur(16px); opacity:.55; transition:opacity .3s; }
+  .btn-glow:hover{ box-shadow:0 12px 44px -8px var(--accent); }
+  .btn-glow:hover::before{ opacity:1; }
+  .magnetic{ will-change:transform; transition:transform .3s var(--ease); }
+
+  .mood{ transition:transform .25s var(--ease),border-color .3s,background .3s; }
+  .mood.active{ transform:scale(1.06); }
+
+  .tilt-card{ transform-style:preserve-3d; transition:transform .2s var(--ease),box-shadow .35s,border-color .35s; will-change:transform; }
+  .tilt-card:hover{ box-shadow:0 26px 70px -22px var(--accent); border-color:color-mix(in srgb,var(--accent) 60%,transparent); }
+  .tilt-card .ti{ transform:translateZ(46px); }
+  .card-sheen{ position:absolute; inset:0; border-radius:inherit; opacity:0; transition:opacity .35s; background:radial-gradient(400px circle at var(--mx,50%) var(--my,50%), color-mix(in srgb,var(--accent) 22%,transparent), transparent 45%); }
+  .tilt-card:hover .card-sheen{ opacity:1; }
+
+  /* ===== WebGL 3D can ===== */
+  /* Scroll-film hero */
+  .film-track{ position:relative; z-index:10; }
+  #canStage{ position:sticky; top:0; height:100svh; overflow:hidden; display:block; }
+  .film-glow{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:74vmin; height:74vmin; border-radius:50%; z-index:0;
+    background:radial-gradient(circle, color-mix(in srgb,var(--accent) 42%,transparent), transparent 62%); filter:blur(34px); transition:background .9s var(--ease); }
+  #canGL{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:min(760px,96vw); aspect-ratio:760/900; height:auto;
+    z-index:1; touch-action:pan-y; will-change:transform; }
+  .fcap{ position:absolute; inset:0; z-index:2; display:flex; justify-content:center; opacity:0; pointer-events:none;
+    padding:0 1.4rem; transition:opacity .55s var(--ease); }
+  .fcap.active{ opacity:1; }
+  .fcap.top{ align-items:flex-start; padding-top:15vh; }
+  .fcap.bottom{ align-items:flex-end; padding-bottom:7vh; }
+  .fcap .fin{ transform:translateY(28px); transition:transform .7s var(--ease); text-shadow:0 6px 34px rgba(0,0,0,.6); }
+  .fcap.active .fin{ transform:none; }
+  .fcap .interactive{ pointer-events:none; }
+  .fcap.active .interactive{ pointer-events:auto; }
+  .film-cue{ position:absolute; bottom:22px; left:50%; transform:translateX(-50%); z-index:3; }
+  .film-rail{ position:absolute; left:26px; top:50%; transform:translateY(-50%); z-index:3; display:flex; flex-direction:column; gap:11px; }
+  .film-rail span{ width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,.2); transition:all .35s var(--ease); }
+  .film-rail span.on{ background:var(--accent); box-shadow:0 0 14px var(--accent); height:26px; border-radius:5px; }
+  @media (max-width:640px){ .film-rail{ left:12px; } }
+
+  /* ===== 3D cylinder can (legacy CSS, retired) ===== */
+  .can-stage{ perspective:1600px; }
+  .can-float{ animation:canFloat 6s ease-in-out infinite; }
+  @keyframes canFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+  .can-scene{ position:relative; width:210px; height:430px; transform-style:preserve-3d; transform:rotateX(6deg); }
+  .can3d{ position:absolute; inset:0; transform-style:preserve-3d; transform-origin:center center; will-change:transform; }
+  .seg{ position:absolute; top:0; left:50%; height:100%; backface-visibility:hidden; }
+  .can-label{ position:absolute; top:38px; left:50%; height:366px; margin-left:-78px; width:156px; backface-visibility:hidden; }
+  .can-lid{ position:absolute; left:50%; top:50%; border-radius:50%;
+    background:radial-gradient(circle at 40% 35%, #f4f4f8, #d7d7de 45%, #9a9aa2 78%, #6f6f77);
+    box-shadow:inset 0 0 12px rgba(0,0,0,.35); }
+  .can-light{ position:absolute; top:0; left:50%; margin-left:-105px; width:210px; height:100%; pointer-events:none; border-radius:26px/34px;
+    background:
+      linear-gradient(180deg, rgba(0,0,0,.30), rgba(0,0,0,0) 10%, rgba(0,0,0,0) 86%, rgba(0,0,0,.36)),
+      linear-gradient(90deg, rgba(0,0,0,.52) 0%, rgba(0,0,0,.14) 9%, rgba(255,255,255,0) 25%,
+        rgba(255,255,255,.42) 39%, rgba(255,255,255,.16) 49%, rgba(255,255,255,0) 61%,
+        rgba(0,0,0,.16) 84%, rgba(255,255,255,.10) 93%, rgba(0,0,0,.52) 100%); }
+  .can-drops{ position:absolute; top:9%; bottom:6%; left:50%; width:186px; margin-left:-93px;
+    pointer-events:none; border-radius:44px; overflow:hidden; }
+  .can-drops span{ position:absolute; border-radius:48% 52% 55% 58%;
+    background:radial-gradient(circle at 35% 28%, rgba(255,255,255,.95), rgba(255,255,255,.28) 42%, rgba(110,120,145,.10) 68%, transparent 74%);
+    box-shadow:0 1px 1px rgba(0,0,0,.14); opacity:.85; }
+  .can-shine{ position:absolute; top:0; left:50%; margin-left:-105px; width:60px; height:100%; pointer-events:none;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent); transform:skewX(-16deg); animation:shine 5.5s ease-in-out infinite; }
+  @keyframes shine{0%,100%{margin-left:-160px}45%,55%{margin-left:110px}}
+  .can-shadow{ position:absolute; left:50%; bottom:-38px; width:190px; height:34px; margin-left:-95px; border-radius:50%;
+    background:radial-gradient(circle, color-mix(in srgb,var(--accent) 55%,transparent), transparent 70%); filter:blur(10px); }
+
+  .hint{ animation:hintPulse 2.4s ease-in-out infinite; }
+  @keyframes hintPulse{0%,100%{opacity:.5}50%{opacity:1}}
+  .pop{ position:fixed; border-radius:50%; z-index:9996; pointer-events:none; will-change:transform,opacity; }
+
+  .marquee{ display:flex; gap:2.5rem; white-space:nowrap; animation:mq 24s linear infinite; }
+  @keyframes mq{ from{transform:translateX(0)} to{transform:translateX(-50%)} }
+  @keyframes bob{0%,100%{transform:translateY(0);opacity:.4}50%{transform:translateY(8px);opacity:1}}
+  .cue{ animation:bob 1.8s ease-in-out infinite; }
+
+  /* RAVE toast */
+  #toast{ position:fixed; left:50%; bottom:32px; transform:translateX(-50%) translateY(140%); z-index:95;
+    padding:12px 22px; border-radius:9999px; font-weight:700; letter-spacing:.1em;
+    background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3)); box-shadow:0 10px 40px -6px var(--accent);
+    transition:transform .5s var(--ease); }
+  #toast.show{ transform:translateX(-50%) translateY(0); }
+  body.rave{ animation:ravePulse .3s linear infinite; }
+  @keyframes ravePulse{0%{filter:hue-rotate(0)}100%{filter:hue-rotate(20deg)}}
+
+  /* Working navigation */
+  section{ scroll-margin-top:96px; }
+  .navlink{ position:relative; padding-bottom:2px; }
+  .navlink.active{ color:#fff; }
+  .navlink.active::after{ content:""; position:absolute; left:0; right:0; bottom:-4px; height:2px; border-radius:2px;
+    background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3)); box-shadow:0 0 8px var(--accent); }
+
+  /* Generic modal */
+  .modal{ position:fixed; inset:0; z-index:97; display:grid; place-items:center; padding:1.2rem;
+    opacity:0; visibility:hidden; transition:opacity .4s ease,visibility .4s ease; }
+  .modal.open{ opacity:1; visibility:visible; }
+  .modal-bg{ position:absolute; inset:0; background:rgba(0,0,0,.62); backdrop-filter:blur(8px); }
+  .modal-card{ position:relative; width:min(500px,92vw); max-height:82vh; overflow-y:auto; border-radius:24px;
+    border:1px solid rgba(255,255,255,.14); background:linear-gradient(160deg, rgba(28,28,40,.96), rgba(14,14,22,.96));
+    padding:2rem; transform:translateY(28px) scale(.96); transition:transform .45s var(--ease); }
+  .modal.open .modal-card{ transform:none; }
+
+  /* Cart */
+  #cartBtn{ position:relative; }
+  #cartCount{ position:absolute; top:-6px; right:-6px; min-width:18px; height:18px; border-radius:9999px;
+    background:var(--accent); color:#fff; font-size:11px; font-weight:800; display:grid; place-items:center; padding:0 4px;
+    box-shadow:0 0 10px var(--accent); transform:scale(0); transition:transform .3s var(--ease); }
+  #cartCount.on{ transform:scale(1); }
+  #cartCount.pop{ animation:popCount .4s var(--ease); }
+  @keyframes popCount{ 0%{transform:scale(1)} 50%{transform:scale(1.6)} 100%{transform:scale(1)} }
+  .cart-drawer{ position:fixed; top:0; right:0; bottom:0; z-index:98; width:min(370px,94vw);
+    background:rgba(10,10,16,.94); backdrop-filter:blur(20px); border-left:1px solid rgba(255,255,255,.12);
+    transform:translateX(105%); transition:transform .5s var(--ease); display:flex; flex-direction:column; }
+  .cart-drawer.open{ transform:none; }
+  .fly-can{ position:fixed; z-index:99; width:22px; height:38px; border-radius:6px; pointer-events:none;
+    background:linear-gradient(180deg,#fff 45%,var(--accent) 55%); box-shadow:0 4px 14px var(--accent); }
+
+  /* Scrollbar, focus, tactility */
+  ::-webkit-scrollbar{ width:10px; }
+  ::-webkit-scrollbar-track{ background:#0a0a10; }
+  ::-webkit-scrollbar-thumb{ background:linear-gradient(180deg,var(--c1),var(--c2),var(--c3)); border-radius:8px; border:2px solid #0a0a10; }
+  :focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
+  .btn-glow:active{ transform:scale(.96); }
+
+  /* Giant parallax watermarks */
+  .wm{ position:absolute; inset:0; display:grid; place-items:center; z-index:0; pointer-events:none; user-select:none;
+    font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(5rem,17vw,15rem); letter-spacing:.04em;
+    color:rgba(255,255,255,.028); white-space:nowrap; will-change:transform; }
+  section > div:not(.wm){ position:relative; }
+
+  /* Mobile buy bar clearance */
+  @media (max-width:640px){ #musicBtn{ bottom:84px; } #toTop{ bottom:84px; } }
+
+  /* Side dot navigation */
+  #dots button{ width:10px; height:10px; border-radius:50%; background:rgba(255,255,255,.18); position:relative; transition:all .3s var(--ease); }
+  #dots button:hover{ background:rgba(255,255,255,.5); }
+  #dots button.on{ background:var(--accent); box-shadow:0 0 12px var(--accent); transform:scale(1.4); }
+  #dots .lbl{ position:absolute; right:22px; top:50%; transform:translateY(-50%); white-space:nowrap;
+    font-size:11px; font-weight:600; color:#fff; background:rgba(10,10,16,.9); border:1px solid rgba(255,255,255,.12);
+    padding:3px 10px; border-radius:9999px; opacity:0; pointer-events:none; transition:opacity .25s; }
+  #dots button:hover .lbl{ opacity:1; }
+
+  /* Hero staggered entrance */
+  #home .reveal:nth-child(1){ transition-delay:.05s }
+  #home .reveal:nth-child(2){ transition-delay:.15s }
+  #home .reveal:nth-child(3){ transition-delay:.25s }
+  #home .reveal:nth-child(4){ transition-delay:.35s }
+  #home .reveal:nth-child(5){ transition-delay:.45s }
+  #home .reveal:nth-child(6){ transition-delay:.55s }
+  #home .reveal:nth-child(7){ transition-delay:.65s }
+
+  /* FAQ accordion */
+  .faq-q{ transition:background .25s, border-color .25s; }
+  .faq-item.open .faq-q{ border-color:color-mix(in srgb,var(--accent) 45%,transparent); background:color-mix(in srgb,var(--accent) 7%,transparent); }
+  .faq-a{ max-height:0; overflow:hidden; transition:max-height .5s var(--ease); }
+  .faq-item.open .faq-a{ max-height:280px; }
+  .faq-item .chev{ transition:transform .35s var(--ease); }
+  .faq-item.open .chev{ transform:rotate(180deg); }
+
+  /* Checkout success */
+  .okring{ width:84px; height:84px; border-radius:50%; border:3px solid var(--accent); display:grid; place-items:center; margin:0 auto;
+    animation:okPop .6s cubic-bezier(.34,1.56,.64,1) both; box-shadow:0 0 40px color-mix(in srgb,var(--accent) 50%,transparent); }
+  @keyframes okPop{ 0%{transform:scale(0)} 100%{transform:scale(1)} }
+
+  /* Mobile menu */
+  #mobileMenu{ max-height:0; opacity:0; overflow:hidden; border-color:transparent;
+    transition:max-height .5s var(--ease), opacity .4s ease, border-color .3s; }
+  #mobileMenu.open{ max-height:380px; opacity:1; border-color:rgba(255,255,255,.1); }
+
+  /* Flavor lineup */
+  .mini-can{ width:64px; height:128px; border-radius:12px/16px; position:relative; overflow:hidden; margin:0 auto;
+    box-shadow:0 14px 30px -12px rgba(0,0,0,.6), inset -9px 0 14px rgba(0,0,0,.25), inset 9px 0 14px rgba(0,0,0,.16);
+    transition:transform .35s var(--ease); }
+  .mini-can::before{ content:""; position:absolute; top:0; left:0; right:0; height:7px;
+    background:linear-gradient(90deg,#9a9aa2,#e9e9ee 50%,#9a9aa2); }
+  .mini-can::after{ content:""; position:absolute; top:0; bottom:0; left:22%; width:12%;
+    background:linear-gradient(180deg,rgba(255,255,255,.8),rgba(255,255,255,.05)); filter:blur(1px); opacity:.7; }
+  .lineup-card{ transition:transform .3s var(--ease), border-color .3s, box-shadow .35s, background .3s; }
+  .lineup-card:hover{ transform:translateY(-6px); }
+  .lineup-card:hover .mini-can{ transform:translateY(-6px) rotate(-4deg) scale(1.07); }
+  .lineup-card.on{ border-color:var(--accent); box-shadow:0 18px 50px -18px var(--accent); }
+
+  /* Back to top */
+  #toTop{ position:fixed; right:20px; bottom:24px; z-index:95; opacity:0; visibility:hidden; transform:translateY(14px);
+    transition:all .4s var(--ease); }
+  #toTop.show{ opacity:1; visibility:visible; transform:none; }
+
+  /* Floating share */
+  #shareBtn{ position:fixed; right:20px; bottom:78px; z-index:95; transition:all .4s var(--ease); }
+  #shareBtn:hover{ box-shadow:0 0 26px var(--accent); }
+  #shareMenu{ position:absolute; right:0; bottom:56px; display:flex; flex-direction:column; gap:8px;
+    opacity:0; visibility:hidden; transform:translateY(10px) scale(.9); transform-origin:bottom right; transition:all .3s var(--ease); }
+  #shareBtn.open #shareMenu{ opacity:1; visibility:visible; transform:none; }
+  #shareMenu a{ white-space:nowrap; }
+  @media (max-width:640px){ #shareBtn{ bottom:138px; } }
+
+  /* Condensation runs */
+  .can-drops span.run{ animation:dropRun linear infinite; }
+  @keyframes dropRun{ 0%{transform:translateY(0)} 78%{transform:translateY(44px); opacity:.85} 100%{transform:translateY(46px); opacity:0} }
+
+  /* Page-wipe transition */
+  .wipe{ position:fixed; inset:0; z-index:94; pointer-events:none; overflow:hidden; }
+  .wipe .layer{ position:absolute; inset:0; transform:translateY(101%); will-change:transform; }
+  .wipe-label{ position:absolute; inset:0; display:grid; place-items:center; opacity:0;
+    font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(2.6rem,9vw,5.5rem);
+    letter-spacing:.12em; color:#fff; text-shadow:0 0 34px var(--accent); }
+  .wipe-label small{ display:block; text-align:center; font-size:.85rem; font-weight:600;
+    letter-spacing:.4em; color:rgba(255,255,255,.55); margin-top:.6rem; }
+
+  /* Badge → card pulse */
+  .pulse-card{ animation:cardPulse 1.1s ease 2; }
+  @keyframes cardPulse{ 0%,100%{box-shadow:none} 50%{box-shadow:0 0 0 3px var(--accent), 0 0 46px var(--accent)} }
+
+  /* Experience the Mood — cinematic overlay */
+  .exp{ position:fixed; inset:0; z-index:96; display:grid; place-items:center; overflow:hidden;
+    opacity:0; visibility:hidden; transition:opacity .6s ease, visibility .6s ease; }
+  .exp.open{ opacity:1; visibility:visible; }
+  .exp-bg{ position:absolute; inset:-25%;
+    background:radial-gradient(circle at 50% 45%, var(--accent), color-mix(in srgb,var(--c1) 55%,#000) 52%, #04040a 84%);
+    animation:expBreathe 6s ease-in-out infinite; }
+  @keyframes expBreathe{ 0%,100%{transform:scale(1);opacity:.92} 50%{transform:scale(1.14);opacity:1} }
+  .exp-ring{ position:absolute; width:60vmin; height:60vmin; border-radius:50%;
+    border:1px solid rgba(255,255,255,.18); box-shadow:0 0 80px rgba(255,255,255,.15) inset; animation:expBreathe 6s ease-in-out infinite; }
+  .exp-inner{ position:relative; text-align:center; padding:2rem; }
+  .exp-kicker{ font-family:'Space Grotesk',monospace; letter-spacing:.4em; text-transform:uppercase; font-size:.8rem; color:rgba(255,255,255,.75); }
+  .exp-title{ margin-top:.4rem; font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(3.5rem,14vw,9rem); line-height:1;
+    color:#fff; text-shadow:0 6px 40px rgba(0,0,0,.35); }
+  .exp-flavor{ margin-top:.6rem; font-size:clamp(1.1rem,3vw,1.8rem); font-weight:600; color:rgba(255,255,255,.9); }
+  .exp-tag{ margin-top:1.4rem; font-size:.75rem; letter-spacing:.35em; color:rgba(255,255,255,.6); }
+  .exp-hint{ position:absolute; left:0; right:0; bottom:8vh; text-align:center; font-size:.8rem; letter-spacing:.15em;
+    color:rgba(255,255,255,.7); }
+  .exp.open .exp-kicker{ animation:expUp .8s var(--ease) .2s both; }
+  .exp.open .exp-title{ animation:expPop 1s var(--ease) .45s both; }
+  .exp.open .exp-flavor{ animation:expUp .8s var(--ease) .9s both; }
+  .exp.open .exp-tag{ animation:expUp .8s var(--ease) 1.2s both; }
+  .exp.open .exp-hint{ animation:expUp .8s var(--ease) 2.2s both, hintPulse 2s ease-in-out 3s infinite; }
+  @keyframes expUp{ from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:none} }
+  @keyframes expPop{ from{opacity:0;transform:scale(.7)} to{opacity:1;transform:none} }
+
+  /* Music equalizer */
+  .eq{ display:flex; align-items:flex-end; gap:2px; height:16px; color:var(--accent); }
+  .eq i{ width:3px; height:5px; border-radius:2px; background:currentColor; display:block; }
+  #musicBtn.playing .eq i{ animation:eqbar .9s ease-in-out infinite; box-shadow:0 0 8px var(--accent); }
+  #musicBtn.playing .eq i:nth-child(2){ animation-delay:.15s; }
+  #musicBtn.playing .eq i:nth-child(3){ animation-delay:.3s; }
+  #musicBtn.playing .eq i:nth-child(4){ animation-delay:.45s; }
+  @keyframes eqbar{ 0%,100%{height:4px} 50%{height:16px} }
+
+  ::selection{ background:color-mix(in srgb,var(--accent) 40%,transparent); color:#fff; }
+  @media (prefers-reduced-motion:reduce){ *{animation:none!important;transition:none!important} .reveal{opacity:1;transform:none} #intro{display:none} }
+</style>
+</head>
+
+<body class="cc antialiased locked">
+
+<svg width="0" height="0" style="position:absolute"><defs>
+  <filter id="goo"><feGaussianBlur in="SourceGraphic" stdDeviation="7" result="blur"/>
+    <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -9" result="goo"/>
+    <feBlend in="SourceGraphic" in2="goo"/></filter>
+  <linearGradient id="mg" x1="0" y1="0" x2="100" y2="100"><stop offset="0" stop-color="#8B5CF6"/><stop offset="1" stop-color="#38BDF8"/></linearGradient>
+</defs></svg>
+
+<div id="intro">
+  <div class="ihalf l"></div><div class="ihalf r"></div>
+  <div class="idrop"></div>
+  <div class="iripple"></div><div class="iripple r2"></div><div class="iripple r3"></div>
+  <div class="ishock"></div>
+
+  <!-- Logo awakening -->
+  <div class="iscene" id="is1">
+    <div class="text-center">
+      <svg class="intro-draw mx-auto" width="96" height="96" viewBox="0 0 100 100" fill="none">
+        <path d="M20 78 V38 C20 22 42 22 50 40 C58 22 80 22 80 38 V78" stroke="url(#mg)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="intro-word mt-4 font-display font-extrabold text-3xl"><span>My<span class="grad-text">MuuD</span></span></div>
+      <div class="intro-word mt-1 text-sm tracking-[0.4em] text-white/50"><span>มาย มู้ด</span></div>
+      <div class="intro-word mt-3 text-xs font-semibold tracking-[0.4em] text-white/70"><span>DRINK YOUR MOOD</span></div>
+    </div>
+  </div>
+
+  <!-- Claims punch in -->
+  <div class="iscene" id="is2">
+    <div id="punchWord" class="font-display font-extrabold text-5xl sm:text-7xl tracking-tight text-center px-4"></div>
+  </div>
+
+  <button id="introSkip" class="absolute bottom-6 right-6 z-10 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-semibold text-white/60 hover:text-white hover:bg-white/10 transition">Skip intro ›</button>
+</div>
+
+<div id="progress"></div>
+<div class="grain"></div>
+<div id="spot"></div>
+
+<div class="goo-wrap"><div class="goo" id="g0"></div><div class="goo" id="g1"></div><div class="goo" id="g2"></div></div>
+<div class="cursor-dot" id="dot"></div>
+
+<div class="aurora"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+<canvas id="bgCanvas"></canvas>
+
+<!-- NAV -->
+<header class="fixed top-0 inset-x-0 z-50" id="nav">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+    <div class="mt-2 hidden sm:flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.04] backdrop-blur-xl px-4 py-1.5 text-[11px] font-semibold tracking-wide text-white/60">
+      <i data-lucide="truck" class="w-3.5 h-3.5" style="color:var(--accent)"></i>
+      Free nationwide shipping on orders over ฿300 · ส่งฟรีทั่วไทยเมื่อสั่งครบ ฿300
+    </div>
+    <div id="navPill" class="mt-2 flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl px-4 sm:px-6 py-3 transition-all">
+      <a href="#home" class="flex items-center gap-2.5" data-hover>
+        <svg width="32" height="32" viewBox="0 0 100 100" fill="none"><path d="M20 78 V38 C20 22 42 22 50 40 C58 22 80 22 80 38 V78" stroke="url(#mg)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="font-display font-extrabold text-xl tracking-tight">My<span class="grad-text">MuuD</span></span></a>
+      <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-white/70">
+        <a href="#home" class="navlink hover:text-white transition" data-hover>Home</a>
+        <a href="#quiz" class="navlink hover:text-white transition" data-hover>Mood Check</a>
+        <a href="#benefits" class="navlink hover:text-white transition" data-hover>Benefits</a>
+        <a href="#lineup" class="navlink hover:text-white transition" data-hover>Lineup</a>
+        <a href="#lab" class="navlink hover:text-white transition font-bold" data-hover style="color:var(--accent)">Mood Lab ★</a>
+        <a href="#shop" class="navlink hover:text-white transition" data-hover>Shop</a></nav>
+      <div class="flex items-center gap-3">
+        <button id="cartBtn" data-hover aria-label="Open cart"
+          class="grid place-items-center w-10 h-10 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 transition">
+          <i data-lucide="shopping-cart" class="w-5 h-5"></i><span id="cartCount">0</span></button>
+        <button id="buyNow" data-hover data-magnetic class="btn-glow hidden sm:block rounded-xl bg-gradient-to-r from-[var(--c1)] via-[var(--c2)] to-[var(--c3)] px-5 py-2.5 text-sm font-semibold">Buy Now</button>
+        <button id="menuBtn" data-hover aria-label="Menu"
+          class="md:hidden grid place-items-center w-10 h-10 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 transition">
+          <i data-lucide="menu" class="w-5 h-5"></i></button>
+      </div>
+    </div>
+    <div id="mobileMenu" class="md:hidden mt-2 rounded-2xl border bg-[rgba(10,10,16,.92)] backdrop-blur-xl">
+      <nav class="flex flex-col p-3 text-sm font-medium text-white/80">
+        <a href="#home" class="rounded-xl px-4 py-3 hover:bg-white/5 transition" data-hover>🏠 Home</a>
+        <a href="#quiz" class="rounded-xl px-4 py-3 hover:bg-white/5 transition" data-hover>💗 Mood Check</a>
+        <a href="#benefits" class="rounded-xl px-4 py-3 hover:bg-white/5 transition" data-hover>✨ Benefits</a>
+        <a href="#lineup" class="rounded-xl px-4 py-3 hover:bg-white/5 transition" data-hover>🥤 Lineup</a>
+        <a href="#shop" class="rounded-xl px-4 py-3 hover:bg-white/5 transition" data-hover>🛒 Shop</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<!-- HERO — pinned scroll-film -->
+<section id="home" class="relative">
+  <div class="film-track" style="height:580vh">
+    <div id="canStage">
+      <div class="film-glow"></div>
+      <canvas id="canGL"></canvas>
+
+      <!-- Chapter 0 · open -->
+      <div class="fcap top active" data-fc="0">
+        <div class="fin text-center max-w-3xl">
+          <div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs font-medium text-white/70 backdrop-blur">
+            <span class="h-2 w-2 rounded-full animate-pulse" style="background:var(--accent)"></span> DRINK YOUR MOOD · มาย มู้ด</div>
+          <h1 class="mt-5 font-display font-extrabold leading-[1.02] tracking-tight text-5xl sm:text-6xl xl:text-7xl">
+            <span class="scramble" data-text="Drink Your">Drink Your</span> <span class="grad-text">Mood.</span><br/>
+            <span class="scramble" data-text="Refresh Your">Refresh Your</span> <span class="grad-text">Mind.</span></h1>
+          <div class="mt-5 flex items-center justify-center gap-2 text-xs text-white/55">
+            <span class="tracking-widest" style="color:var(--accent)">★★★★★</span>
+            <b class="text-white/80">4.9</b> — trusted by 2,400+ mood drinkers</div>
+        </div>
+      </div>
+
+      <!-- Chapter 1 · zero -->
+      <div class="fcap top" data-fc="1">
+        <div class="fin text-center max-w-3xl">
+          <div class="text-xs font-semibold tracking-[0.4em] uppercase text-white/45">The promise</div>
+          <h2 class="mt-3 font-display font-extrabold text-5xl sm:text-7xl tracking-tight">Zero sugar.<br/><span class="grad-text">Zero calories.</span></h2>
+          <p class="mt-4 text-white/65 text-lg">All the sparkling flavor — none of the crash.</p>
+        </div>
+      </div>
+
+      <!-- Chapter 2 · the fizz -->
+      <div class="fcap top" data-fc="2">
+        <div class="fin text-center max-w-3xl">
+          <div class="text-xs font-semibold tracking-[0.4em] uppercase text-white/45">The feel</div>
+          <h2 class="mt-3 font-display font-extrabold text-5xl sm:text-7xl tracking-tight">Micro-<span class="grad-text">carbonated.</span></h2>
+          <p class="mt-4 text-white/65 text-lg">Champagne-fine bubbles that dance to the last sip — never flat.</p>
+        </div>
+      </div>
+
+      <!-- Chapter 3 · the science (back of can) -->
+      <div class="fcap top" data-fc="3">
+        <div class="fin text-center max-w-3xl">
+          <div class="text-xs font-semibold tracking-[0.4em] uppercase text-white/45">The science</div>
+          <h2 class="mt-3 font-display font-extrabold text-5xl sm:text-7xl tracking-tight"><span class="grad-text">pH 7.0</span> balanced.</h2>
+          <p class="mt-4 text-white/65 text-lg">Real fruit character. Gentle on you. 🇹🇭 Crafted in Thailand.</p>
+        </div>
+      </div>
+
+      <!-- Chapter 4 · sustainability -->
+      <div class="fcap top" data-fc="4">
+        <div class="fin text-center max-w-3xl">
+          <div class="text-xs font-semibold tracking-[0.4em] uppercase text-white/45">The planet</div>
+          <h2 class="mt-3 font-display font-extrabold text-5xl sm:text-7xl tracking-tight">Infinitely <span class="grad-text">recyclable.</span></h2>
+          <p class="mt-4 text-white/65 text-lg">100% aluminum · BPA-free lining · a good mood for you and the earth. ♻</p>
+        </div>
+      </div>
+
+      <!-- Chapter 5 · choose + CTA -->
+      <div class="fcap bottom" data-fc="5">
+        <div class="fin text-center max-w-3xl w-full">
+          <h2 class="font-display font-extrabold text-4xl sm:text-6xl tracking-tight">Five moods. <span class="grad-text">One you.</span></h2>
+          <div class="mt-5 text-xs uppercase tracking-widest text-white/45 font-mono">◈ Choose your muud</div>
+          <div class="interactive mt-3 flex flex-wrap justify-center gap-2.5" id="moodBar"></div>
+          <div class="mt-4 flex flex-wrap justify-center gap-2.5">
+            <button data-badge="0" class="interactive flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold backdrop-blur hover:bg-white/10 transition" data-hover><i data-lucide="candy-off" class="w-4 h-4" style="color:var(--c2)"></i> 0 SUGAR</button>
+            <button data-badge="1" class="interactive flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold backdrop-blur hover:bg-white/10 transition" data-hover><i data-lucide="flame" class="w-4 h-4" style="color:var(--c1)"></i> CALORIE 0</button>
+            <button data-badge="2" class="interactive flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold backdrop-blur hover:bg-white/10 transition" data-hover><i data-lucide="droplets" class="w-4 h-4" style="color:var(--c3)"></i> pH BALANCE</button>
+          </div>
+          <div class="mt-6 flex flex-wrap justify-center gap-4">
+            <a href="#product" id="expBtn" data-hover data-magnetic class="interactive btn-glow rounded-2xl bg-gradient-to-r from-[var(--c1)] via-[var(--c2)] to-[var(--c3)] px-7 py-4 font-semibold flex items-center gap-2">Experience the Mood <i data-lucide="arrow-right" class="w-5 h-5"></i></a>
+            <a href="#lab" data-hover class="interactive rounded-2xl border border-white/20 bg-white/5 px-7 py-4 font-semibold text-white/90 hover:bg-white/10 transition flex items-center gap-2"><i data-lucide="flask-conical" class="w-5 h-5" style="color:var(--accent)"></i> Brew Your Own</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- chapter progress rail -->
+      <div class="film-rail" id="filmRail"><span class="on"></span><span></span><span></span><span></span><span></span><span></span></div>
+
+      <!-- drag/scroll cue -->
+      <div class="film-cue text-white/45 text-[11px] font-mono flex flex-col items-center gap-1">
+        <span id="filmHint">scroll to explore · drag to spin · tap to open · double-click to flip</span>
+        <i data-lucide="chevron-down" class="w-4 h-4 cue"></i>
+      </div>
+      <span id="chipFlavor" class="hidden"></span>
+    </div>
+  </div>
+</section>
+
+<div class="relative z-10 border-y border-white/10 bg-white/[0.03] py-4 overflow-hidden">
+  <div class="marquee font-display font-bold text-white/25 text-lg uppercase tracking-widest" id="marquee"></div></div>
+
+<!-- PRESS -->
+<div class="relative z-10 py-12">
+  <div class="max-w-6xl mx-auto px-5 sm:px-8">
+    <div class="reveal text-center text-[11px] font-semibold tracking-[0.4em] text-white/30 uppercase">As featured in</div>
+    <div class="reveal mt-7 flex flex-wrap items-center justify-center gap-x-14 gap-y-5 font-display font-bold text-white/25 text-lg sm:text-xl">
+      <span class="hover:text-white/55 transition tracking-wide" data-hover>SIAM WELLNESS</span>
+      <span class="hover:text-white/55 transition tracking-wide" data-hover>BKK LIFESTYLE</span>
+      <span class="hover:text-white/55 transition tracking-wide" data-hover>URBAN TASTE</span>
+      <span class="hover:text-white/55 transition tracking-wide" data-hover>HEALTH+ ASIA</span>
+      <span class="hover:text-white/55 transition tracking-wide" data-hover>THE MORNING POST</span>
+    </div>
+  </div>
+</div>
+
+<!-- MOOD QUIZ -->
+<section id="quiz" class="relative z-10 py-24 sm:py-32">
+  <div class="wm" aria-hidden="true">FEEL</div>
+  <div class="max-w-4xl mx-auto px-5 sm:px-8">
+    <div class="reveal relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04] backdrop-blur-xl p-8 sm:p-14 text-center">
+      <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-80 h-80 rounded-full blur-3xl opacity-40" style="background:var(--accent)"></div>
+
+      <div class="relative" id="quizAsk">
+        <span class="text-sm font-semibold tracking-widest uppercase" style="color:var(--accent)">Mood Check · เช็คมู้ด</span>
+        <h2 class="mt-3 font-display font-extrabold text-4xl sm:text-5xl tracking-tight">How do you feel <span class="grad-text">today?</span></h2>
+        <p class="mt-4 text-white/60 max-w-lg mx-auto">No wrong answers — just tap what's closest. We'll match you a MyMuuD mood to sip on. 💗</p>
+        <div class="mt-9 grid grid-cols-2 sm:grid-cols-5 gap-3" id="quizOptions"></div>
+      </div>
+
+      <div class="relative hidden" id="quizResult">
+        <div class="text-6xl sm:text-7xl mb-3" id="resEmoji">🥤</div>
+        <div class="text-sm font-semibold tracking-widest uppercase" style="color:var(--accent)" id="resTag">Your muud</div>
+        <h2 class="mt-2 font-display font-extrabold text-3xl sm:text-5xl tracking-tight" id="resTitle"></h2>
+        <p class="mt-4 text-white/70 max-w-lg mx-auto text-lg" id="resMsg"></p>
+        <div class="mt-8 flex flex-col sm:flex-row justify-center items-center gap-4">
+          <a href="#shop" data-hover data-magnetic class="btn-glow rounded-2xl bg-gradient-to-r from-[var(--c1)] via-[var(--c2)] to-[var(--c3)] px-7 py-4 font-semibold flex items-center gap-2">
+            <i data-lucide="cup-soda" class="w-5 h-5"></i> <span id="resCta">Sip this mood</span></a>
+          <button data-hover id="quizRetry" class="rounded-2xl border border-white/20 bg-white/5 px-7 py-4 font-semibold text-white/90 hover:bg-white/10 transition flex items-center gap-2">
+            <i data-lucide="rotate-ccw" class="w-5 h-5"></i> Try again</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section id="benefits" class="relative z-10 py-24 sm:py-32">
+  <div class="wm" aria-hidden="true">MUUD</div>
+  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+    <div class="reveal text-center max-w-2xl mx-auto">
+      <span class="text-sm font-semibold tracking-widest uppercase" style="color:var(--accent)">Why MyMuuD</span>
+      <h2 class="mt-3 font-display font-extrabold text-4xl sm:text-5xl tracking-tight">Refreshment, <span class="grad-text">reimagined.</span></h2>
+      <p class="mt-4 text-white/60">Every can is engineered to lift your mood without a single compromise.</p></div>
+    <div class="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="featureGrid"></div>
+  </div>
+</section>
+
+<!-- LINEUP -->
+<section id="lineup" class="relative z-10 py-24 sm:py-32">
+  <div class="wm" aria-hidden="true">มู้ด</div>
+  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+    <div class="reveal text-center max-w-2xl mx-auto">
+      <span class="text-sm font-semibold tracking-widest uppercase" style="color:var(--accent)">The Lineup</span>
+      <h2 class="mt-3 font-display font-extrabold text-4xl sm:text-5xl tracking-tight">Five moods. <span class="grad-text">One you.</span></h2>
+      <p class="mt-4 text-white/60">Tap a can — the whole world changes to match. เลือกมู้ดของคุณ 🫧</p>
+    </div>
+    <div class="mt-14 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5">
+      <button data-lineup="0" data-hover class="lineup-card reveal rounded-3xl border border-white/10 bg-white/[0.04] p-6 text-center hover:bg-white/[0.07]">
+        <div class="mini-can" style="background:linear-gradient(180deg,#fff 42%, #FF3E9A 50%)"></div>
+        <div class="mt-4 font-display font-bold">PINK</div>
+        <div class="text-xs text-white/50 mt-0.5">Grapefruit Twist</div>
+        <div class="mt-2 text-[11px] font-bold" style="color:var(--accent)">฿45 / can</div>
+        <span class="qadd mt-3 inline-flex items-center gap-1 rounded-xl border border-white/15 bg-white/5 px-3 py-1.5 text-[11px] font-bold text-white/70 transition hover:bg-white/10 hover:text-white">＋ Quick add</span></button>
+      <button data-lineup="1" data-hover class="lineup-card reveal rounded-3xl border border-white/10 bg-white/[0.04] p-6 text-center hover:bg-white/[0.07]">
+        <div class="mini-can" style="background:linear-gradient(180deg,#fff 42%, #06B6D4 50%)"></div>
+        <div class="mt-4 font-display font-bold">AQUA</div>
+        <div class="text-xs text-white/50 mt-0.5">Yuzu Splash</div>
+        <div class="mt-2 text-[11px] font-bold" style="color:var(--accent)">฿45 / can</div>
+        <span class="qadd mt-3 inline-flex items-center gap-1 rounded-xl border border-white/15 bg-white/5 px-3 py-1.5 text-[11px] font-bold text-white/70 transition hover:bg-white/10 hover:text-white">＋ Quick add</span></button>
+      <button data-lineup="2" data-hover class="lineup-card reveal rounded-3xl border border-white/10 bg-white/[0.04] p-6 text-center hover:bg-white/[0.07]">
+        <div class="mini-can" style="background:linear-gradient(180deg,#fff 42%, #A855F7 50%)"></div>
+        <div class="mt-4 font-display font-bold">GRAPE</div>
+        <div class="text-xs text-white/50 mt-0.5">Berry Rush</div>
+        <div class="mt-2 text-[11px] font-bold" style="color:var(--accent)">฿45 / can</div>
+        <span class="qadd mt-3 inline-flex items-center gap-1 rounded-xl border border-white/15 bg-white/5 px-3 py-1.5 text-[11px] font-bold text-white/70 transition hover:bg-white/10 hover:text-white">＋ Quick add</span></button>
+      <button data-lineup="3" data-hover class="lineup-card reveal rounded-3xl border border-white/10 bg-white/[0.04] p-6 text-center hover:bg-white/[0.07]">
+        <div class="mini-can" style="background:linear-gradient(180deg,#fff 42%, #FB7185 50%)"></div>
+        <div class="mt-4 font-display font-bold">CITRUS</div>
+        <div class="text-xs text-white/50 mt-0.5">Sunny Zest</div>
+        <div class="mt-2 text-[11px] font-bold" style="color:var(--accent)">฿45 / can</div>
+        <span class="qadd mt-3 inline-flex items-center gap-1 rounded-xl border border-white/15 bg-white/5 px-3 py-1.5 text-[11px] font-bold text-white/70 transition hover:bg-white/10 hover:text-white">＋ Quick add</span></button>
+      <button data-lineup="4" data-hover class="lineup-card reveal rounded-3xl border border-white/10 bg-white/[0.04] p-6 text-center hover:bg-white/[0.07]">
+        <div class="mini-can" style="background:linear-gradient(180deg,#fff 42%, #34D399 50%)"></div>
+        <div class="mt-4 font-display font-bold">MINT</div>
+        <div class="text-xs text-white/50 mt-0.5">Cool Breeze</div>
+        <div class="mt-2 text-[11px] font-bold" style="color:var(--accent)">฿45 / can</div>
+        <span class="qadd mt-3 inline-flex items-center gap-1 rounded-xl border border-white/15 bg-white/5 px-3 py-1.5 text-[11px] font-bold text-white/70 transition hover:bg-white/10 hover:text-white">＋ Quick add</span></button>
+    </div>
+  </div>
+</section>
+
+<!-- MOOD LAB -->
+<section id="lab" class="relative z-10 py-24 sm:py-32">
+  <div class="wm" aria-hidden="true">MIX</div>
+  <div class="max-w-6xl mx-auto px-5 sm:px-8">
+    <div class="reveal text-center max-w-2xl mx-auto">
+      <span class="text-sm font-semibold tracking-widest uppercase" style="color:var(--accent)">The Mood Lab · ★ signature</span>
+      <h2 class="mt-3 font-display font-extrabold text-4xl sm:text-5xl tracking-tight">Five moods, or <span class="grad-text">infinite you.</span></h2>
+      <p class="mt-4 text-white/60">Blend two moods, name your own flavor, and we'll brew a one-of-a-kind MyMuuD — with a card you can save &amp; share. 🧪</p>
+    </div>
+
+    <div class="reveal mt-14 grid lg:grid-cols-2 gap-10 items-center">
+      <!-- Controls -->
+      <div class="rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-xl p-7 sm:p-9">
+        <div class="text-xs uppercase tracking-widest text-white/40 font-mono mb-2.5">◈ Your name</div>
+        <input id="labName" maxlength="18" placeholder="e.g. Ploy" data-hover
+          class="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 outline-none focus:border-[var(--accent)] transition placeholder:text-white/30 font-semibold">
+
+        <div class="text-xs uppercase tracking-widest text-white/40 font-mono mt-6 mb-2.5">◈ Base mood</div>
+        <div class="flex flex-wrap gap-2" id="labBase"></div>
+
+        <div class="text-xs uppercase tracking-widest text-white/40 font-mono mt-6 mb-2.5">◈ Splash of</div>
+        <div class="flex flex-wrap gap-2" id="labSplash"></div>
+
+        <div class="mt-5 flex items-center gap-3">
+          <span class="text-xs text-white/40 font-mono">Balance</span>
+          <input id="labMix" type="range" min="15" max="85" value="60" class="flex-1 accent-[var(--accent)]" data-hover>
+          <span id="labMixVal" class="text-xs font-bold w-24 text-right"></span>
+        </div>
+
+        <button id="labMake" data-hover data-magnetic
+          class="btn-glow mt-7 w-full rounded-2xl bg-gradient-to-r from-[var(--c1)] via-[var(--c2)] to-[var(--c3)] px-6 py-4 font-bold flex items-center justify-center gap-2">
+          <i data-lucide="flask-conical" class="w-5 h-5"></i> Brew My Mood</button>
+
+        <div id="labActions" class="mt-3 hidden grid-cols-2 gap-3">
+          <button id="labDownload" data-hover class="rounded-2xl border border-white/20 bg-white/5 px-5 py-3.5 font-semibold hover:bg-white/10 transition flex items-center justify-center gap-2"><i data-lucide="download" class="w-5 h-5" style="color:var(--accent)"></i> Save card</button>
+          <button id="labShare" data-hover class="rounded-2xl border border-white/20 bg-white/5 px-5 py-3.5 font-semibold hover:bg-white/10 transition flex items-center justify-center gap-2"><i data-lucide="share-2" class="w-5 h-5" style="color:var(--accent)"></i> Share</button>
+          <button id="labAddCart" data-hover class="col-span-2 btn-glow rounded-2xl bg-gradient-to-r from-[var(--c1)] via-[var(--c2)] to-[var(--c3)] px-5 py-3.5 font-semibold flex items-center justify-center gap-2"><i data-lucide="shopping-bag" class="w-5 h-5"></i> Add my custom can — ฿55</button>
+        </div>
+      </div>
+
+      <!-- Card preview -->
+      <div class="flex flex-col items-center">
+        <div class="rounded-3xl overflow-hidden border border-white/10 shadow-[0_30px_80px_-24px_var(--accent)]" style="width:min(360px,86vw)">
+          <canvas id="labCard" width="1080" height="1080" style="width:100%; height:auto; display:block"></canvas>
+        </div>
+        <div class="mt-4 text-xs text-white/40 font-mono">↑ your card updates live · save it as an image</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="product" class="relative z-10 py-20">
+  <div class="wm" aria-hidden="true">ZERO</div>
+  <div class="max-w-6xl mx-auto px-5 sm:px-8">
+    <div class="reveal rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.02] backdrop-blur-xl p-8 sm:p-14">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+        <div data-hover><div class="font-display font-extrabold text-5xl grad-text count" data-to="0">0</div><div class="mt-2 text-white/60 text-sm">Grams of Sugar</div></div>
+        <div data-hover><div class="font-display font-extrabold text-5xl grad-text count" data-to="0">0</div><div class="mt-2 text-white/60 text-sm">Calories</div></div>
+        <div data-hover><div class="font-display font-extrabold text-5xl grad-text count" data-to="7" data-dec="1">0</div><div class="mt-2 text-white/60 text-sm">Balanced pH</div></div>
+        <div data-hover><div class="font-display font-extrabold text-5xl grad-text count" data-to="330">0</div><div class="mt-2 text-white/60 text-sm">mL of Pure Vibe</div></div>
+      </div>
+      <div class="mt-10 pt-8 border-t border-white/10 flex flex-wrap items-center justify-center gap-x-9 gap-y-3 text-xs font-semibold text-white/45">
+        <span class="flex items-center gap-2"><i data-lucide="shield-check" class="w-4 h-4" style="color:var(--accent)"></i> GMP Certified</span>
+        <span class="flex items-center gap-2"><i data-lucide="badge-check" class="w-4 h-4" style="color:var(--accent)"></i> Thai FDA (อย.) Approved</span>
+        <span class="flex items-center gap-2"><i data-lucide="leaf" class="w-4 h-4" style="color:var(--accent)"></i> BPA-Free Can</span>
+        <span class="flex items-center gap-2"><i data-lucide="recycle" class="w-4 h-4" style="color:var(--accent)"></i> 100% Recyclable</span>
+        <span class="flex items-center gap-2"><i data-lucide="award" class="w-4 h-4" style="color:var(--accent)"></i> Crafted in Bangkok</span>
+      </div></div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="reviews" class="relative z-10 py-20">
+  <div class="wm" aria-hidden="true">FAM</div>
+  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+    <div class="reveal text-center max-w-2xl mx-auto">
+      <span class="text-sm font-semibold tracking-widest uppercase" style="color:var(--accent)">The MuuD Fam</span>
+      <h2 class="mt-3 font-display font-extrabold text-4xl sm:text-5xl tracking-tight">Loved by <span class="grad-text">good moods</span> everywhere.</h2>
+      <div class="mt-6 inline-flex items-center gap-2.5 rounded-full border border-white/12 bg-white/5 px-5 py-2.5 text-sm backdrop-blur">
+        <span class="tracking-widest" style="color:var(--accent)">★★★★★</span>
+        <b>4.9 / 5</b><span class="text-white/45">from 2,400+ verified reviews</span></div>
+    </div>
+    <div class="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="reveal tilt-card relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-md p-7" data-tilt data-hover>
+        <div class="card-sheen"></div>
+        <div class="ti relative">
+          <div class="text-lg tracking-widest" style="color:var(--accent)">★★★★★</div>
+          <p class="mt-3 text-white/75 leading-relaxed">"เปิดกระป๋องปุ๊บ อารมณ์ดีปั๊บ! ซ่าละมุนมาก ไม่หวานเลยแต่รสชาติดีเกินคาด 💗"</p>
+          <div class="mt-5 flex items-center gap-3">
+            <span class="grid place-items-center w-10 h-10 rounded-full font-bold text-sm" style="background:color-mix(in srgb,var(--accent) 25%,transparent)">P</span>
+            <div><div class="font-bold text-sm">Ploy</div><div class="text-xs text-white/45">Bangkok · drinks PINK</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal tilt-card relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-md p-7" data-tilt data-hover>
+        <div class="card-sheen"></div>
+        <div class="ti relative">
+          <div class="text-lg tracking-widest" style="color:var(--accent)">★★★★★</div>
+          <p class="mt-3 text-white/75 leading-relaxed">"Zero sugar that actually tastes premium. AQUA is my 3 PM reset button — crisp, clean, no crash."</p>
+          <div class="mt-5 flex items-center gap-3">
+            <span class="grid place-items-center w-10 h-10 rounded-full font-bold text-sm" style="background:color-mix(in srgb,var(--accent) 25%,transparent)">M</span>
+            <div><div class="font-bold text-sm">Mark</div><div class="text-xs text-white/45">Chiang Mai · drinks AQUA</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal tilt-card relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-md p-7" data-tilt data-hover>
+        <div class="card-sheen"></div>
+        <div class="ti relative">
+          <div class="text-lg tracking-widest" style="color:var(--accent)">★★★★★</div>
+          <p class="mt-3 text-white/75 leading-relaxed">"ดีไซน์น่ารัก ถ่ายรูปสวย แถมดื่มแล้วสดชื่นจริง ๆ ซื้อยกลังไปแล้วค่ะ 🍇"</p>
+          <div class="mt-5 flex items-center gap-3">
+            <span class="grid place-items-center w-10 h-10 rounded-full font-bold text-sm" style="background:color-mix(in srgb,var(--accent) 25%,transparent)">B</span>
+            <div><div class="font-bold text-sm">Bew</div><div class="text-xs text-white/45">Phuket · drinks GRAPE</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARE -->
+<section id="compare" class="relative z-10 py-20">
+  <div class="wm" aria-hidden="true">VS</div>
+  <div class="max-w-5xl mx-auto px-5 sm:px-8">
+    <div class="reveal text-center max-w-2xl mx-auto">
+      <span class="text-sm font-semibold tracking-widest uppercase" style="color:var(--accent)">The Honest Comparison</span>
+      <h2 class="mt-3 font-display font-extrabold text-4xl sm:text-5xl tracking-tight">Why switch to <span class="grad-text">MyMuuD?</span></h2>
+    </div>
+    <div class="reveal mt-12 overflow-x-auto rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-xl">
+      <table class="w-full text-sm min-w-[560px]">
+        <thead>
+          <tr class="border-b border-white/10 text-left">
+            <th class="p-5"></th>
+            <th class="p-5"><span class="inline-flex items-center rounded-full px-4 py-1.5 font-display font-bold" style="background:color-mix(in srgb,var(--accent) 18%,transparent); border:1px solid color-mix(in srgb,var(--accent) 45%,transparent)">My<span class="grad-text">MuuD</span></span></th>
+            <th class="p-5 font-display font-bold text-white/55">Regular Soda</th>
+            <th class="p-5 font-display font-bold text-white/55">Diet Soda</th>
+          </tr>
+        </thead>
+        <tbody id="cmpBody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- SHOP -->
+<section id="shop" class="relative z-10 py-24 sm:py-32">
+  <div class="wm" aria-hidden="true">SHOP</div>
+  <div class="max-w-5xl mx-auto px-5 sm:px-8">
+    <div class="reveal relative overflow-hidden rounded-[2rem] border border-white/10 p-10 sm:p-16 text-center"
+      style="background:linear-gradient(120deg, color-mix(in srgb,var(--c1) 18%,transparent), color-mix(in srgb,var(--c2) 22%,transparent) 50%, color-mix(in srgb,var(--c3) 18%,transparent))">
+      <div class="absolute -top-24 -right-24 w-72 h-72 rounded-full blur-3xl" style="background:color-mix(in srgb,var(--c2) 30%,transparent)"></div>
+      <div class="absolute -bottom-24 -left-24 w-72 h-72 rounded-full blur-3xl" style="background:color-mix(in srgb,var(--c3) 30%,transparent)"></div>
+      <h2 class="relative font-display font-extrabold text-4xl sm:text-6xl tracking-tight">Ready to <span class="grad-text">drink your mood?</span></h2>
+      <p class="relative mt-5 text-white/70 max-w-xl mx-auto">Grab a chilled 6-pack of MyMuuD and feel the fizz. Free delivery on your first order.</p>
+      <div class="relative mt-10 max-w-2xl mx-auto rounded-3xl border border-white/10 bg-white/[0.05] backdrop-blur-xl p-6 sm:p-8 text-left">
+        <div class="flex flex-col sm:flex-row gap-8">
+          <div class="flex-1">
+            <div class="text-xs uppercase tracking-widest text-white/40 font-mono mb-2.5">◈ Flavor</div>
+            <div class="flex flex-wrap gap-2" id="cfgFlavors"></div>
+            <div class="text-xs uppercase tracking-widest text-white/40 font-mono mt-6 mb-2.5">◈ Pack</div>
+            <div class="flex flex-wrap gap-2" id="cfgPacks"></div>
+            <div class="text-xs uppercase tracking-widest text-white/40 font-mono mt-6 mb-2.5">◈ Quantity</div>
+            <div class="flex items-center gap-3">
+              <button id="qMinus" data-hover aria-label="Less" class="grid place-items-center w-9 h-9 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 transition font-bold">−</button>
+              <span id="qVal" class="font-display font-bold text-xl w-8 text-center">1</span>
+              <button id="qPlus" data-hover aria-label="More" class="grid place-items-center w-9 h-9 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 transition font-bold">+</button>
+            </div>
+          </div>
+          <div class="sm:w-52 flex flex-col justify-between gap-5">
+            <div>
+              <div class="text-xs uppercase tracking-widest text-white/40 font-mono">Total</div>
+              <div class="font-display font-extrabold text-4xl grad-text mt-1" id="cfgPrice">฿45</div>
+              <div class="text-xs text-white/45 mt-1.5" id="cfgDesc">1 × Single Can · PINK</div>
+            </div>
+            <button id="cfgAdd" data-hover data-magnetic class="btn-glow rounded-2xl bg-gradient-to-r from-[var(--c1)] via-[var(--c2)] to-[var(--c3)] px-6 py-4 font-semibold flex items-center justify-center gap-2">
+              <i data-lucide="shopping-bag" class="w-5 h-5"></i> Add to Cart</button>
+          </div>
+        </div>
+      </div>
+      <div class="relative mt-6 flex justify-center">
+        <button id="storeBtn" data-hover class="rounded-2xl border border-white/25 bg-white/5 px-8 py-4 font-semibold hover:bg-white/10 transition flex items-center gap-2"><i data-lucide="map-pin" class="w-5 h-5" style="color:var(--accent)"></i> Find a Store</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="relative z-10 py-24 sm:py-32">
+  <div class="wm" aria-hidden="true">FAQ</div>
+  <div class="max-w-3xl mx-auto px-5 sm:px-8">
+    <div class="reveal text-center">
+      <span class="text-sm font-semibold tracking-widest uppercase" style="color:var(--accent)">Good Questions</span>
+      <h2 class="mt-3 font-display font-extrabold text-4xl sm:text-5xl tracking-tight">Everything you're <span class="grad-text">wondering.</span></h2>
+    </div>
+    <div class="reveal mt-12 space-y-3" id="faqList"></div>
+  </div>
+</section>
+
+<footer class="relative z-10 border-t border-white/10 py-12">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8 mb-10">
+    <div class="reveal rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-md p-6 sm:p-8 flex flex-col sm:flex-row items-center gap-5 justify-between">
+      <div class="text-center sm:text-left">
+        <div class="font-display font-bold text-xl">Join the MuuD fam 💌</div>
+        <div class="text-white/50 text-sm mt-1">New flavors, drops &amp; good vibes in your inbox. No spam, ever.</div>
+      </div>
+      <form id="newsForm" class="flex w-full sm:w-auto gap-2">
+        <input id="newsEmail" type="email" required placeholder="your@email.com"
+          class="flex-1 sm:w-64 rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm outline-none focus:border-[var(--accent)] transition placeholder:text-white/30" data-hover>
+        <button type="submit" data-hover class="btn-glow rounded-xl bg-gradient-to-r from-[var(--c1)] via-[var(--c2)] to-[var(--c3)] px-5 py-3 text-sm font-semibold shrink-0">Subscribe</button>
+      </form>
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-10">
+      <div class="lg:col-span-2">
+        <div class="flex items-center gap-2.5">
+          <svg width="30" height="30" viewBox="0 0 100 100" fill="none"><path d="M20 78 V38 C20 22 42 22 50 40 C58 22 80 22 80 38 V78" stroke="url(#mg)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="font-display font-extrabold text-xl">My<span class="grad-text">MuuD</span></span>
+        </div>
+        <p class="mt-4 text-sm text-white/45 leading-relaxed max-w-xs">
+          Premium sparkling mood water, crafted in Bangkok. Zero sugar, zero calories,
+          perfectly pH-balanced — drink your mood.</p>
+        <div class="mt-5 flex items-center gap-3">
+          <a href="https://instagram.com/mymuud" target="_blank" rel="noopener" data-hover data-magnetic class="grid place-items-center w-10 h-10 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 transition" aria-label="Instagram"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+          <a href="https://facebook.com/mymuud" target="_blank" rel="noopener" data-hover data-magnetic class="grid place-items-center w-10 h-10 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 transition" aria-label="Facebook"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+          <a href="https://youtube.com/@mymuud" target="_blank" rel="noopener" data-hover data-magnetic class="grid place-items-center w-10 h-10 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 transition" aria-label="YouTube"><i data-lucide="youtube" class="w-5 h-5"></i></a>
+          <a href="https://tiktok.com/@mymuud" target="_blank" rel="noopener" data-hover data-magnetic class="grid place-items-center w-10 h-10 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 transition" aria-label="TikTok"><i data-lucide="music" class="w-5 h-5"></i></a>
+        </div>
+      </div>
+      <div>
+        <div class="font-display font-bold text-xs tracking-[0.25em] uppercase text-white/70">Shop</div>
+        <ul class="mt-4 space-y-2.5 text-sm text-white/45">
+          <li><a href="#lineup" data-hover class="hover:text-white transition">MyMuuD PINK</a></li>
+          <li><a href="#lineup" data-hover class="hover:text-white transition">MyMuuD AQUA</a></li>
+          <li><a href="#lineup" data-hover class="hover:text-white transition">MyMuuD GRAPE</a></li>
+          <li><a href="#lineup" data-hover class="hover:text-white transition">MyMuuD CITRUS</a></li>
+          <li><a href="#lineup" data-hover class="hover:text-white transition">MyMuuD MINT</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="font-display font-bold text-xs tracking-[0.25em] uppercase text-white/70">Company</div>
+        <ul class="mt-4 space-y-2.5 text-sm text-white/45">
+          <li><a href="#home" data-hover class="hover:text-white transition">Our Story</a></li>
+          <li><a href="#quiz" data-hover class="hover:text-white transition">Mood Check</a></li>
+          <li><a href="#" data-hover class="hover:text-white transition">Sustainability</a></li>
+          <li><a href="#" data-hover class="hover:text-white transition">Press Kit</a></li>
+          <li><a href="#" data-hover class="hover:text-white transition">Careers</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="font-display font-bold text-xs tracking-[0.25em] uppercase text-white/70">Support</div>
+        <ul class="mt-4 space-y-2.5 text-sm text-white/45">
+          <li><a href="#faq" data-hover class="hover:text-white transition">FAQ</a></li>
+          <li><a href="#" data-hover class="hover:text-white transition">Shipping &amp; Delivery</a></li>
+          <li><a href="#" data-hover class="hover:text-white transition">Wholesale</a></li>
+          <li><a href="mailto:hello@mymuud.com" data-hover class="hover:text-white transition">hello@mymuud.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="mt-12 pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
+      <p class="text-white/40 text-xs">© 2026 MyMuuD Co., Ltd. · มาย มู้ด — All rights reserved.</p>
+      <div class="flex items-center gap-5 text-xs text-white/40">
+        <a href="#" data-hover class="hover:text-white transition">Privacy Policy</a>
+        <a href="#" data-hover class="hover:text-white transition">Terms of Service</a>
+        <span class="hidden lg:inline text-white/15 select-none" title="psst… try it">↑↑↓↓←→←→BA</span>
+      </div>
+      <div class="flex items-center gap-2 text-[10px] font-bold text-white/50">
+        <span class="rounded border border-white/15 bg-white/5 px-2 py-1">VISA</span>
+        <span class="rounded border border-white/15 bg-white/5 px-2 py-1">Mastercard</span>
+        <span class="rounded border border-white/15 bg-white/5 px-2 py-1">PromptPay</span>
+        <span class="rounded border border-white/15 bg-white/5 px-2 py-1">TrueMoney</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Page-wipe transition -->
+<div id="wipe" class="wipe">
+  <div class="layer" style="background:var(--c1)"></div>
+  <div class="layer" style="background:var(--c2)"></div>
+  <div class="layer" style="background:var(--ink); box-shadow:0 -2px 30px var(--accent)"></div>
+  <div id="wipeLabel" class="wipe-label"></div>
+</div>
+
+<!-- Generic modal -->
+<div id="modal" class="modal">
+  <div class="modal-bg" id="modalBg"></div>
+  <div class="modal-card">
+    <button id="modalClose" data-hover aria-label="Close" class="absolute top-4 right-4 grid place-items-center w-9 h-9 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 transition"><i data-lucide="x" class="w-4 h-4"></i></button>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<!-- Cart drawer -->
+<div id="cartDrawer" class="cart-drawer">
+  <div class="flex items-center justify-between p-5 border-b border-white/10">
+    <div class="font-display font-bold text-lg flex items-center gap-2"><i data-lucide="shopping-cart" class="w-5 h-5" style="color:var(--accent)"></i> Your Cart</div>
+    <button id="cartClose" data-hover aria-label="Close cart" class="grid place-items-center w-9 h-9 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 transition"><i data-lucide="x" class="w-4 h-4"></i></button>
+  </div>
+  <div id="cartItems" class="flex-1 overflow-y-auto p-5 space-y-3"></div>
+  <div class="px-5 pt-4 border-t border-white/10">
+    <div id="shipMsg" class="text-xs text-white/55 mb-2">Free shipping on orders over ฿300</div>
+    <div class="h-1.5 rounded-full bg-white/10 overflow-hidden">
+      <div id="shipBar" class="h-full rounded-full transition-all duration-500" style="background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3)); width:0%"></div>
+    </div>
+  </div>
+  <div class="p-5">
+    <div class="flex justify-between mb-4 text-sm text-white/70"><span>Total</span><span id="cartTotal" class="font-bold text-white text-lg">฿0</span></div>
+    <button id="checkout" data-hover class="btn-glow w-full rounded-2xl bg-gradient-to-r from-[var(--c1)] via-[var(--c2)] to-[var(--c3)] px-6 py-3.5 font-semibold">Checkout</button>
+  </div>
+</div>
+
+<!-- Experience the Mood overlay -->
+<div id="experience" class="exp">
+  <div class="exp-bg"></div>
+  <div class="exp-ring"></div>
+  <div class="exp-inner">
+    <div class="exp-kicker" id="expKicker">close your eyes for a second…</div>
+    <div class="exp-title" id="expTitle">PINK</div>
+    <div class="exp-flavor" id="expFlavor">Grapefruit Twist</div>
+    <div class="exp-tag">DRINK YOUR MOOD · มาย มู้ด</div>
+  </div>
+  <div class="exp-hint">tap anywhere to continue</div>
+</div>
+
+<!-- Sticky mobile buy bar -->
+<div id="mobileBar" class="sm:hidden fixed bottom-0 inset-x-0 z-[93] border-t border-white/10 bg-[rgba(10,10,16,.92)] backdrop-blur-xl px-4 py-3 flex items-center justify-between gap-3 translate-y-full transition-transform duration-500">
+  <div>
+    <div class="font-display font-bold text-sm">MyMuuD <span id="mbKey" style="color:var(--accent)">PINK</span></div>
+    <div class="text-[11px] text-white/50">Single can · 330 mL</div>
+  </div>
+  <button id="mbAdd" data-hover class="btn-glow rounded-xl bg-gradient-to-r from-[var(--c1)] via-[var(--c2)] to-[var(--c3)] px-4 py-2.5 text-sm font-semibold shrink-0">Add — ฿45</button>
+</div>
+
+<!-- Back to top -->
+<button id="toTop" data-hover aria-label="Back to top"
+  class="grid place-items-center w-11 h-11 rounded-full border border-white/15 bg-white/5 backdrop-blur-xl hover:bg-white/10 transition">
+  <i data-lucide="arrow-up" class="w-5 h-5"></i></button>
+
+<!-- Floating share -->
+<div id="shareBtn">
+  <div id="shareMenu">
+    <a href="#" data-share="line" data-hover class="grid place-items-center w-11 h-11 rounded-full border border-white/15 bg-white/5 backdrop-blur-xl hover:bg-white/10 transition" aria-label="Share to LINE"><i data-lucide="message-circle" class="w-5 h-5" style="color:#06C755"></i></a>
+    <a href="#" data-share="facebook" data-hover class="grid place-items-center w-11 h-11 rounded-full border border-white/15 bg-white/5 backdrop-blur-xl hover:bg-white/10 transition" aria-label="Share to Facebook"><i data-lucide="facebook" class="w-5 h-5" style="color:#1877F2"></i></a>
+    <a href="#" data-share="twitter" data-hover class="grid place-items-center w-11 h-11 rounded-full border border-white/15 bg-white/5 backdrop-blur-xl hover:bg-white/10 transition" aria-label="Share to X"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+    <a href="#" data-share="copy" data-hover class="grid place-items-center w-11 h-11 rounded-full border border-white/15 bg-white/5 backdrop-blur-xl hover:bg-white/10 transition" aria-label="Copy link"><i data-lucide="link" class="w-5 h-5" style="color:var(--accent)"></i></a>
+  </div>
+  <button data-hover aria-label="Share this page"
+    class="grid place-items-center w-11 h-11 rounded-full border border-white/15 bg-white/5 backdrop-blur-xl hover:bg-white/10 transition">
+    <i data-lucide="share-2" class="w-5 h-5" style="color:var(--accent)"></i></button>
+</div>
+
+<!-- Music player -->
+<button id="musicBtn" data-hover aria-label="Toggle music"
+  class="fixed left-5 bottom-5 z-[95] flex items-center gap-3 rounded-full border border-white/15 bg-white/5 backdrop-blur-xl px-4 py-2.5 text-sm font-semibold transition hover:bg-white/10">
+  <span class="eq" id="eq"><i></i><i></i><i></i><i></i></span>
+  <span id="musicLabel">Play chill</span>
+</button>
+
+<!-- Side dot navigation -->
+<nav id="dots" class="hidden xl:flex fixed right-6 top-1/2 -translate-y-1/2 z-40 flex-col gap-3.5" aria-label="Sections"></nav>
+
+<div id="toast">✦ RAVE MODE ✦</div>
+
+<script>
+lucide.createIcons();
+/* ===== Cinematic intro — drop → ripple → logo → claims → explosion → split ===== */
+(function(){
+  const intro=document.getElementById('intro');
+  const unlock=()=>document.body.classList.remove('locked');
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){ intro.classList.add('done'); unlock(); return; }
+  const scenes=['is1','is2'].map(id=>document.getElementById(id));
+  const timers=[]; let finished=false;
+  const at=(fn,t)=>timers.push(setTimeout(fn,t));
+  const show=i=>scenes.forEach((s,j)=>s.classList.toggle('on', j===i));
+  const claims=[['0 SUGAR','#FF3E9A'],['0 CALORIES','#8B5CF6'],['pH BALANCE','#38BDF8']];
+  function punch(i){
+    const w=document.getElementById('punchWord'), [t,c]=claims[i];
+    w.textContent=t; w.style.color=c; w.style.textShadow=`0 0 44px ${c}`;
+    w.classList.remove('punch'); void w.offsetWidth; w.classList.add('punch');
+  }
+  function boom(){
+    intro.classList.add('boom');
+    for(let i=0;i<44;i++){
+      const b=document.createElement('div'); b.className='cbub';
+      const s=5+Math.random()*16; b.style.width=b.style.height=s+'px';
+      intro.appendChild(b);
+      const a=Math.random()*Math.PI*2, v=140+Math.random()*420;
+      b.animate([{transform:'translate(-50%,-50%) scale(.4)', opacity:1},
+        {transform:`translate(calc(-50% + ${Math.cos(a)*v}px), calc(-50% + ${Math.sin(a)*v-120}px)) scale(1.1)`, opacity:0}],
+        {duration:900+Math.random()*500, easing:'cubic-bezier(.2,.8,.3,1)'}).onfinish=()=>b.remove();
+    }
+  }
+  function finish(){
+    if(finished) return; finished=true;
+    timers.forEach(clearTimeout); unlock();
+    intro.style.pointerEvents='none';
+    intro.classList.add('split');
+    setTimeout(()=>{ intro.classList.add('done');
+      if(typeof burst==='function') burst(innerWidth/2, innerHeight*0.4); }, 700);
+  }
+  // timeline
+  at(()=>intro.classList.add('rippling'), 1400);   // Phase 1 — drop hits, ripples expand
+  at(()=>show(0), 1650);                            // Phase 2 — logo awakening + tagline
+  at(()=>{ show(1); punch(0); }, 3300);             // Phase 3 — claims punch in
+  at(()=>punch(1), 3950);
+  at(()=>punch(2), 4600);
+  at(()=>{ show(-1); boom(); }, 5350);              // Phase 4 — flavor explosion
+  at(finish, 5800);                                 // screen splits, page lands
+  document.getElementById('introSkip').addEventListener('click', finish);
+})();
+
+/* ===== global mouse ===== */
+window.__m = { x:innerWidth/2, y:innerHeight/2 };
+
+/* ===== MOOD ENGINE ===== */
+const moods = [
+  { key:'PINK',   name:'Pink',   flavor:'Grapefruit Twist', c1:'#8B5CF6', c2:'#FF3E9A', c3:'#38BDF8', ink:'#08080C' },
+  { key:'AQUA',   name:'Aqua',   flavor:'Yuzu Splash',      c1:'#3B82F6', c2:'#06B6D4', c3:'#22D3EE', ink:'#04090E' },
+  { key:'GRAPE',  name:'Grape',  flavor:'Berry Rush',       c1:'#7C3AED', c2:'#A855F7', c3:'#EC4899', ink:'#0A0610' },
+  { key:'CITRUS', name:'Citrus', flavor:'Sunny Zest',       c1:'#F59E0B', c2:'#FB7185', c3:'#FACC15', ink:'#0E0A04' },
+  { key:'MINT',   name:'Mint',   flavor:'Cool Breeze',      c1:'#10B981', c2:'#34D399', c3:'#22D3EE', ink:'#04100C' },
+];
+const root = document.documentElement.style;
+let bgHue = '#FF3E9A';
+function applyMood(m){
+  root.setProperty('--c1',m.c1); root.setProperty('--c2',m.c2); root.setProperty('--c3',m.c3);
+  root.setProperty('--accent',m.c2); root.setProperty('--ink',m.ink);
+  document.querySelectorAll('.can-flavor').forEach(e=>e.textContent=m.key);
+  document.getElementById('chipFlavor').textContent = m.flavor;
+  bgHue = m.c2; window.__mood = m;
+}
+window.__mood = moods[0];
+const moodBar = document.getElementById('moodBar');
+moodBar.innerHTML = moods.map((m,i)=>`
+  <button data-hover data-mood="${i}" class="mood ${i===0?'active':''} flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold backdrop-blur"
+    style="border-color:${i===0?m.c2:'rgba(255,255,255,.15)'}; background:${i===0? m.c2+'22':'rgba(255,255,255,.05)'}">
+    <span class="h-3 w-3 rounded-full" style="background:linear-gradient(135deg,${m.c1},${m.c2})"></span>${m.name}</button>`).join('');
+moodBar.querySelectorAll('[data-mood]').forEach(btn=>{
+  btn.addEventListener('click', ()=>{ const m=moods[+btn.dataset.mood]; applyMood(m);
+    burst(innerWidth*0.72, innerHeight*0.42, m.c2);
+    moodBar.querySelectorAll('.mood').forEach(b=>{ b.classList.remove('active'); b.style.borderColor='rgba(255,255,255,.15)'; b.style.background='rgba(255,255,255,.05)'; });
+    btn.classList.add('active'); btn.style.borderColor=m.c2; btn.style.background=m.c2+'22'; });
+});
+
+/* ===== Mood Quiz — "How do you feel today?" ===== */
+(function(){
+  // feeling -> mood index + warm message
+  const quiz = [
+    { emoji:'😩', label:'Stressed',  mood:0, tag:'Breathe out',   title:'MyMuuD PINK', msg:'Rough day? Let the crisp grapefruit fizz melt the tension away. You’ve got this. 💗' },
+    { emoji:'😴', label:'Tired',     mood:3, tag:'Wake up gently', title:'MyMuuD CITRUS', msg:'Running on empty? A bright, sunny zest to lift your energy — no sugar crash, just a clean spark. ☀️' },
+    { emoji:'😊', label:'Happy',     mood:2, tag:'Keep it going',  title:'MyMuuD GRAPE', msg:'Love that for you! Berry Rush keeps the good vibes bubbling all day long. 🫧' },
+    { emoji:'🧘', label:'Chill',     mood:4, tag:'Stay cool',      title:'MyMuuD MINT', msg:'In your calm era. Cool Breeze mint keeps you refreshed and perfectly at ease. 🌿' },
+    { emoji:'🎯', label:'Focused',   mood:1, tag:'Clear mind',     title:'MyMuuD AQUA', msg:'Locked in. Clean, crisp Yuzu Splash for a clear head and a steady flow. 💧' },
+  ];
+  const opts=document.getElementById('quizOptions');
+  const ask=document.getElementById('quizAsk'), res=document.getElementById('quizResult');
+  opts.innerHTML = quiz.map((q,i)=>`
+    <button data-hover data-q="${i}" class="group flex flex-col items-center gap-2 rounded-2xl border border-white/12 bg-white/[0.04] px-3 py-5 transition hover:-translate-y-1 hover:bg-white/10" style="transition:transform .25s var(--ease),background .25s">
+      <span class="text-4xl group-hover:scale-125 transition-transform">${q.emoji}</span>
+      <span class="text-sm font-semibold text-white/80">${q.label}</span>
+    </button>`).join('');
+
+  function activateMood(i){
+    const m = moods[i]; applyMood(m);
+    moodBar.querySelectorAll('.mood').forEach((b,j)=>{ b.classList.toggle('active',j===i);
+      b.style.borderColor = j===i? m.c2 : 'rgba(255,255,255,.15)';
+      b.style.background  = j===i? m.c2+'22' : 'rgba(255,255,255,.05)'; });
+  }
+  opts.querySelectorAll('[data-q]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const q = quiz[+btn.dataset.q];
+      activateMood(q.mood);
+      document.getElementById('resEmoji').textContent = q.emoji;
+      document.getElementById('resTag').textContent = q.tag;
+      document.getElementById('resTitle').textContent = q.title;
+      document.getElementById('resMsg').textContent = q.msg;
+      ask.classList.add('hidden'); res.classList.remove('hidden');
+      lucide.createIcons();
+      const r = res.getBoundingClientRect();
+      burst(r.left + r.width/2, r.top + Math.min(r.height*0.4, innerHeight*0.4), moods[q.mood].c2);
+      if(typeof fizzSound==='function') fizzSound();
+    });
+  });
+  document.getElementById('quizRetry').addEventListener('click', ()=>{
+    res.classList.add('hidden'); ask.classList.remove('hidden');
+  });
+})();
+
+/* ===== Build 3D cylinder can ===== */
+(function(){
+  const can3d = document.getElementById('can3d');
+  if(!can3d) return;   // retired — replaced by the WebGL can below
+  const N = 28, R = 105, H = 430;                 // more panels = rounder silhouette
+  const bodyTop = 38, bodyH = 366;                 // printed body band
+  const neckH = 30, topR = 88;                     // tapered bare-metal neck
+  const chimeH = 16, botR = 93;                    // tucked-in bottom chime
+  const apothem = R*Math.cos(Math.PI/N);
+  const segW = 2*R*Math.tan(Math.PI/N) + 1.2;
+  const neckTilt = Math.atan2(R-topR, neckH)*180/Math.PI;   // ≈29°
+  const chimeTilt = Math.atan2(R-botR, chimeH)*180/Math.PI; // ≈37°
+  const neckClip = (1-topR/R)/2*100, chimeClip = (1-botR/R)/2*100;
+  const metal  = 'linear-gradient(180deg,#f4f4f8,#d3d3dc 35%,#b8b8c2 65%,#8b8b93)';
+  const metalD = 'linear-gradient(180deg,#b9b9c3,#93939c 50%,#6f6f77)';
+  const bandBG =
+    'repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0 1px, rgba(0,0,0,0) 1px 3px),' + // brushed aluminum
+    'linear-gradient(90deg, rgba(0,0,0,.13), rgba(0,0,0,0) 30%, rgba(0,0,0,0) 70%, rgba(0,0,0,.13)),' +
+    'linear-gradient(180deg,#ffffff 0%,#ffffff 44%, color-mix(in srgb,var(--accent) 50%,#fff) 47%, var(--accent) 53%, var(--accent) 100%)';
+  let html = '';
+  for(let i=0;i<N;i++){
+    const deg = i*(360/N);
+    // printed body
+    html += `<div class="seg" style="top:${bodyTop}px; height:${bodyH}px; width:${segW}px; margin-left:${-segW/2}px; transform:rotateY(${deg}deg) translateZ(${apothem}px); background:${bandBG};"></div>`;
+    // tapered neck (cone frustum, tips inward)
+    html += `<div class="seg" style="top:${bodyTop-neckH}px; height:${neckH+1}px; width:${segW}px; margin-left:${-segW/2}px; transform-origin:50% 100%; transform:rotateY(${deg}deg) translateZ(${apothem}px) rotateX(${neckTilt}deg); background:${metal}; clip-path:polygon(${neckClip}% 0, ${100-neckClip}% 0, 100% 100%, 0 100%);"></div>`;
+    // bottom chime (tucks inward)
+    html += `<div class="seg" style="top:${bodyTop+bodyH-1}px; height:${chimeH+1}px; width:${segW}px; margin-left:${-segW/2}px; transform-origin:50% 0%; transform:rotateY(${deg}deg) translateZ(${apothem}px) rotateX(${-chimeTilt}deg); background:${metalD}; clip-path:polygon(0 0, 100% 0, ${100-chimeClip}% 100%, ${chimeClip}% 100%);"></div>`;
+  }
+  // front label (rotates with can)
+  html += `<div class="can-label" style="transform:translateZ(${apothem+0.5}px);">
+    <div class="absolute inset-0 flex flex-col items-center pt-8 px-2 text-center">
+      <svg width="50" height="50" viewBox="0 0 100 100" fill="none"><path d="M20 78 V38 C20 22 42 22 50 40 C58 22 80 22 80 38 V78" stroke="url(#mg)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="mt-1 font-display font-extrabold text-lg tracking-tight text-black">My<span class="grad-text">MuuD</span></div>
+      <div class="text-[9px] tracking-[0.3em] text-black/60 -mt-0.5">มาย มู้ด</div>
+      <div class="text-[8px] tracking-[0.35em] text-black/50 mt-1">DRINK YOUR MOOD</div>
+      <div class="mt-auto mb-6 text-white">
+        <i data-lucide="droplet" class="w-5 h-5 mx-auto mb-1"></i>
+        <div class="font-display font-bold tracking-[0.3em] text-sm can-flavor">PINK</div>
+        <div class="mt-1 text-[7px] tracking-widest opacity-90">0 SUGAR · CALORIE 0 · pH BALANCE</div>
+        <div class="mt-1 text-[10px] font-semibold opacity-90">330 mL</div>
+      </div></div></div>`;
+  // back label (nutrition facts — visible when spun 180°)
+  html += `<div class="can-label" style="transform:rotateY(180deg) translateZ(${apothem+0.5}px);">
+    <div class="absolute inset-0 flex flex-col items-center pt-5 px-2.5">
+      <div class="w-full rounded-md bg-white border border-black/70 p-1.5 text-left text-black" style="font-size:6.5px;line-height:1.35">
+        <div class="text-center font-extrabold border-b border-black pb-0.5 mb-0.5" style="font-size:9px">ข้อมูลโภชนาการ</div>
+        <div class="text-center text-black/70" style="font-size:5.6px">0 servings per container · Serving size 1 can (330 mL)</div>
+        <div class="flex justify-between items-end font-extrabold border-t-2 border-b-2 border-black mt-1 py-0.5" style="font-size:9px"><span>Calories</span><span style="font-size:11px">0</span></div>
+        <div class="text-right font-bold border-b border-black/50 pb-0.5" style="font-size:5.2px">% Daily Value*</div>
+        ${[['Total Fat 0g','0%'],['Sodium 0mg','0%'],['Total Carbohydrate 0g','0%'],['&nbsp;&nbsp;Sugars 0g','0%'],['Protein 0g','0%'],['pH Balancing Mineral','✓']].map(r=>`
+          <div class="flex justify-between border-b border-black/30 py-px"><span>${r[0]}</span><span class="font-bold">${r[1]}</span></div>`).join('')}
+        <div class="pt-0.5 text-black/70" style="font-size:4.8px">*Percent Daily Values are based on a 2,000 calorie diet.</div>
+      </div>
+      <div class="mt-auto mb-3 w-full text-left text-white">
+        <div class="font-extrabold" style="font-size:7px">INGREDIENTS:</div>
+        <div style="font-size:6px;line-height:1.45">Carbonated Water, Citric Acid, Natural Grapefruit Flavor, pH Balance Mineral Blend, Preservative (Potassium Sorbate).</div>
+        <div class="mt-1 flex items-center gap-1" style="font-size:5.8px">
+          <span class="inline-block rounded-[1px]" style="width:15px;height:10px;background:linear-gradient(180deg,#ED1C24 0 16.6%,#fff 16.6% 33.3%,#241D4F 33.3% 66.6%,#fff 66.6% 83.3%,#ED1C24 83.3% 100%)"></span>
+          <span class="font-extrabold tracking-wider">PRODUCT OF THAILAND</span>
+        </div>
+        <div class="mt-1.5 flex items-end gap-2">
+          <div class="bg-white rounded-sm p-0.5 shrink-0">
+            <div style="width:62px;height:24px;background:repeating-linear-gradient(90deg,#000 0 1px,#fff 1px 2px,#000 2px 4px,#fff 4px 5px,#000 5px 6px,#fff 6px 8px,#000 8px 9px,#fff 9px 11px)"></div>
+            <div class="text-black text-center font-mono" style="font-size:5px;letter-spacing:.12em">8 10853 41352</div>
+          </div>
+          <div style="font-size:5.4px;line-height:1.5">
+            <div class="font-bold" style="font-size:7px">♻ 100% recyclable</div>
+            <div class="font-extrabold" style="font-size:6.4px">Net Content: 330 mL</div>
+          </div>
+        </div>
+      </div>
+    </div></div>`;
+  // top lid — sized to the tapered neck, with seam ring, recessed panel and pull tab
+  const lidD = topR*1.96, lidY = -(H/2 - 12);
+  html += `<div class="can-lid" style="width:${lidD}px;height:${lidD}px;margin-left:${-lidD/2}px;
+    transform:translateY(${lidY}px) rotateX(90deg);">
+    <div style="position:absolute;inset:0;border-radius:50%;border:3px solid rgba(255,255,255,.6);box-shadow:inset 0 0 4px rgba(0,0,0,.35)"></div>
+    <div style="position:absolute;inset:7%;border-radius:50%;background:radial-gradient(circle at 42% 36%, #e9e9ef, #c6c6cf 55%, #94949c);box-shadow:inset 0 0 8px rgba(0,0,0,.4)"></div>
+    <div style="position:absolute;inset:15%;border-radius:50%;background:radial-gradient(circle at 45% 40%, #d9d9e0, #adadb6 60%, #82828a);box-shadow:inset 0 3px 8px rgba(0,0,0,.38)"></div>
+    <div style="position:absolute;left:24%;top:44%;width:52%;height:16%;border-radius:45%/70%;background:linear-gradient(180deg,#dcdce3,#9d9da5);box-shadow:0 2px 3px rgba(0,0,0,.45),inset 0 1px 1px rgba(255,255,255,.7)"></div>
+    <div style="position:absolute;left:31%;top:47%;width:22%;height:10%;border-radius:50%;background:#6e6e76;box-shadow:inset 0 1px 3px rgba(0,0,0,.6)"></div>
+    <div style="position:absolute;left:46%;top:41%;width:8%;height:8%;border-radius:50%;background:radial-gradient(circle,#83838b,#5c5c63);box-shadow:inset 0 1px 2px rgba(0,0,0,.6)"></div>
+    <div style="position:absolute;left:34%;top:26%;width:32%;height:14%;border-radius:50%;background:rgba(0,0,0,.14);filter:blur(1px)"></div>
+  </div>`;
+  can3d.innerHTML = html;
+  lucide.createIcons();
+
+  // condensation — chilled-can droplets on the visible face
+  const scene = document.querySelector('.can-scene');
+  const drops = document.createElement('div'); drops.className='can-drops';
+  let dHtml='';
+  for(let i=0;i<36;i++){
+    const s=1.6+Math.random()*6, run=Math.random()<0.16;
+    dHtml+=`<span ${run?'class="run"':''} style="left:${4+Math.random()*92}%;top:${3+Math.random()*80}%;width:${s.toFixed(1)}px;height:${(run? s*(2+Math.random()*1.6) : s*(0.9+Math.random()*0.25)).toFixed(1)}px;opacity:${(0.5+Math.random()*0.45).toFixed(2)};${run?`animation-duration:${(7+Math.random()*9).toFixed(1)}s;animation-delay:${(-Math.random()*8).toFixed(1)}s;`:''}"></span>`;
+  }
+  drops.innerHTML=dHtml; scene.appendChild(drops);
+
+  /* spin physics — drag momentum + hover sway + idle showroom turntable + scroll-spin */
+  const stage = document.getElementById('canStage');
+  const noMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let base=0, vel=0, hover=0, hoverTgt=0, dragging=false, sx=0, moved=0, lastAct=performance.now();
+  function loop(){
+    const now=performance.now();
+    if(!dragging){
+      base+=vel; vel*=0.95; if(Math.abs(vel)<0.01) vel=0;
+      if(!noMotion && now-lastAct>3500 && Math.abs(vel)<0.05) base+=0.12;   // showroom turntable
+    }
+    hover+=(hoverTgt-hover)*0.08;
+    can3d.style.transform = `rotateY(${base+hover}deg)`;
+    requestAnimationFrame(loop);
+  } loop();
+  stage.addEventListener('mousemove', e=>{ if(dragging) return; const r=stage.getBoundingClientRect();
+    hoverTgt=((e.clientX-r.left)/r.width-0.5)*30; lastAct=performance.now(); });
+  stage.addEventListener('mouseleave', ()=>{ hoverTgt=0; });
+  let lastSY=scrollY;
+  addEventListener('scroll', ()=>{ const d=scrollY-lastSY; lastSY=scrollY;
+    if(!dragging && !noMotion) base+=d*0.12; }, {passive:true});      // can rolls as you scroll
+  const down=(x)=>{ dragging=true; sx=x; moved=0; vel=0; lastAct=performance.now(); };
+  const move=(x)=>{ if(!dragging)return; const dx=x-sx; moved+=Math.abs(dx); base+=dx*0.6; vel=dx*0.6; sx=x; lastAct=performance.now(); };
+  const up=()=>{ if(!dragging)return; dragging=false; lastAct=performance.now();
+    if(moved<6){ const r=document.querySelector('.can-scene').getBoundingClientRect();
+      burst(r.left+r.width/2, r.top+r.height*0.28); fizzSound();
+      can3d.animate([{filter:'brightness(1)'},{filter:'brightness(1.5)'},{filter:'brightness(1)'}],{duration:420});
+      vel += 8; } };
+  stage.addEventListener('mousedown', e=>{ e.preventDefault(); down(e.clientX); });
+  addEventListener('mousemove', e=>move(e.clientX));
+  addEventListener('mouseup', up);
+  stage.addEventListener('touchstart', e=>down(e.touches[0].clientX), {passive:true});
+  addEventListener('touchmove', e=>{ if(dragging)move(e.touches[0].clientX); }, {passive:true});
+  addEventListener('touchend', up);
+})();
+
+/* ===== Feature cards ===== */
+const features = [
+  { icon:'candy-off',   t:'Zero Sugar',    d:'All the sparkling flavor, none of the sugar crash. Sweetened to perfection, guilt-free.',
+    more:'MyMuuD is sweetened with a balanced stevia blend — no sucrose, no syrup, no crash. That means all the treat, none of the guilt, and a flavor that stays crisp instead of cloying. Perfect anytime: morning desk sips, post-workout, or 2 AM playlist sessions.' },
+  { icon:'flame',       t:'0 Calorie',     d:'Sip freely all day long. A refreshing lift that keeps your goals perfectly on track.',
+    more:'A whole can, literally zero calories. Whether you count macros or just vibes, MyMuuD fits your day like it was never there — except for the mood lift. Swap it in for any sugary soda and your future self says thank you.' },
+  { icon:'droplets',    t:'pH Balanced',   d:'A clean, balanced pH for a smooth, crisp finish that feels as good as it tastes.',
+    more:'Most sodas sit at a harsh pH of 2–3. MyMuuD is engineered to a gentle, near-neutral balance — kinder to your teeth and stomach, with a rounder, smoother mouthfeel. Refreshment that respects your body.' },
+  { icon:'sparkles',    t:'Ultra Fizzy',   d:'Fine, lively carbonation that dances on your tongue — refreshment you can feel.',
+    more:'We micro-carbonate at low temperature for smaller, denser bubbles. The result: a silky, champagne-like fizz that lasts to the final sip instead of going flat halfway through the can.' },
+  { icon:'leaf',        t:'Natural Twist', d:'Bright, real-fruit flavor profiles crafted for a youthful, energetic vibe.',
+    more:'Every mood is built on real fruit character — pink grapefruit, yuzu, berry, citrus, cool mint — layered by flavorists, not just "flavoring". Nothing artificial-tasting, nothing heavy. Just bright, honest refreshment.' },
+  { icon:'heart-pulse', t:'Mood Boost',    d:'Every can is designed to reset your mind and lift your mood, one crisp sip at a time.',
+    more:'The cold snap, the fizz, the scent, the color — every sensory detail of MyMuuD is tuned to trigger a tiny reset moment. It\'s not just a drink; it\'s a 330 mL pause button for your day. Drink your mood. 💗' },
+];
+document.getElementById('featureGrid').innerHTML = features.map((f,i)=>`
+  <div class="reveal tilt-card relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-md p-7" data-tilt data-hover data-feature="${i}">
+    <div class="card-sheen"></div>
+    <div class="ti relative">
+      <div class="grid place-items-center w-14 h-14 rounded-2xl mb-5" style="background:color-mix(in srgb,var(--accent) 14%,transparent); border:1px solid color-mix(in srgb,var(--accent) 40%,transparent)">
+        <i data-lucide="${f.icon}" class="w-7 h-7" style="color:var(--accent)"></i></div>
+      <h3 class="font-display font-bold text-xl">${f.t}</h3>
+      <p class="mt-2 text-white/55 text-sm leading-relaxed">${f.d}</p>
+      <div class="mt-5 flex items-center gap-1.5 text-sm font-semibold" style="color:var(--accent)">Learn more <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
+    </div></div>`).join('');
+lucide.createIcons();
+
+/* ===== Marquee ===== */
+const words = ['DRINK YOUR MOOD','0 SUGAR','CALORIE 0','pH 7.0 BALANCED','MyMuuD','330 mL','ZERO CRASH','5 MOODS','REFRESH YOUR MIND','มาย มู้ด'];
+const line = words.map(w=>`<span>${w}</span><span style="color:var(--accent)">✦</span>`).join('');
+document.getElementById('marquee').innerHTML = line + line;
+
+/* ===== Progress ===== */
+const prog=document.getElementById('progress');
+addEventListener('scroll',()=>{ const h=document.documentElement.scrollHeight-innerHeight; prog.style.width=(scrollY/h*100)+'%'; }, {passive:true});
+
+/* ===== Reveal + count ===== */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target);}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+const cio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){countUp(e.target);cio.unobserve(e.target);}}),{threshold:.6});
+document.querySelectorAll('.count').forEach(el=>cio.observe(el));
+function countUp(el){ const to=+el.dataset.to,dec=+(el.dataset.dec||0); let s=null,dur=1400;
+  function step(t){ if(!s)s=t; const p=Math.min((t-s)/dur,1),e=1-Math.pow(1-p,3);
+    el.textContent=(to*e).toFixed(dec); if(p<1)requestAnimationFrame(step); else el.textContent=to.toFixed(dec);} requestAnimationFrame(step); }
+
+/* ===== Scramble ===== */
+document.querySelectorAll('.scramble').forEach(el=>{ const real=el.dataset.text,chars='!<>-_\\/[]{}—=+*^?#01';
+  el.addEventListener('mouseenter',()=>{ let f=0; clearInterval(el._iv);
+    el._iv=setInterval(()=>{ el.textContent=real.split('').map((c,i)=> i<f?c:(c===' '?' ':chars[(Math.random()*chars.length)|0])).join('');
+      f+=1/2; if(f>=real.length){clearInterval(el._iv); el.textContent=real;} },30); }); });
+
+/* ===== Cursor: goo + dot + spotlight + fizz (buttery, frame-rate independent) ===== */
+(function(){
+  const fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
+  const spot=document.getElementById('spot');
+  const dot=document.getElementById('dot');
+  const blobs=[document.getElementById('g0'),document.getElementById('g1'),document.getElementById('g2')];
+  if(!fine){ document.body.classList.remove('cc'); document.querySelector('.goo-wrap').style.display='none'; dot.style.display='none'; }
+  const sizes=[34,24,16]; blobs.forEach((b,i)=>b.style.width=b.style.height=sizes[i]+'px');
+
+  let mx=innerWidth/2, my=innerHeight/2;                 // raw target
+  let dx=mx, dy=my;                                      // dot (eased, tight)
+  let sx=mx, sy=my;                                      // spotlight (eased, loose)
+  const p=blobs.map(()=>({x:mx,y:my}));                  // goo chain
+  let lastFizz=0, lx=mx, ly=my;
+
+  addEventListener('mousemove',e=>{ mx=e.clientX; my=e.clientY; window.__m.x=mx; window.__m.y=my;
+    const now=performance.now(), d=Math.hypot(mx-lx,my-ly);
+    if(fine && now-lastFizz>42 && d>5){ fizz(mx,my); lastFizz=now; lx=mx; ly=my; } }, {passive:true});
+
+  // delegated hover growth — works for dynamically added [data-hover] elements too
+  if(fine){
+    const grow=on=>blobs.forEach((b,i)=>b.style.width=b.style.height=(sizes[i]*(on?1.6:1))+'px');
+    document.addEventListener('mouseover',e=>{ if(e.target.closest('[data-hover]')) grow(true); });
+    document.addEventListener('mouseout', e=>{ if(e.target.closest('[data-hover]') && !(e.relatedTarget&&e.relatedTarget.closest('[data-hover]'))) grow(false); });
+  }
+
+  // one time-based loop drives everything — identical feel at 60/120/144 Hz
+  const k=(base,dt)=>1-Math.pow(1-base,dt*60);           // per-frame factor from per-60fps base
+  let prev=performance.now();
+  function render(now){
+    const dt=Math.min((now-prev)/1000, 0.05); prev=now;
+    if(fine){
+      dx+=(mx-dx)*k(0.55,dt); dy+=(my-dy)*k(0.55,dt);    // dot: tight but silky
+      dot.style.transform=`translate3d(${dx}px,${dy}px,0) translate(-50%,-50%)`;
+      let tx=dx, ty=dy;
+      p.forEach((pt,i)=>{ const f=k(0.3-i*0.07,dt);
+        pt.x+=(tx-pt.x)*f; pt.y+=(ty-pt.y)*f;
+        blobs[i].style.transform=`translate3d(${pt.x}px,${pt.y}px,0) translate(-50%,-50%)`; tx=pt.x; ty=pt.y; });
+    }
+    sx+=(mx-sx)*k(0.14,dt); sy+=(my-sy)*k(0.14,dt);      // spotlight drifts behind (GPU transform)
+    spot.style.transform=`translate3d(${sx.toFixed(1)}px,${sy.toFixed(1)}px,0)`;
+    requestAnimationFrame(render);
+  }
+  requestAnimationFrame(render);
+})();
+
+const palette=()=>{ const s=getComputedStyle(document.documentElement);
+  return [s.getPropertyValue('--c1'),s.getPropertyValue('--c2'),s.getPropertyValue('--c3'),'#ffffff'].map(x=>x.trim()); };
+function fizz(x,y){ const el=document.createElement('div'); el.className='fizz';
+  const s=4+Math.random()*8,col=palette()[(Math.random()*4)|0];
+  el.style.width=el.style.height=s+'px'; el.style.left=(x-s/2)+'px'; el.style.top=(y-s/2)+'px';
+  el.style.setProperty('--ex',(Math.random()*40-20)+'px');
+  el.style.background=`radial-gradient(circle at 30% 30%, #fff, ${col} 60%, transparent 85%)`; el.style.boxShadow=`0 0 8px ${col}`;
+  const dur=700+Math.random()*700; el.style.animation=`fizzUp ${dur}ms cubic-bezier(.4,0,.2,1) forwards`;
+  document.body.appendChild(el); setTimeout(()=>el.remove(),dur+50); }
+
+/* ===== Sound + burst ===== */
+let AC;
+function fizzSound(){ try{ AC=AC||new (window.AudioContext||window.webkitAudioContext)();
+  const dur=0.7,buf=AC.createBuffer(1,AC.sampleRate*dur,AC.sampleRate),d=buf.getChannelData(0);
+  for(let i=0;i<d.length;i++){ const t=i/d.length; d[i]=(Math.random()*2-1)*Math.pow(1-t,2.2)*0.5; }
+  const src=AC.createBufferSource(); src.buffer=buf; const hp=AC.createBiquadFilter(); hp.type='highpass'; hp.frequency.value=1400;
+  const g=AC.createGain(); g.gain.value=0.6; src.connect(hp).connect(g).connect(AC.destination); src.start(); }catch(e){} }
+/* subtle UI sounds — only while music is on, so silence stays the default */
+function blip(freq=900, dur=0.07, vol=0.04, type='sine'){
+  if(typeof Music==='undefined' || !Music.isPlaying()) return;
+  try{ AC=AC||new (window.AudioContext||window.webkitAudioContext)();
+    const o=AC.createOscillator(), g=AC.createGain(); o.type=type; o.frequency.value=freq;
+    const t=AC.currentTime; g.gain.setValueAtTime(vol,t); g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+    o.connect(g); g.connect(AC.destination); o.start(t); o.stop(t+dur+0.02); }catch(e){}
+}
+function chime(){ blip(660,.12,.05); setTimeout(()=>blip(990,.18,.05),90); }
+document.addEventListener('click', e=>{ if(e.target.closest('[data-hover]')) blip(520,.06,.035,'triangle'); });
+function burst(x,y,color){ const cols=color?[color,'#fff']:palette();
+  for(let i=0;i<30;i++){ const el=document.createElement('div'); el.className='pop';
+    const s=5+Math.random()*10,c=cols[(Math.random()*cols.length)|0];
+    el.style.width=el.style.height=s+'px'; el.style.left=x+'px'; el.style.top=y+'px';
+    el.style.background=`radial-gradient(circle at 30% 30%, #fff, ${c} 65%, transparent)`; el.style.boxShadow=`0 0 10px ${c}`;
+    document.body.appendChild(el); const ang=Math.random()*Math.PI*2,vel=80+Math.random()*190;
+    const dx=Math.cos(ang)*vel,dy=Math.sin(ang)*vel-60;
+    el.animate([{transform:'translate(-50%,-50%) scale(1)',opacity:1},{transform:`translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px)) scale(0)`,opacity:0}],
+      {duration:800+Math.random()*500,easing:'cubic-bezier(.2,.8,.2,1)'}).onfinish=()=>el.remove(); } }
+
+/* ===== Tilt + magnetic ===== */
+document.querySelectorAll('[data-tilt]').forEach(card=>{ let raf; const M=10;
+  card.addEventListener('mousemove',e=>{ const r=card.getBoundingClientRect();
+    const px=(e.clientX-r.left)/r.width-0.5,py=(e.clientY-r.top)/r.height-0.5;
+    card.style.setProperty('--mx',(e.clientX-r.left)+'px'); card.style.setProperty('--my',(e.clientY-r.top)+'px');
+    cancelAnimationFrame(raf); raf=requestAnimationFrame(()=>{ card.style.transform=`perspective(800px) rotateY(${px*M}deg) rotateX(${-py*M}deg) translateY(-6px)`; }); });
+  card.addEventListener('mouseleave',()=>{ cancelAnimationFrame(raf); card.style.transform=''; }); });
+document.querySelectorAll('[data-magnetic]').forEach(el=>{
+  el.addEventListener('mousemove',e=>{ const r=el.getBoundingClientRect();
+    el.style.transform=`translate(${(e.clientX-r.left-r.width/2)*0.3}px,${(e.clientY-r.top-r.height/2)*0.4}px)`; });
+  el.addEventListener('mouseleave',()=>el.style.transform=''); });
+
+/* ===== Background canvas: rising bubbles that flee the cursor ===== */
+let raveSpeed = 1;
+(function(){
+  const cv=document.getElementById('bgCanvas'),ctx=cv.getContext('2d'); let W,H,DPR;
+  const N=innerWidth<640?26:50; let parts=[];
+  function resize(){ DPR=Math.min(devicePixelRatio||1,2); W=cv.width=innerWidth*DPR; H=cv.height=innerHeight*DPR; cv.style.width=innerWidth+'px'; cv.style.height=innerHeight+'px'; }
+  resize(); addEventListener('resize',resize);
+  const mk=(y)=>({x:Math.random()*W,y:y!=null?y:H+Math.random()*H,r:(3+Math.random()*20)*DPR,sp:(0.3+Math.random()*0.9)*DPR,drift:(Math.random()*0.5-0.25)*DPR,ph:Math.random()*Math.PI*2,a:0.05+Math.random()*0.28,vx:0,vy:0});
+  for(let i=0;i<N;i++) parts.push(mk(Math.random()*H));
+  const hex=h=>{h=h.replace('#','');return[parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)];};
+  function draw(){ ctx.clearRect(0,0,W,H);
+    const hx=bgHue.trim(); const [r,g,b]=hex(hx.length===7?hx:'#FF3E9A');
+    const mxp=window.__m.x*DPR, myp=window.__m.y*DPR, RAD=120*DPR;
+    parts.forEach(p=>{
+      p.y-=p.sp*raveSpeed; p.ph+=0.01; p.x+=p.drift+Math.sin(p.ph)*0.3*DPR;
+      // repel from cursor
+      const dx=p.x-mxp, dy=p.y-myp, dist=Math.hypot(dx,dy);
+      if(dist<RAD && dist>0.1){ const f=(1-dist/RAD)*2.4*DPR; p.vx+=dx/dist*f; p.vy+=dy/dist*f; }
+      p.x+=p.vx; p.y+=p.vy; p.vx*=0.9; p.vy*=0.9;
+      if(p.y<-p.r){ Object.assign(p,mk(H+p.r)); }
+      const grd=ctx.createRadialGradient(p.x-p.r*0.3,p.y-p.r*0.3,p.r*0.1,p.x,p.y,p.r);
+      grd.addColorStop(0,`rgba(255,255,255,${p.a*0.9})`); grd.addColorStop(0.5,`rgba(${r},${g},${b},${p.a*0.5})`); grd.addColorStop(1,`rgba(${r},${g},${b},0)`);
+      ctx.fillStyle=grd; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();
+      ctx.strokeStyle=`rgba(255,255,255,${p.a*0.4})`; ctx.lineWidth=1*DPR; ctx.stroke();
+    });
+    requestAnimationFrame(draw);
+  } requestAnimationFrame(draw);
+})();
+
+/* ===== Nav shadow ===== */
+addEventListener('scroll',()=>{ document.getElementById('navPill').classList.toggle('shadow-2xl',scrollY>20); }, {passive:true});
+
+/* ===== RAVE MODE easter egg (Konami) ===== */
+(function(){
+  const seq=['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+  let idx=0, on=false, hue=0, iv=null;
+  addEventListener('keydown',e=>{
+    const k=e.key.length===1?e.key.toLowerCase():e.key;
+    idx = (k===seq[idx]) ? idx+1 : (k===seq[0]?1:0);
+    if(idx===seq.length){ idx=0; toggleRave(); }
+  });
+  function toggleRave(){
+    on=!on; const t=document.getElementById('toast');
+    if(on){
+      document.body.classList.add('rave'); raveSpeed=3;
+      t.textContent='✦ RAVE MODE ✦'; t.classList.add('show');
+      burst(innerWidth/2, innerHeight/2); fizzSound();
+      iv=setInterval(()=>{ hue=(hue+12)%360;
+        const c2=`hsl(${hue} 90% 60%)`, c1=`hsl(${(hue+60)%360} 90% 62%)`, c3=`hsl(${(hue+300)%360} 90% 62%)`;
+        root.setProperty('--c1',c1); root.setProperty('--c2',c2); root.setProperty('--c3',c3); root.setProperty('--accent',c2);
+        bgHue = hslToHex(hue,90,60);
+      },110);
+      setTimeout(()=>t.classList.remove('show'),2200);
+    }else{
+      document.body.classList.remove('rave'); raveSpeed=1; clearInterval(iv);
+      applyMood(moods[0]); moodBar.querySelectorAll('.mood').forEach((b,i)=>{ b.classList.toggle('active',i===0);
+        b.style.borderColor=i===0?moods[0].c2:'rgba(255,255,255,.15)'; b.style.background=i===0?moods[0].c2+'22':'rgba(255,255,255,.05)'; });
+      t.textContent='mood restored'; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1400);
+    }
+  }
+  function hslToHex(h,s,l){ s/=100; l/=100; const k=n=>(n+h/30)%12; const a=s*Math.min(l,1-l);
+    const f=n=>{ const c=l-a*Math.max(-1,Math.min(k(n)-3,Math.min(9-k(n),1))); return Math.round(255*c).toString(16).padStart(2,'0'); };
+    return `#${f(0)}${f(8)}${f(4)}`; }
+})();
+
+/* ===== Little lo-fi song (WebAudio, self-contained melody + beat) ===== */
+const Music = (function(){
+  let ctx, master, lp, reverb, noiseBuf, playing=false, barTimer, bar=0;
+  const bpm=74, beat=60/bpm;
+  const mf = m => 440*Math.pow(2,(m-69)/12);           // midi -> Hz
+  // 4-bar loop:  Am – F – C – G  (warm, relaxing).  chord / bass / melody[{step,note}]
+  const song = [
+    { chord:[57,60,64], bass:45, mel:[{s:0,n:69},{s:1.5,n:72},{s:3,n:76}] }, // Am
+    { chord:[53,57,60], bass:41, mel:[{s:0,n:72},{s:2,n:69},{s:3.5,n:67}] }, // F
+    { chord:[60,64,67], bass:48, mel:[{s:0,n:67},{s:1.5,n:72},{s:2.5,n:74},{s:3,n:76}] }, // C
+    { chord:[55,59,62], bass:43, mel:[{s:0,n:74},{s:2,n:67},{s:3,n:71}] }, // G
+  ];
+
+  function makeReverb(sec=3, decay=2.4){
+    const rate=ctx.sampleRate, len=rate*sec, buf=ctx.createBuffer(2,len,rate);
+    for(let ch=0;ch<2;ch++){ const d=buf.getChannelData(ch);
+      for(let i=0;i<len;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/len,decay); }
+    const c=ctx.createConvolver(); c.buffer=buf; return c;
+  }
+  function lead(note, t, dur=1.4){                        // soft bell melody
+    const f=mf(note), o=ctx.createOscillator(), o2=ctx.createOscillator(), g=ctx.createGain(), pan=ctx.createStereoPanner();
+    o.type='sine'; o2.type='sine'; o.frequency.value=f; o2.frequency.value=f*2.001;
+    pan.pan.value=Math.random()*0.6-0.3;
+    g.gain.setValueAtTime(0.0001,t);
+    g.gain.exponentialRampToValueAtTime(0.18,t+0.03);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+dur+1.4);
+    o.connect(g); o2.connect(g); g.connect(pan); pan.connect(lp); pan.connect(reverb);
+    o.start(t); o2.start(t); o.stop(t+dur+2); o2.stop(t+dur+2);
+  }
+  function padChord(notes, t, dur){
+    notes.forEach(n=>{ const o=ctx.createOscillator(), g=ctx.createGain();
+      o.type='sawtooth'; o.frequency.value=mf(n);
+      g.gain.setValueAtTime(0.0001,t);
+      g.gain.exponentialRampToValueAtTime(0.04,t+0.8);
+      g.gain.setValueAtTime(0.04,t+dur-0.8);
+      g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+      o.connect(g); g.connect(lp); g.connect(reverb); o.start(t); o.stop(t+dur+0.1); });
+  }
+  function bass(note, t){ const o=ctx.createOscillator(), g=ctx.createGain();
+    o.type='triangle'; o.frequency.value=mf(note);
+    g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.12,t+0.03);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+beat*1.6);
+    o.connect(g); g.connect(lp); o.start(t); o.stop(t+beat*2); }
+  function kick(t){ const o=ctx.createOscillator(), g=ctx.createGain();
+    o.frequency.setValueAtTime(130,t); o.frequency.exponentialRampToValueAtTime(48,t+0.12);
+    g.gain.setValueAtTime(0.35,t); g.gain.exponentialRampToValueAtTime(0.0001,t+0.22);
+    o.connect(g); g.connect(master); o.start(t); o.stop(t+0.25); }
+  function hat(t){ const s=ctx.createBufferSource(); s.buffer=noiseBuf;
+    const hp=ctx.createBiquadFilter(); hp.type='highpass'; hp.frequency.value=7000;
+    const g=ctx.createGain(); g.gain.setValueAtTime(0.06,t); g.gain.exponentialRampToValueAtTime(0.0001,t+0.05);
+    s.connect(hp).connect(g).connect(master); s.start(t); s.stop(t+0.06); }
+
+  function playBar(){
+    if(!playing) return;
+    const t0=ctx.currentTime+0.06, b=song[bar%4];
+    padChord(b.chord.map(n=>n+12), t0, beat*4);
+    bass(b.bass,t0); bass(b.bass,t0+beat*2);
+    for(let i=0;i<4;i++){ if(i%2===0) kick(t0+i*beat); hat(t0+i*beat+beat/2); }
+    b.mel.forEach(m=>{ if(Math.random()>0.12) lead(m.n, t0+m.s*beat); }); // tiny variation
+    bar++;
+  }
+  function build(){
+    ctx=new (window.AudioContext||window.webkitAudioContext)();
+    master=ctx.createGain(); master.gain.value=0.0001;
+    lp=ctx.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=2400; lp.Q.value=0.4;
+    reverb=makeReverb(); const wet=ctx.createGain(); wet.gain.value=0.35;
+    reverb.connect(wet); wet.connect(master); lp.connect(master); master.connect(ctx.destination);
+    const lfo=ctx.createOscillator(), lg=ctx.createGain(); lfo.frequency.value=0.06; lg.gain.value=500;
+    lfo.connect(lg); lg.connect(lp.frequency); lfo.start();
+    noiseBuf=ctx.createBuffer(1,ctx.sampleRate*0.1,ctx.sampleRate);
+    const nd=noiseBuf.getChannelData(0); for(let i=0;i<nd.length;i++) nd[i]=Math.random()*2-1;
+  }
+  function start(){
+    if(!ctx) build(); if(ctx.state==='suspended') ctx.resume();
+    playing=true; bar=0;
+    master.gain.cancelScheduledValues(ctx.currentTime);
+    master.gain.setValueAtTime(Math.max(master.gain.value,0.0001),ctx.currentTime);
+    master.gain.exponentialRampToValueAtTime(0.5,ctx.currentTime+2);
+    playBar(); barTimer=setInterval(playBar, beat*4*1000);
+  }
+  function stop(){ playing=false; clearInterval(barTimer);
+    if(master){ master.gain.cancelScheduledValues(ctx.currentTime);
+      master.gain.setValueAtTime(master.gain.value,ctx.currentTime);
+      master.gain.exponentialRampToValueAtTime(0.0001,ctx.currentTime+1.2); } }
+  return { toggle(){ playing?stop():start(); return playing; }, isPlaying(){ return playing; } };
+})();
+
+(function(){
+  const btn=document.getElementById('musicBtn'), label=document.getElementById('musicLabel');
+  window.setMusicUI = (on)=>{ btn.classList.toggle('playing',on); label.textContent = on ? 'Now playing' : 'Play chill'; };
+  btn.addEventListener('click', ()=> window.setMusicUI(Music.toggle()) );
+})();
+
+/* ===== Toast helper ===== */
+window.showToast = (msg, ms=1900)=>{ const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show'); clearTimeout(t._tt);
+  t._tt=setTimeout(()=>t.classList.remove('show'), ms); };
+
+/* ===== Scrollspy — nav highlights the section you're in ===== */
+(function(){
+  const ids=['home','quiz','benefits','lineup','product','shop'];
+  const links=[...document.querySelectorAll('.navlink')];
+  function spy(){
+    let cur='home';
+    ids.forEach(id=>{ const s=document.getElementById(id); if(s && scrollY >= s.offsetTop-160) cur=id; });
+    links.forEach(l=>l.classList.toggle('active', l.getAttribute('href')==='#'+cur));
+  }
+  addEventListener('scroll', spy, {passive:true}); spy();
+})();
+
+/* ===== Page-wipe transition ===== */
+let wiping=false;
+function wipeTo(target, label, sub){
+  if(!target) return;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // already there? just glide
+  if(Math.abs(target.getBoundingClientRect().top) < 80){ target.scrollIntoView({behavior:'smooth'}); return; }
+  if(reduced){ target.scrollIntoView(); return; }
+  if(wiping) return; wiping=true;
+  const layers=[...document.querySelectorAll('#wipe .layer')];
+  const lab=document.getElementById('wipeLabel');
+  lab.innerHTML = `${label||''}<small>${sub||'MyMuuD · DRINK YOUR MOOD'}</small>`;
+  const dur=460, stag=90, easeIn='cubic-bezier(.7,0,.3,1)';
+  // sweep up to cover
+  layers.forEach((l,i)=> l.animate([{transform:'translateY(101%)'},{transform:'translateY(0%)'}],
+    {duration:dur, delay:i*stag, easing:easeIn, fill:'forwards'}));
+  lab.animate([{opacity:0, transform:'translateY(26px)'},{opacity:1, transform:'translateY(0)'}],
+    {duration:380, delay:dur*0.55, easing:'cubic-bezier(.16,1,.3,1)', fill:'forwards'});
+  if(typeof fizzSound==='function') fizzSound();
+  setTimeout(()=>{
+    target.scrollIntoView({behavior:'auto'});             // jump while covered
+    setTimeout(()=>{
+      // sweep away to reveal
+      layers.forEach((l,i)=> l.animate([{transform:'translateY(0%)'},{transform:'translateY(-101%)'}],
+        {duration:dur, delay:i*stag, easing:easeIn, fill:'forwards'}));
+      lab.animate([{opacity:1},{opacity:0}], {duration:240, fill:'forwards'});
+      // section entrance
+      target.animate([{opacity:.35, transform:'translateY(34px) scale(.99)'},{opacity:1, transform:'none'}],
+        {duration:650, delay:dur*0.5, easing:'cubic-bezier(.16,1,.3,1)'});
+      target.querySelectorAll('.reveal').forEach(el=>el.classList.add('show'));
+      setTimeout(()=>{ wiping=false; }, dur+stag*2+80);
+    }, 320);
+  }, dur+stag*2+60);
+}
+const wipeLabels={ home:['HOME','หน้าแรก · THE CAN'], quiz:['MOOD CHECK','เช็คมู้ด · HOW DO YOU FEEL?'],
+  benefits:['BENEFITS','ข้อดี · WHY MYMUUD'], lineup:['THE LINEUP','5 มู้ด · PICK YOUR FLAVOR'],
+  lab:['THE MOOD LAB','ห้องแล็บมู้ด · BREW YOUR OWN'],
+  product:['PRODUCT','ผลิตภัณฑ์ · THE NUMBERS'], reviews:['REVIEWS','รีวิว · THE MUUD FAM'],
+  compare:['COMPARE','เทียบกันชัด ๆ · THE HONEST TABLE'], faq:['FAQ','คำถามที่พบบ่อย · GOOD QUESTIONS'],
+  shop:['SHOP','ช้อป · GET YOUR MOOD'] };
+// intercept every in-page anchor
+document.addEventListener('click', e=>{
+  const a=e.target.closest('a[href^="#"]'); if(!a || a.id==='expBtn') return;
+  const id=a.getAttribute('href').slice(1); const t=document.getElementById(id); if(!t) return;
+  e.preventDefault();
+  const L=wipeLabels[id]||[id.toUpperCase(),''];
+  wipeTo(t, L[0], L[1]);
+});
+
+/* ===== Generic modal ===== */
+const Modal=(function(){
+  const el=document.getElementById('modal'), body=document.getElementById('modalBody');
+  function open(html){ body.innerHTML=html; el.classList.add('open'); lucide.createIcons(); }
+  function close(){ el.classList.remove('open'); }
+  document.getElementById('modalBg').addEventListener('click', close);
+  document.getElementById('modalClose').addEventListener('click', close);
+  addEventListener('keydown', e=>{ if(e.key==='Escape') close(); });
+  return { open, close };
+})();
+
+/* ===== Cart ===== */
+const Cart=(function(){
+  const SIZES=[{label:'Single Can',mult:1,price:45},{label:'6-Pack',mult:6,price:270},{label:'12-Pack Party',mult:12,price:499}];
+  let items=[];
+  try{ items=(JSON.parse(localStorage.getItem('muudCart')||'[]')||[]).map(i=>({
+    key:i.key||'PINK', flavor:i.flavor||'Grapefruit Twist', c:i.c||'#FF3E9A',
+    size: typeof i.size==='number' ? Math.min(i.size,2) : (i.pack?1:0), qty:Math.max(1,i.qty||1) })); }catch(e){ items=[]; }
+  const drawer=document.getElementById('cartDrawer'), list=document.getElementById('cartItems'),
+        total=document.getElementById('cartTotal'), count=document.getElementById('cartCount');
+  function openDrawer(){ drawer.classList.add('open'); }
+  function closeDrawer(){ drawer.classList.remove('open'); }
+  function render(){
+    try{ localStorage.setItem('muudCart', JSON.stringify(items)); }catch(e){}
+    const n=items.reduce((s,i)=>s+SIZES[i.size].mult*i.qty,0);
+    count.textContent=n; count.classList.toggle('on', n>0);
+    count.classList.remove('pop'); void count.offsetWidth; count.classList.add('pop');
+    const sub=items.reduce((s,i)=>s+SIZES[i.size].price*i.qty,0);
+    total.textContent='฿'+sub;
+    const bar=document.getElementById('shipBar'), sm=document.getElementById('shipMsg');
+    if(bar){ bar.style.width=Math.min(100, sub/300*100)+'%';
+      sm.innerHTML = sub>=300 ? '🎉 You\'ve unlocked <b style="color:var(--accent)">FREE shipping</b>!'
+        : sub>0 ? `฿${300-sub} away from <b class="text-white">FREE shipping</b>`
+        : 'Free shipping on orders over ฿300'; }
+    list.innerHTML = items.length ? items.map((i,idx)=>`
+      <div class="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-3">
+        <span class="w-8 h-12 rounded-md shrink-0" style="background:linear-gradient(180deg,#fff 45%, ${i.c} 55%)"></span>
+        <div class="flex-1 min-w-0">
+          <div class="font-bold text-sm truncate">MyMuuD ${i.key}</div>
+          <div class="text-xs text-white/50 truncate">${SIZES[i.size].label} · ฿${SIZES[i.size].price}</div>
+          <div class="mt-1.5 flex items-center gap-2">
+            <button data-dec="${idx}" data-hover aria-label="Less" class="grid place-items-center w-6 h-6 rounded-lg border border-white/15 bg-white/5 hover:bg-white/10 text-xs">−</button>
+            <span class="text-sm font-bold w-5 text-center">${i.qty}</span>
+            <button data-inc="${idx}" data-hover aria-label="More" class="grid place-items-center w-6 h-6 rounded-lg border border-white/15 bg-white/5 hover:bg-white/10 text-xs">+</button>
+          </div>
+        </div>
+        <div class="text-sm font-semibold shrink-0">฿${SIZES[i.size].price*i.qty}</div>
+        <button data-del="${idx}" data-hover class="text-white/40 hover:text-white text-xl leading-none px-1.5" aria-label="Remove">×</button>
+      </div>`).join('')
+      : '<div class="text-white/40 text-sm text-center py-12">Your cart is empty.<br/>Pick a mood and add a can 🥤</div>';
+    list.querySelectorAll('[data-del]').forEach(b=>b.addEventListener('click', ()=>{ items.splice(+b.dataset.del,1); render(); }));
+    list.querySelectorAll('[data-inc]').forEach(b=>b.addEventListener('click', ()=>{ items[+b.dataset.inc].qty=Math.min(items[+b.dataset.inc].qty+1,99); render(); }));
+    list.querySelectorAll('[data-dec]').forEach(b=>b.addEventListener('click', ()=>{ const it=items[+b.dataset.dec];
+      if(it.qty>1) it.qty--; else items.splice(+b.dataset.dec,1); render(); }));
+  }
+  function fly(fromEl){
+    const cb=document.getElementById('cartBtn').getBoundingClientRect();
+    const r=fromEl.getBoundingClientRect();
+    const el=document.createElement('div'); el.className='fly-can';
+    el.style.left=(r.left+r.width/2-11)+'px'; el.style.top=(r.top+r.height/2-19)+'px';
+    document.body.appendChild(el);
+    const dx=cb.left+cb.width/2-(r.left+r.width/2), dy=cb.top+cb.height/2-(r.top+r.height/2);
+    el.animate([{transform:'translate(0,0) scale(1) rotate(0deg)',opacity:1},
+      {transform:`translate(${dx}px,${dy}px) scale(.25) rotate(360deg)`,opacity:.85}],
+      {duration:750, easing:'cubic-bezier(.3,.7,.3,1)'}).onfinish=()=>{ el.remove(); render(); };
+  }
+  function add(fromEl, sizeIdx=0, qty=1){
+    const m=window.__mood||moods[0];
+    const ex=items.find(i=>i.key===m.key && i.size===sizeIdx);
+    if(ex) ex.qty=Math.min(ex.qty+qty,99); else items.push({ key:m.key, flavor:m.flavor, c:m.c2, size:sizeIdx, qty });
+    if(fromEl) fly(fromEl); else render();
+    showToast(`${qty>1? qty+' × ':''}MyMuuD ${m.key} ${SIZES[sizeIdx].label} added 🛒`);
+    if(typeof fizzSound==='function') fizzSound();
+  }
+  document.getElementById('cartBtn').addEventListener('click', ()=>{ render(); drawer.classList.toggle('open'); });
+  document.getElementById('cartClose').addEventListener('click', closeDrawer);
+  document.getElementById('checkout').addEventListener('click', ()=>{
+    if(!items.length){ showToast('Cart is empty — add a mood first 🥤'); return; }
+    const sub=items.reduce((s,i)=>s+SIZES[i.size].price*i.qty,0);
+    const ship=sub>=300?0:40, tot=sub+ship;
+    Modal.open(`
+      <div class="text-sm font-semibold tracking-widest uppercase mb-1" style="color:var(--accent)">Checkout</div>
+      <h3 class="font-display font-extrabold text-2xl mb-5">Order summary</h3>
+      <div class="space-y-2.5 max-h-48 overflow-y-auto pr-1">${items.map(i=>`
+        <div class="flex items-center justify-between text-sm">
+          <span class="text-white/70">${i.qty} × MyMuuD ${i.key} <span class="text-white/40">(${SIZES[i.size].label})</span></span>
+          <b>฿${SIZES[i.size].price*i.qty}</b></div>`).join('')}
+      </div>
+      <div class="mt-4 pt-4 border-t border-white/10 space-y-1.5 text-sm">
+        <div class="flex justify-between text-white/60"><span>Subtotal</span><span>฿${sub}</span></div>
+        <div class="flex justify-between text-white/60"><span>Shipping</span><span>${ship===0?'<b style="color:var(--accent)">FREE</b>':'฿'+ship}</span></div>
+        <div class="flex justify-between font-display font-extrabold text-xl pt-1"><span>Total</span><span class="grad-text">฿${tot}</span></div>
+      </div>
+      <button id="placeOrder" data-hover class="btn-glow mt-6 w-full rounded-2xl bg-gradient-to-r from-[var(--c1)] via-[var(--c2)] to-[var(--c3)] px-6 py-4 font-semibold">Place Order — ฿${tot}</button>
+      <p class="mt-3 text-center text-[11px] text-white/35">Demo checkout — no payment is taken.</p>`);
+    setTimeout(()=>{
+      const b=document.getElementById('placeOrder'); if(!b) return;
+      b.addEventListener('click', ()=>{
+        const no='MUUD-'+Math.random().toString(36).slice(2,7).toUpperCase();
+        document.getElementById('modalBody').innerHTML=`
+          <div class="text-center py-4">
+            <div class="okring"><i data-lucide="check" class="w-10 h-10" style="color:var(--accent)"></i></div>
+            <h3 class="mt-5 font-display font-extrabold text-3xl">Order placed!</h3>
+            <p class="mt-2 text-white/60">Order <b class="text-white">${no}</b> — your mood is on the way. 💗</p>
+            <button id="okDone" data-hover class="mt-7 rounded-2xl border border-white/20 bg-white/5 px-8 py-3.5 font-semibold hover:bg-white/10 transition">Done</button>
+          </div>`;
+        lucide.createIcons();
+        burst(innerWidth/2, innerHeight/2); if(typeof fizzSound==='function') fizzSound();
+        items.length=0; render(); closeDrawer();
+        const d=document.getElementById('okDone'); if(d) d.addEventListener('click', Modal.close);
+      });
+    });
+  });
+  render();
+  return { add, openDrawer, SIZES };
+})();
+
+/* ===== Wire every remaining click ===== */
+(function(){
+  // Nav "Buy Now" → shop section (with page-wipe)
+  document.getElementById('buyNow').addEventListener('click', ()=>{
+    wipeTo(document.getElementById('shop'), 'SHOP', 'ช้อป · GET YOUR MOOD');
+  });
+  // Shop configurator — flavor / pack / quantity with live price
+  (function(){
+    const S=Cart.SIZES; let flavor=0, pack=0, qty=1;
+    const fl=document.getElementById('cfgFlavors'), pk=document.getElementById('cfgPacks');
+    fl.innerHTML = moods.map((m,i)=>`<button data-hover data-cf="${i}" class="cfg-f flex items-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-bold transition" style="border-color:rgba(255,255,255,.15)">
+      <span class="w-3 h-3 rounded-full" style="background:linear-gradient(135deg,${m.c1},${m.c2})"></span>${m.key}</button>`).join('');
+    pk.innerHTML = S.map((s,i)=>`<button data-hover data-cp="${i}" class="cfg-p rounded-xl border px-3.5 py-2 text-xs font-bold text-left transition" style="border-color:rgba(255,255,255,.15)">${s.label}<span class="block font-normal text-white/50 mt-0.5">฿${s.price}</span></button>`).join('');
+    function paint(){
+      const m=moods[flavor], s=S[pack];
+      fl.querySelectorAll('.cfg-f').forEach((b,i)=>{ b.style.borderColor=i===flavor?m.c2:'rgba(255,255,255,.15)'; b.style.background=i===flavor?m.c2+'22':'transparent'; });
+      pk.querySelectorAll('.cfg-p').forEach((b,i)=>{ b.style.borderColor=i===pack?m.c2:'rgba(255,255,255,.15)'; b.style.background=i===pack?m.c2+'22':'transparent'; });
+      document.getElementById('qVal').textContent=qty;
+      document.getElementById('cfgPrice').textContent='฿'+(s.price*qty);
+      document.getElementById('cfgDesc').textContent=`${qty} × ${s.label} · ${m.key}`;
+    }
+    fl.addEventListener('click', e=>{ const b=e.target.closest('[data-cf]'); if(!b) return;
+      flavor=+b.dataset.cf; const m=moods[flavor]; applyMood(m);
+      moodBar.querySelectorAll('.mood').forEach((x,j)=>{ x.classList.toggle('active', j===flavor);
+        x.style.borderColor=j===flavor?m.c2:'rgba(255,255,255,.15)'; x.style.background=j===flavor?m.c2+'22':'rgba(255,255,255,.05)'; });
+      paint(); });
+    pk.addEventListener('click', e=>{ const b=e.target.closest('[data-cp]'); if(!b) return; pack=+b.dataset.cp; paint(); });
+    document.getElementById('qPlus').addEventListener('click', ()=>{ qty=Math.min(qty+1,20); paint(); });
+    document.getElementById('qMinus').addEventListener('click', ()=>{ qty=Math.max(qty-1,1); paint(); });
+    document.getElementById('cfgAdd').addEventListener('click', e=> Cart.add(e.currentTarget, pack, qty));
+    window.__syncCfg = i => { if(i<0||i>=moods.length) return; flavor=i; paint(); };   // stays in sync (ignores custom moods)
+    paint();
+  })();
+  // Quiz result CTA already scrolls to #shop (anchor)
+
+  // Find a Store → modal
+  const stores=[
+    ['7-Eleven','ทุกสาขาทั่วประเทศ · Nationwide'],
+    ['Tops & Central Food Hall','Bangkok · Chiang Mai · Phuket'],
+    ['Gourmet Market','Siam Paragon · EmQuartier · ICONSIAM'],
+    ['Villa Market','Sukhumvit · Ari · Thonglor'],
+  ];
+  document.getElementById('storeBtn').addEventListener('click', ()=>{
+    Modal.open(`
+      <div class="text-sm font-semibold tracking-widest uppercase mb-2" style="color:var(--accent)">Find a Store</div>
+      <h3 class="font-display font-extrabold text-2xl mb-5">Grab a MyMuuD near you</h3>
+      <div class="space-y-3">${stores.map(s=>`
+        <div class="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-4">
+          <i data-lucide="map-pin" class="w-5 h-5 shrink-0" style="color:var(--accent)"></i>
+          <div><div class="font-bold text-sm">${s[0]}</div><div class="text-xs text-white/50">${s[1]}</div></div>
+        </div>`).join('')}</div>
+      <p class="mt-5 text-xs text-white/40">Availability varies by branch. Or order online — free delivery on your first order.</p>`);
+  });
+
+  // Feature cards → detail modal with add-to-cart
+  document.getElementById('featureGrid').addEventListener('click', e=>{
+    const card=e.target.closest('[data-feature]'); if(!card) return;
+    const f=features[+card.dataset.feature];
+    Modal.open(`
+      <div class="grid place-items-center w-16 h-16 rounded-2xl mb-5" style="background:color-mix(in srgb,var(--accent) 14%,transparent); border:1px solid color-mix(in srgb,var(--accent) 40%,transparent)">
+        <i data-lucide="${f.icon}" class="w-8 h-8" style="color:var(--accent)"></i></div>
+      <h3 class="font-display font-extrabold text-3xl">${f.t}</h3>
+      <p class="mt-3 text-white/60 leading-relaxed">${f.d}</p>
+      <p class="mt-3 text-white/75 leading-relaxed">${f.more}</p>
+      <button id="modalAdd" data-hover class="btn-glow mt-6 w-full rounded-2xl bg-gradient-to-r from-[var(--c1)] via-[var(--c2)] to-[var(--c3)] px-6 py-3.5 font-semibold flex items-center justify-center gap-2">
+        <i data-lucide="cup-soda" class="w-5 h-5"></i> Taste it — add a can</button>`);
+    setTimeout(()=>{ const b=document.getElementById('modalAdd');
+      if(b) b.addEventListener('click', ev=>{ Cart.add(ev.currentTarget,0,1); Modal.close(); }); });
+  });
+
+  // Hero badges → scroll to matching benefit card + pulse it
+  document.querySelectorAll('[data-badge]').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      const card=document.getElementById('featureGrid').children[+b.dataset.badge];
+      if(!card) return;
+      card.scrollIntoView({behavior:'smooth', block:'center'});
+      card.classList.remove('pulse-card'); void card.offsetWidth; card.classList.add('pulse-card');
+    });
+  });
+
+  // Stats → click replays the count-up with a mini burst
+  document.querySelectorAll('#product .count').forEach(el=>{
+    el.parentElement.style.cursor='pointer';
+    el.parentElement.addEventListener('click', e=>{
+      countUp(el); burst(e.clientX, e.clientY, (window.__mood||moods[0]).c2);
+    });
+  });
+})();
+
+/* ===== Lineup, mobile menu, newsletter, back-to-top ===== */
+(function(){
+  // track current mood globally + keep lineup cards in sync with EVERY mood change
+  window.__mood = moods[0];
+  const syncLineup = i => document.querySelectorAll('[data-lineup]').forEach((c,j)=>c.classList.toggle('on', j===i));
+  const _apply = applyMood;
+  applyMood = m => { _apply(m); window.__mood = m; const i=moods.indexOf(m);
+    syncLineup(i);
+    const mk=document.getElementById('mbKey'); if(mk) mk.textContent=m.key;
+    if(window.__syncCfg) window.__syncCfg(i);
+    if(typeof chime==='function') chime(); };
+  syncLineup(0);
+
+  // lineup cards → switch the whole site's mood
+  const emo = ['💗','💧','🍇','🍊','🌿'];
+  document.querySelectorAll('[data-lineup]').forEach(card=>{
+    card.addEventListener('click', (e)=>{
+      const i=+card.dataset.lineup, m=moods[i];
+      applyMood(m);
+      moodBar.querySelectorAll('.mood').forEach((b,j)=>{ b.classList.toggle('active', j===i);
+        b.style.borderColor = j===i? m.c2 : 'rgba(255,255,255,.15)';
+        b.style.background  = j===i? m.c2+'22' : 'rgba(255,255,255,.05)'; });
+      if(e.target.closest('.qadd')){ Cart.add(card, 0, 1); return; }   // quick add → straight to cart
+      const r=card.getBoundingClientRect();
+      burst(r.left+r.width/2, r.top+r.height/3, m.c2);
+      showToast(`Mood switched to ${m.key} ${emo[i]}`);
+    });
+  });
+
+  // mobile menu
+  const mm=document.getElementById('mobileMenu'), mb=document.getElementById('menuBtn');
+  mb.addEventListener('click', ()=>mm.classList.toggle('open'));
+  mm.querySelectorAll('a').forEach(a=>a.addEventListener('click', ()=>mm.classList.remove('open')));
+
+  // newsletter
+  document.getElementById('newsForm').addEventListener('submit', e=>{
+    e.preventDefault();
+    const em=document.getElementById('newsEmail');
+    burst(innerWidth/2, innerHeight-140); if(typeof fizzSound==='function') fizzSound();
+    showToast(`Welcome to the MuuD fam, ${em.value.split('@')[0]}! 💌`, 2500);
+    em.value='';
+  });
+
+  // back to top
+  const tt=document.getElementById('toTop');
+  addEventListener('scroll', ()=>tt.classList.toggle('show', scrollY>600), {passive:true});
+  tt.addEventListener('click', ()=>wipeTo(document.getElementById('home'),'HOME','หน้าแรก · THE CAN'));
+
+  // giant watermark parallax
+  const wms=[...document.querySelectorAll('.wm')];
+  let wmRaf=null;
+  addEventListener('scroll', ()=>{
+    if(wmRaf) return;
+    wmRaf=requestAnimationFrame(()=>{ wmRaf=null;
+      wms.forEach(w=>{ const r=w.parentElement.getBoundingClientRect();
+        if(r.bottom>0 && r.top<innerHeight) w.style.transform=`translateY(${(r.top*0.18).toFixed(1)}px)`; });
+    });
+  }, {passive:true});
+
+  // sticky mobile buy bar
+  const mbar=document.getElementById('mobileBar');
+  addEventListener('scroll', ()=>mbar.classList.toggle('translate-y-full', scrollY<500), {passive:true});
+  document.getElementById('mbAdd').addEventListener('click', e=> Cart.add(e.currentTarget, 0, 1));
+})();
+
+/* ═══════════ REAL 3D CAN — WebGL (Three.js) ═══════════ */
+(function(){
+  const stage=document.getElementById('canStage'), cv=document.getElementById('canGL');
+  if(!stage||!cv) return;
+  const fallback=()=>{ stage.innerHTML='<div class="mini-can" style="width:180px;height:360px;border-radius:26px/34px;background:linear-gradient(180deg,#fff 42%, var(--accent) 50%)"></div>'; };
+  if(typeof THREE==='undefined'){ fallback(); return; }
+  let renderer;
+  try{ renderer=new THREE.WebGLRenderer({canvas:cv, antialias:true, alpha:true}); }
+  catch(e){ fallback(); return; }
+
+  const W=760, H=900;
+  renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));
+  renderer.setSize(W,H,false);
+  const scene=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(30, W/H, 0.1, 50);
+  cam.position.set(0, 0.1, 9.6);
+  const heroEl=document.getElementById('home');
+  const caps=[...document.querySelectorAll('.fcap')];
+  const rail=[...document.querySelectorAll('#filmRail span')];
+  const filmGlow=document.querySelector('.film-glow');
+  let curCap=0, musicNudged=false, landed3=false;
+  // colour journey the can travels through as you scroll (pink → aqua → grape → pink)
+  const ARC=['#FF3E9A','#06B6D4','#A855F7','#FF3E9A'].map(h=>[0,2,4].map(i=>parseInt(h.slice(1).substr(i,2),16)));
+  const arcCol=p=>{ const n=ARC.length-1, seg=Math.max(0,Math.min(n-1,Math.floor(p*n))), lt=p*n-seg;
+    return ARC[seg].map((v,i)=>Math.round(v+(ARC[seg+1][i]-v)*lt)); };
+
+  /* studio lights — rims take the brand gradient colors */
+  scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+  const key=new THREE.DirectionalLight(0xffffff, 0.95); key.position.set(2.5,4,5); scene.add(key);
+  const rimL=new THREE.PointLight(0x8B5CF6, 1.2, 22); rimL.position.set(-4,1.5,-2.5); scene.add(rimL);
+  const rimR=new THREE.PointLight(0x38BDF8, 1.0, 22); rimR.position.set(4,-1,-2.5); scene.add(rimR);
+  const acc =new THREE.PointLight(0xFF3E9A, 1.3, 18); acc.position.set(0,-3,3); scene.add(acc);
+
+  const root=new THREE.Group(); scene.add(root);   // cursor parallax
+  const canG=new THREE.Group(); root.add(canG);    // spin
+
+  /* ── label painted live onto a canvas texture ── */
+  const TW=2048, TH=1024;
+  const tc=document.createElement('canvas'); tc.width=TW; tc.height=TH;
+  const tx=tc.getContext('2d');
+  const tex=new THREE.CanvasTexture(tc);
+  tex.anisotropy=renderer.capabilities.getMaxAnisotropy();
+  const sc=document.createElement('canvas'); sc.width=sc.height=128;   // contact shadow
+  const sctx=sc.getContext('2d');
+  const shTex=new THREE.CanvasTexture(sc);
+
+  const rr=(x,y,w,h,r)=>{ tx.beginPath();
+    if(tx.roundRect) tx.roundRect(x,y,w,h,r); else tx.rect(x,y,w,h); };
+  const ls=v=>{ try{ tx.letterSpacing=v; }catch(e){} };
+
+  function logoMark(cx,y,s){
+    const g=tx.createLinearGradient(cx-50*s,y,cx+50*s,y+100*s);
+    g.addColorStop(0,'#8B5CF6'); g.addColorStop(1,'#38BDF8');
+    tx.save(); tx.translate(cx-50*s,y); tx.scale(s,s);
+    tx.strokeStyle=g; tx.lineWidth=11; tx.lineCap='round'; tx.lineJoin='round';
+    tx.beginPath(); tx.moveTo(20,78); tx.lineTo(20,38);
+    tx.bezierCurveTo(20,22,42,22,50,40); tx.bezierCurveTo(58,22,80,22,80,38);
+    tx.lineTo(80,78); tx.stroke(); tx.restore();
+  }
+  function drawFront(cx,m){
+    logoMark(cx,55,1.9);
+    tx.textBaseline='alphabetic'; ls('0px');
+    tx.font='800 84px Sora, sans-serif';
+    const w1=tx.measureText('My').width, w2=tx.measureText('MuuD').width, x0=cx-(w1+w2)/2;
+    tx.fillStyle='#111'; tx.fillText('My',x0,320);
+    const g=tx.createLinearGradient(x0+w1,250,x0+w1+w2,330);
+    g.addColorStop(0,m.c1); g.addColorStop(.55,m.c2); g.addColorStop(1,m.c3);
+    tx.fillStyle=g; tx.fillText('MuuD',x0+w1,320);
+    tx.textAlign='center';
+    tx.font='600 34px Outfit, sans-serif'; tx.fillStyle='rgba(17,17,17,.6)'; tx.fillText('— มาย มู้ด —',cx,372);
+    ls('12px'); tx.font='700 26px Outfit, sans-serif'; tx.fillStyle='rgba(17,17,17,.55)'; tx.fillText('DRINK YOUR MOOD',cx,428); ls('0px');
+    // droplet
+    tx.fillStyle='#fff'; tx.beginPath(); tx.moveTo(cx,618);
+    tx.bezierCurveTo(cx+30,660,cx+26,700,cx,706); tx.bezierCurveTo(cx-26,700,cx-30,660,cx,618); tx.fill();
+    ls('18px'); tx.font='700 60px Sora, sans-serif'; tx.fillStyle='#fff'; tx.fillText(m.key,cx+9,796); ls('0px');
+    ls('4px'); tx.font='600 24px Outfit, sans-serif'; tx.fillStyle='rgba(255,255,255,.95)';
+    tx.fillText('0 SUGAR  |  CALORIE 0  |  PH BALANCE',cx,852); ls('0px');
+    tx.font='700 34px Outfit, sans-serif'; tx.fillText('330 mL',cx,908);
+    tx.textAlign='left';
+  }
+  function drawBack(cx){
+    // nutrition panel
+    tx.fillStyle='#fff'; rr(cx-280,46,560,404,16); tx.fill();
+    tx.strokeStyle='#111'; tx.lineWidth=3; rr(cx-280,46,560,404,16); tx.stroke();
+    tx.textAlign='center'; tx.fillStyle='#111';
+    tx.font='700 38px Sora, sans-serif'; tx.fillText('ข้อมูลโภชนาการ',cx,102);
+    tx.font='400 20px Outfit, sans-serif'; tx.fillStyle='rgba(17,17,17,.6)';
+    tx.fillText('Serving size 1 can (330 mL)',cx,132);
+    tx.fillStyle='#111'; tx.fillRect(cx-250,146,500,5);
+    tx.textAlign='left'; tx.font='800 36px Outfit, sans-serif'; tx.fillText('Calories',cx-250,196);
+    tx.textAlign='right'; tx.font='800 46px Outfit, sans-serif'; tx.fillText('0',cx+250,198);
+    tx.fillRect(cx-250,212,500,4);
+    tx.font='700 18px Outfit, sans-serif'; tx.fillText('% Daily Value*',cx+250,240);
+    const rows=[['Total Fat 0g','0%'],['Sodium 0mg','0%'],['Total Carbohydrate 0g','0%'],['   Sugars 0g','0%'],['Protein 0g','0%']];
+    rows.forEach((r,i)=>{ const y=278+i*33;
+      tx.textAlign='left';  tx.font='500 22px Outfit, sans-serif'; tx.fillText(r[0],cx-250,y);
+      tx.textAlign='right'; tx.font='700 22px Outfit, sans-serif'; tx.fillText(r[1],cx+250,y);
+      tx.fillStyle='rgba(17,17,17,.25)'; tx.fillRect(cx-250,y+8,500,2); tx.fillStyle='#111'; });
+    tx.textAlign='left'; tx.font='400 16px Outfit, sans-serif'; tx.fillStyle='rgba(17,17,17,.55)';
+    tx.fillText('*Percent Daily Values are based on a 2,000 calorie diet.',cx-250,436);
+    // ingredients on the colored zone
+    tx.fillStyle='#fff'; tx.font='800 26px Outfit, sans-serif'; tx.fillText('INGREDIENTS:',cx-250,568);
+    tx.font='400 22px Outfit, sans-serif';
+    tx.fillText('Carbonated Water, Citric Acid, Natural Grapefruit',cx-250,600);
+    tx.fillText('Flavor, pH Balance Mineral Blend, Preservative',cx-250,628);
+    tx.fillText('(Potassium Sorbate).',cx-250,656);
+    // thai flag + origin
+    const fy=688; const st=[['#ED1C24',8],['#fff',8],['#241D4F',16],['#fff',8],['#ED1C24',8]]; let oy=fy;
+    st.forEach(s=>{ tx.fillStyle=s[0]; tx.fillRect(cx-250,oy,72,s[1]); oy+=s[1]; });
+    tx.fillStyle='#fff'; tx.font='800 24px Outfit, sans-serif'; tx.fillText('PRODUCT OF THAILAND',cx-162,fy+34);
+    // barcode
+    tx.fillStyle='#fff'; tx.fillRect(cx-250,760,270,110);
+    tx.fillStyle='#000'; let bx=cx-236;
+    for(let i=0;bx<cx+2;i++){ const w=1+((i*7)%3); tx.fillRect(bx,772,w,66); bx+=w+1+((i*5)%3); }
+    tx.font='600 20px Outfit, sans-serif'; tx.textAlign='center'; tx.fillText('8 10853 41352',cx-115,862);
+    tx.textAlign='left'; tx.fillStyle='#fff';
+    tx.font='700 24px Outfit, sans-serif'; tx.fillText('♻ 100% recyclable',cx+45,796);
+    tx.font='800 22px Outfit, sans-serif'; tx.fillText('Net Content: 330 mL',cx+45,832);
+  }
+  function paint(){
+    const m=window.__mood||{key:'PINK',c1:'#8B5CF6',c2:'#FF3E9A',c3:'#38BDF8'};
+    const A=m.c2, wy=TH*0.44;
+    tx.textAlign='left'; ls('0px');
+    tx.fillStyle='#fff'; tx.fillRect(0,0,TW,TH);
+    tx.fillStyle=A; tx.beginPath(); tx.moveTo(0,wy+40);
+    for(let x=0;x<=TW;x+=32) tx.lineTo(x, wy+40+Math.sin((x/TW)*Math.PI*8)*24);
+    tx.lineTo(TW,TH); tx.lineTo(0,TH); tx.closePath(); tx.fill();
+    const shade=tx.createLinearGradient(0,wy,0,TH);
+    shade.addColorStop(0,'rgba(255,255,255,.18)'); shade.addColorStop(.4,'rgba(0,0,0,0)'); shade.addColorStop(1,'rgba(0,0,0,.16)');
+    tx.fillStyle=shade; tx.fillRect(0,wy,TW,TH-wy);
+    drawFront(1024,m);
+    drawBack(0); drawBack(2048);          // back sits across the UV seam — draw both halves
+    tex.needsUpdate=true;
+    // contact shadow tint
+    sctx.clearRect(0,0,128,128);
+    const sg=sctx.createRadialGradient(64,64,4,64,64,62);
+    sg.addColorStop(0,A); sg.addColorStop(1,'rgba(0,0,0,0)');
+    sctx.fillStyle=sg; sctx.globalAlpha=.55; sctx.beginPath(); sctx.arc(64,64,62,0,6.284); sctx.fill();
+    shTex.needsUpdate=true;
+    acc.color.set(m.c2); rimL.color.set(m.c1); rimR.color.set(m.c3);
+  }
+  paint();
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(paint);
+  const _am=applyMood; applyMood=m=>{ _am(m); paint(); };
+
+  /* ── geometry: body + tapered neck + chime + lid + pull tab ── */
+  const R=1, BODY=3.1;
+  const bodyMat=new THREE.MeshStandardMaterial({map:tex, metalness:.45, roughness:.3});
+  const metal  =new THREE.MeshStandardMaterial({color:0xd9d9e0, metalness:.95, roughness:.26, side:THREE.DoubleSide});
+  const metalD =new THREE.MeshStandardMaterial({color:0x9b9ba3, metalness:.9,  roughness:.34, side:THREE.DoubleSide});
+  canG.add(new THREE.Mesh(new THREE.CylinderGeometry(R,R,BODY,72,1,true), bodyMat));
+  const neckPts=[]; for(let i=0;i<=8;i++){ const t=i/8; neckPts.push(new THREE.Vector2(R-0.16*Math.pow(t,1.15), BODY/2+0.30*t)); }
+  canG.add(new THREE.Mesh(new THREE.LatheGeometry(neckPts,72), metal));
+  const chPts=[]; for(let i=0;i<=6;i++){ const t=i/6; chPts.push(new THREE.Vector2(R-0.13*t, -BODY/2-0.16*t)); }
+  canG.add(new THREE.Mesh(new THREE.LatheGeometry(chPts,72), metalD));
+  const bcap=new THREE.Mesh(new THREE.CircleGeometry(R-0.13,48), metalD);
+  bcap.rotation.x=Math.PI/2; bcap.position.y=-BODY/2-0.16; canG.add(bcap);
+  const lid=new THREE.Group(); lid.position.y=BODY/2+0.30;
+  const lidTop=new THREE.Mesh(new THREE.CylinderGeometry(0.84,0.84,0.03,64), metalD); lid.add(lidTop);
+  const rim=new THREE.Mesh(new THREE.TorusGeometry(0.82,0.038,12,64), metal);
+  rim.rotation.x=Math.PI/2; rim.position.y=0.035; lid.add(rim);
+  const tabRing=new THREE.Mesh(new THREE.TorusGeometry(0.14,0.03,8,24), metalD);
+  tabRing.rotation.x=Math.PI/2; tabRing.position.set(0,0.05,-0.1);
+  const tabArm=new THREE.Mesh(new THREE.BoxGeometry(0.12,0.02,0.24), metalD);
+  tabArm.position.set(0,0.05,0.12);
+  lid.add(tabRing,tabArm); canG.add(lid);
+  const shadow=new THREE.Mesh(new THREE.PlaneGeometry(3.4,3.4),
+    new THREE.MeshBasicMaterial({map:shTex, transparent:true, depthWrite:false}));
+  shadow.rotation.x=-Math.PI/2; shadow.position.y=-BODY/2-0.62; root.add(shadow);
+
+  /* interactive 3D bubbles around the can — scatter from your cursor */
+  const bubGeo=new THREE.SphereGeometry(1,12,12);
+  const bubMat=new THREE.MeshStandardMaterial({color:0xffffff, transparent:true, opacity:.22, roughness:.12, metalness:.1});
+  const bubs=[]; const tmp=new THREE.Vector3();
+  const resetB=(b,init)=>{ const a=Math.random()*6.283, r=1.4+Math.random()*2.0;
+    b.position.set(Math.cos(a)*r, init?(Math.random()*7-3.5):-3.6, Math.sin(a)*r);
+    const sz=0.07+Math.random()*0.17; b.scale.setScalar(sz);
+    b.userData={sp:0.006+Math.random()*0.012, ph:Math.random()*6.283, sz, vx:0, vy:0, vz:0}; };
+  for(let i=0;i<58;i++){ const b=new THREE.Mesh(bubGeo,bubMat); resetB(b,true); root.add(b); bubs.push(b); }
+  let crect=cv.getBoundingClientRect();
+  const updRect=()=>{ crect=cv.getBoundingClientRect(); };
+  addEventListener('scroll', updRect, {passive:true}); addEventListener('resize', updRect);
+
+  /* ── physics: drag spin + inertia + turntable + scroll-spin + parallax ── */
+  const DEG=Math.PI/180, noMo=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let base=180, vel=0, hover=0, hoverTgt=0, dragging=false, sx=0, moved=0,
+      lastAct=performance.now(), punchAt=-1e9, rx=0, ry=0, vis=true,
+      explodeAt=-1e9, rollAt=-1e9, tiltX=0, tiltY=0, tgtTiltX=0, tgtTiltY=0, gyroAsked=false;
+  const LID_Y=BODY/2+0.30;
+  function askGyro(){ if(gyroAsked) return; gyroAsked=true;
+    if(typeof DeviceOrientationEvent!=='undefined' && DeviceOrientationEvent.requestPermission)
+      DeviceOrientationEvent.requestPermission().catch(()=>{}); }
+  new IntersectionObserver(es=>vis=es[0].isIntersecting,{threshold:0}).observe(stage);
+
+  stage.addEventListener('mousemove', e=>{ if(dragging) return; const r=stage.getBoundingClientRect();
+    hoverTgt=((e.clientX-r.left)/r.width-0.5)*30; lastAct=performance.now(); });
+  stage.addEventListener('mouseleave', ()=>hoverTgt=0);
+  // (scroll now drives rotation via film progress in the render loop)
+  const down=x=>{ askGyro(); dragging=true; sx=x; moved=0; vel=0; lastAct=performance.now(); };
+  const move=x=>{ if(!dragging) return; const dx=x-sx; moved+=Math.abs(dx);
+    base+=dx*0.55; vel=dx*0.55; sx=x; lastAct=performance.now(); };
+  const up=()=>{ if(!dragging) return; dragging=false; lastAct=performance.now();
+    if(moved<6){ const r=stage.getBoundingClientRect();                  // tap = pop the lid open (exploded view)
+      burst(r.left+r.width/2, r.top+r.height*0.3); fizzSound();
+      punchAt=performance.now(); explodeAt=performance.now(); vel+=6; } };
+  cv.addEventListener('mousedown', e=>{ e.preventDefault(); down(e.clientX); });
+  addEventListener('mousemove', e=>move(e.clientX));
+  addEventListener('mouseup', up);
+  cv.addEventListener('touchstart', e=>down(e.touches[0].clientX), {passive:true});
+  addEventListener('touchmove', e=>{ if(dragging) move(e.touches[0].clientX); }, {passive:true});
+  addEventListener('touchend', up);
+  cv.addEventListener('dblclick', ()=>{ rollAt=performance.now();       // double-click = barrel roll
+    const r=stage.getBoundingClientRect(); burst(r.left+r.width/2, r.top+r.height*0.35); fizzSound(); });
+  addEventListener('deviceorientation', e=>{ if(e.gamma==null) return;  // tilt your phone to move the can
+    tgtTiltY=Math.max(-0.55,Math.min(0.55, e.gamma/80));
+    tgtTiltX=Math.max(-0.4, Math.min(0.4, (e.beta-40)/90)); }, true);
+
+  function anim(t){
+    requestAnimationFrame(anim);
+    if(!vis) return;
+    if(!dragging){
+      base+=vel; vel*=0.95; if(Math.abs(vel)<0.01) vel=0;
+      if(!noMo && t-lastAct>3500 && Math.abs(vel)<0.05) base+=0.12;   // showroom turntable
+    }
+    hover+=(hoverTgt-hover)*0.08;
+    // ── film progress through the pinned hero ──
+    let p=0; if(heroEl){ const r=heroEl.getBoundingClientRect(); p=Math.max(0, Math.min(1, -r.top/((r.height-innerHeight)||1))); }
+    // swap chapter captions
+    const LAST=caps.length-1;                                          // 5 (six chapters)
+    const idx = Math.min(LAST, Math.floor(p*caps.length));
+    const col=arcCol(p), cs=`${col[0]},${col[1]},${col[2]}`;
+    if(idx!==curCap){
+      const fwd=idx>curCap; curCap=idx;
+      caps.forEach((c,i)=>c.classList.toggle('active', i===idx));
+      rail.forEach((s,i)=>s.classList.toggle('on', i===idx));
+      if(typeof blip==='function') blip(idx===LAST?780:560, .09, .045, 'sine');  // soft chime per chapter (only if music on)
+      if(idx===LAST && fwd && !landed3){ landed3=true; punchAt=t;                // dramatic landing pop
+        const r=cv.getBoundingClientRect();
+        if(typeof burst==='function') burst(r.left+r.width/2, r.top+r.height*0.44, `rgb(${cs})`);
+        if(typeof fizzSound==='function') fizzSound(); }
+      if(idx<LAST) landed3=false;
+      if(idx>=1 && !musicNudged && typeof Music!=='undefined' && !Music.isPlaying()){
+        musicNudged=true; showToast('🎧 Tap “Play chill” (bottom-left) for the full experience'); }
+    }
+    // colour journey — tint the accent light + hero glow as the can turns
+    acc.color.setRGB(col[0]/255, col[1]/255, col[2]/255);
+    if(filmGlow) filmGlow.style.background=`radial-gradient(circle, rgba(${cs},.42), transparent 62%)`;
+    // one full turn across the scroll: front → side → back (nutrition) → front
+    const scrollRot = p*360;
+    canG.rotation.y=(base+hover+scrollRot)*DEG;
+    let roll=0; const dr=t-rollAt;                                     // double-click barrel roll
+    if(dr<820){ const k=dr/820, e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2; roll=e*Math.PI*2; }
+    canG.rotation.x=Math.sin(p*Math.PI)*0.14 + roll;                   // nod + barrel roll
+    canG.position.y=Math.sin(t*0.0012)*0.1;                            // float bob
+    cam.position.z=9.6 - Math.sin(p*Math.PI)*1.6;                      // dolly in to inspect, pull back at the ends
+    // exploded view — lid flies off, spins, and springs back
+    const dex=t-explodeAt;
+    if(dex<1300){ const k=dex/1300, lift=Math.sin(Math.min(k,1)*Math.PI);
+      lid.position.y=LID_Y+lift*1.15; lid.rotation.y=lift*Math.PI*1.3; lid.rotation.z=lift*0.45; }
+    else if(lid.position.y!==LID_Y){ lid.position.y=LID_Y; lid.rotation.y=0; lid.rotation.z=0; }
+    const m=window.__m||{x:innerWidth/2,y:innerHeight/2};
+    rx+=(((m.y/innerHeight)-0.5)*0.22-rx)*0.06;                        // cursor parallax
+    ry+=(((m.x/innerWidth)-0.5)*0.18-ry)*0.06;
+    tiltX+=(tgtTiltX-tiltX)*0.07; tiltY+=(tgtTiltY-tiltY)*0.07;        // device tilt (mobile)
+    root.rotation.x=rx+tiltX; root.rotation.y=ry+tiltY;
+    const dp=t-punchAt;                                                // pop spring
+    const s=dp<900 ? 1+0.13*Math.exp(-dp/220)*Math.cos(dp/70) : 1;
+    const filmScale=1+Math.sin(p*Math.PI)*0.05;                        // subtle breathe
+    canG.scale.setScalar(s*filmScale);
+    const mX=(window.__m?window.__m.x:innerWidth/2), mY=(window.__m?window.__m.y:innerHeight/2);
+    bubs.forEach(b=>{ const u=b.userData; u.ph+=0.01;
+      // scatter away from the cursor (screen-space) in 3D
+      b.getWorldPosition(tmp); tmp.project(cam);
+      const bsx=crect.left+(tmp.x*0.5+0.5)*crect.width, bsy=crect.top+(-tmp.y*0.5+0.5)*crect.height;
+      const ddx=bsx-mX, ddy=bsy-mY, d=Math.hypot(ddx,ddy);
+      if(d<140 && d>0.5){ const f=(1-d/140)*0.055; u.vx+=(ddx/d)*f; u.vy+=(-ddy/d)*f; u.vz+=(Math.random()-0.5)*f*0.5; }
+      u.vx*=0.9; u.vy*=0.9; u.vz*=0.9;
+      b.position.x+=u.vx+Math.sin(u.ph)*0.003; b.position.y+=u.vy+u.sp; b.position.z+=u.vz;
+      const pop=0.9+0.1*Math.sin(u.ph*3); b.scale.setScalar(u.sz*pop);         // gentle throb
+      if(b.position.y>3.7 || b.position.y<-4.2 || Math.abs(b.position.x)>6) resetB(b); });
+    renderer.render(scene,cam);
+  }
+  requestAnimationFrame(anim);
+})();
+
+/* ===== Comparison table ===== */
+(function(){
+  const rows=[
+    ['Sugar',              ['0 g',1],            ['38 g / can',0],  ['0 g (aspartame)',2]],
+    ['Calories',           ['0',1],              ['150+',0],        ['1–5',2]],
+    ['pH level',           ['~7.0 · balanced',1],['~2.5 · acidic',0],['~3.2 · acidic',0]],
+    ['Real fruit character',['Yes',1],           ['No',0],          ['No',0]],
+    ['Tooth-friendly',     ['Yes',1],            ['No',0],          ['No',0]],
+    ['Feeling after',      ['💗 Refreshed',1],   ['Sugar crash',0], ['Meh',2]],
+  ];
+  const ic=f=> f===1?'<i data-lucide="check-circle-2" class="inline w-4 h-4 mr-1.5 align-[-3px]" style="color:var(--accent)"></i>'
+        : f===0?'<i data-lucide="x-circle" class="inline w-4 h-4 mr-1.5 align-[-3px] text-white/30"></i>'
+        :'<i data-lucide="minus-circle" class="inline w-4 h-4 mr-1.5 align-[-3px] text-white/30"></i>';
+  document.getElementById('cmpBody').innerHTML=rows.map(r=>`
+    <tr class="border-b border-white/5 last:border-0">
+      <td class="p-5 text-white/55 font-medium">${r[0]}</td>
+      <td class="p-5 font-semibold" style="background:color-mix(in srgb,var(--accent) 7%,transparent)">${ic(r[1][1])}${r[1][0]}</td>
+      <td class="p-5 text-white/50">${ic(r[2][1])}${r[2][0]}</td>
+      <td class="p-5 text-white/50">${ic(r[3][1])}${r[3][0]}</td>
+    </tr>`).join('');
+  lucide.createIcons();
+})();
+
+/* ===== FAQ accordion ===== */
+(function(){
+  const faqs=[
+    ['Is MyMuuD really zero sugar?',
+     'Yes — we sweeten with a balanced stevia blend. No sucrose, no syrup, no hidden carbs, and every batch is lab-verified. All the treat, none of the crash.'],
+    ['Is it soda or sparkling water?',
+     'Neither, exactly — it\'s pH-balanced sparkling water with real fruit character. Around pH 7.0 versus pH ~2.5 for regular soda, so it\'s far gentler on your teeth and stomach.'],
+    ['Does MyMuuD contain caffeine?',
+     'No. All five moods are completely caffeine-free — sip at 8 AM or midnight, your sleep stays yours.'],
+    ['ซื้อได้ที่ไหน? · Where can I buy it?',
+     'At 7-Eleven, Tops, Gourmet Market and Villa Market nationwide — or order online right here with free delivery on your first order.'],
+    ['How fast is delivery?',
+     'Bangkok: 1–2 days. Nationwide: 2–4 days. Every order ships cold-chain packed so your moods arrive ready to chill.'],
+    ['Is the can recyclable?',
+     '100% aluminum with a BPA-free lining — infinitely recyclable. Rinse it, crush it (satisfying), and bin it proudly. ♻'],
+  ];
+  const list=document.getElementById('faqList');
+  list.innerHTML=faqs.map((f,i)=>`
+    <div class="faq-item ${i===0?'open':''}">
+      <button data-hover class="faq-q w-full flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/[0.04] px-6 py-4 text-left font-semibold">
+        <span>${f[0]}</span><i data-lucide="chevron-down" class="chev w-5 h-5 shrink-0" style="color:var(--accent)"></i></button>
+      <div class="faq-a"><p class="px-6 py-4 text-sm text-white/55 leading-relaxed">${f[1]}</p></div>
+    </div>`).join('');
+  lucide.createIcons();
+  list.addEventListener('click', e=>{
+    const q=e.target.closest('.faq-q'); if(!q) return;
+    const it=q.parentElement, was=it.classList.contains('open');
+    list.querySelectorAll('.faq-item').forEach(x=>x.classList.remove('open'));
+    if(!was) it.classList.add('open');
+  });
+})();
+
+/* ===== Live purchase pings (social proof) ===== */
+(function(){
+  const names=['Ploy','Mark','Bew','Nan','Ice','Mild','Ton','Fern'];
+  const cities=['Bangkok','Chiang Mai','Phuket','Khon Kaen','Pattaya','Hat Yai'];
+  const what=['a PINK 6-pack','an AQUA 12-pack','a GRAPE 6-pack','a MINT single can','a CITRUS 6-pack'];
+  let shown=0;
+  function ping(){
+    if(shown>=4) return;
+    if(!document.hidden){ shown++;
+      showToast(`💗 ${names[(Math.random()*names.length)|0]} from ${cities[(Math.random()*cities.length)|0]} just grabbed ${what[(Math.random()*what.length)|0]}`, 3200); }
+    setTimeout(ping, 24000+Math.random()*14000);
+  }
+  setTimeout(ping, 14000);
+})();
+
+/* ===== Side dot navigation ===== */
+(function(){
+  const secs=[['home','Home'],['quiz','Mood Check'],['benefits','Benefits'],['lineup','Lineup'],
+    ['lab','Mood Lab'],['product','Product'],['reviews','Reviews'],['compare','Compare'],['shop','Shop'],['faq','FAQ']];
+  const nav=document.getElementById('dots'); if(!nav) return;
+  nav.innerHTML=secs.map(s=>`<button data-dot="${s[0]}" data-hover aria-label="${s[1]}"><span class="lbl">${s[1]}</span></button>`).join('');
+  const btns=[...nav.querySelectorAll('[data-dot]')];
+  btns.forEach(b=>b.addEventListener('click', ()=>{
+    const id=b.dataset.dot, L=wipeLabels[id]||[id.toUpperCase(),''];
+    wipeTo(document.getElementById(id), L[0], L[1]);
+  }));
+  function spy(){
+    let cur='home';
+    secs.forEach(s=>{ const el=document.getElementById(s[0]); if(el && scrollY>=el.offsetTop-200) cur=s[0]; });
+    btns.forEach(b=>b.classList.toggle('on', b.dataset.dot===cur));
+  }
+  addEventListener('scroll', spy, {passive:true}); spy();
+})();
+
+/* ===== Share / growth loop ===== */
+(function(){
+  const box=document.getElementById('shareBtn'); if(!box) return;
+  const trigger=box.querySelector('button');
+  const url=location.href.split('#')[0];
+  const text='MyMuuD — Drink Your Mood 🫧 0 sugar · 0 calories · pH balanced. Which mood are you?';
+  // On phones with native share, one tap = OS share sheet (best for LINE etc.)
+  trigger.addEventListener('click', async ()=>{
+    if(navigator.share && matchMedia('(hover:none)').matches){
+      try{ await navigator.share({title:'MyMuuD', text, url}); return; }catch(e){}
+    }
+    box.classList.toggle('open');
+  });
+  document.addEventListener('click', e=>{ if(!box.contains(e.target)) box.classList.remove('open'); });
+  box.querySelectorAll('[data-share]').forEach(a=>{
+    a.addEventListener('click', e=>{
+      e.preventDefault(); const k=a.dataset.share; box.classList.remove('open');
+      const u=encodeURIComponent(url), t=encodeURIComponent(text);
+      let link='';
+      if(k==='line')     link=`https://social-plugins.line.me/lineit/share?url=${u}`;
+      if(k==='facebook') link=`https://www.facebook.com/sharer/sharer.php?u=${u}`;
+      if(k==='twitter')  link=`https://twitter.com/intent/tweet?url=${u}&text=${t}`;
+      if(k==='copy'){
+        (navigator.clipboard?.writeText(url) || Promise.reject()).then(()=>showToast('Link copied — share the mood! 🔗'))
+          .catch(()=>showToast('Copy failed — long-press the address bar'));
+        if(typeof fizzSound==='function') fizzSound(); return;
+      }
+      window.open(link,'_blank','noopener,width=620,height=580');
+      if(typeof fizzSound==='function') fizzSound();
+    });
+  });
+})();
+
+/* ===== PWA — installable "add to home screen" ===== */
+(function(){
+  const manifest={ name:'MyMuuD — Drink Your Mood', short_name:'MyMuuD', start_url:'.', display:'standalone',
+    background_color:'#08080C', theme_color:'#FF3E9A', description:'Premium sparkling mood water — 0 sugar, 0 calories, pH balanced.',
+    icons:[{ src:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2308080C'/%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='100' y2='100'%3E%3Cstop offset='0' stop-color='%238B5CF6'/%3E%3Cstop offset='1' stop-color='%2338BDF8'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M28 78 V40 C28 26 46 26 52 42 C58 26 76 26 76 40 V78' stroke='url(%23g)' stroke-width='10' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E",
+      sizes:'any', type:'image/svg+xml' }] };
+  try{
+    const blob=new Blob([JSON.stringify(manifest)],{type:'application/manifest+json'});
+    const l=document.createElement('link'); l.rel='manifest'; l.href=URL.createObjectURL(blob);
+    document.head.appendChild(l);
+  }catch(e){}
+  addEventListener('beforeinstallprompt', e=>{ e.preventDefault();
+    setTimeout(()=>showToast('📲 Add MyMuuD to your home screen for instant access'), 20000);
+  });
+})();
+
+/* ═══════════ THE MOOD LAB — signature flavor creator ═══════════ */
+(function(){
+  const cv=document.getElementById('labCard'); if(!cv) return;
+  const g=cv.getContext('2d'), S=1080;
+  const M={
+    PINK:  { c1:'#8B5CF6', c2:'#FF3E9A', adj:['Radiant','Bold','Playful'],   fruit:'Grapefruit', vibe:'confident, glowing, ready for anything' },
+    AQUA:  { c1:'#3B82F6', c2:'#06B6D4', adj:['Clear','Focused','Cool'],      fruit:'Yuzu',       vibe:'calm, sharp, and quietly unstoppable' },
+    GRAPE: { c1:'#7C3AED', c2:'#A855F7', adj:['Dreamy','Electric','Rich'],    fruit:'Berry',      vibe:'creative, alive, a little magic' },
+    CITRUS:{ c1:'#F59E0B', c2:'#FB7185', adj:['Sunny','Bright','Warm'],       fruit:'Zest',       vibe:'energized, hopeful, wide awake' },
+    MINT:  { c1:'#10B981', c2:'#34D399', adj:['Fresh','Serene','Light'],      fruit:'Mint',       vibe:'clear-headed, cool, and at ease' },
+  };
+  const keys=Object.keys(M);
+  let base='PINK', splash='AQUA', mixV=60, made=null;
+
+  const chips=(host,sel,cur)=>{ host.innerHTML=keys.map(k=>{
+    const m=M[k], on=k===cur;
+    return `<button data-k="${k}" data-hover class="flex items-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-bold transition"
+      style="border-color:${on?m.c2:'rgba(255,255,255,.15)'}; background:${on?m.c2+'22':'transparent'}">
+      <span class="w-3 h-3 rounded-full" style="background:linear-gradient(135deg,${m.c1},${m.c2})"></span>${k}</button>`; }).join('');
+    host.querySelectorAll('[data-k]').forEach(b=>b.addEventListener('click',()=>{ sel(b.dataset.k); }));
+  };
+  const baseHost=document.getElementById('labBase'), splashHost=document.getElementById('labSplash');
+  function redrawChips(){ chips(baseHost, k=>{ base=k; if(splash===k) splash=keys[(keys.indexOf(k)+1)%keys.length]; sync(); }, base);
+    chips(splashHost, k=>{ splash=k; if(base===k) base=keys[(keys.indexOf(k)+1)%keys.length]; sync(); }, splash); }
+
+  const mixEl=document.getElementById('labMix'), mixValEl=document.getElementById('labMixVal');
+  mixEl.addEventListener('input', ()=>{ mixV=+mixEl.value; sync(); });
+  document.getElementById('labName').addEventListener('input', draw);
+
+  function flavorName(){ const a=M[base].adj[(Math.abs(hash(base+splash))>>2)%3]; return `${a} ${M[splash].fruit}`; }
+  function hash(s){ let h=0; for(let i=0;i<s.length;i++) h=(h*31+s.charCodeAt(i))|0; return h; }
+  function mix(a,b,t){ const pa=hx(a),pb=hx(b);
+    return `#${[0,1,2].map(i=>Math.round(pa[i]*(1-t)+pb[i]*t).toString(16).padStart(2,'0')).join('')}`; }
+  function hx(h){ h=h.replace('#',''); return [0,2,4].map(i=>parseInt(h.substr(i,2),16)); }
+
+  function sync(){
+    mixValEl.textContent=`${mixV}% ${base} · ${100-mixV}% ${splash}`;
+    redrawChips(); draw();
+  }
+  function wrap(t,x,y,max,lh){ const w=t.split(' '); let line='',yy=y;
+    w.forEach(word=>{ const test=line+word+' '; if(g.measureText(test).width>max && line){ g.fillText(line.trim(),x,yy); line=word+' '; yy+=lh; } else line=test; });
+    g.fillText(line.trim(),x,yy); return yy; }
+
+  function draw(){
+    const b=M[base], s=M[splash], t=(100-mixV)/100;
+    const A=mix(b.c2,s.c2,t*0.5), C1=b.c1, C2=b.c2, C3=s.c2;
+    const name=(document.getElementById('labName').value||'you').trim();
+    const fname=flavorName();
+    // bg
+    g.fillStyle='#08080c'; g.fillRect(0,0,S,S);
+    let rg=g.createRadialGradient(S*0.5,S*0.28,40,S*0.5,S*0.28,S*0.9);
+    rg.addColorStop(0,A+'cc'); rg.addColorStop(.4,A+'44'); rg.addColorStop(1,'#08080c00');
+    g.fillStyle=rg; g.fillRect(0,0,S,S);
+    // bubbles
+    for(let i=0;i<26;i++){ const bx=(hash('x'+i+base)%S+S)%S, by=(hash('y'+i+splash)%S+S)%S, r=8+(i*7)%46;
+      g.beginPath(); g.arc(bx,by,r,0,6.283); g.fillStyle=`${A}${(10+(i*5)%22).toString(16).padStart(2,'0')}`; g.fill();
+      g.lineWidth=2; g.strokeStyle=A+'33'; g.stroke(); }
+    // frame
+    g.strokeStyle='rgba(255,255,255,.10)'; g.lineWidth=3; g.strokeRect(40,40,S-80,S-80);
+    g.textAlign='center';
+    // logo
+    g.save(); g.translate(S/2-40,96); g.scale(.8,.8);
+    const lg=g.createLinearGradient(0,0,100,100); lg.addColorStop(0,'#8B5CF6'); lg.addColorStop(1,'#38BDF8');
+    g.strokeStyle=lg; g.lineWidth=11; g.lineCap='round'; g.lineJoin='round';
+    g.beginPath(); g.moveTo(20,78); g.lineTo(20,38); g.bezierCurveTo(20,22,42,22,50,40); g.bezierCurveTo(58,22,80,22,80,38); g.lineTo(80,78); g.stroke(); g.restore();
+    g.fillStyle='#fff'; g.font='800 44px Sora, sans-serif'; g.fillText('MyMuuD', S/2, 250);
+    g.fillStyle=A; g.font='700 22px Outfit, sans-serif'; g.letterSpacing='6px'; g.fillText('THE MOOD LAB · LIMITED EDITION', S/2, 300); g.letterSpacing='0px';
+    // custom flavor name
+    const fg=g.createLinearGradient(S*0.2,0,S*0.8,0); fg.addColorStop(0,C1); fg.addColorStop(.5,C2); fg.addColorStop(1,C3);
+    g.fillStyle=fg; g.font='800 96px Sora, sans-serif'; wrap(fname, S/2, 470, 900, 108);
+    // for name
+    g.fillStyle='rgba(255,255,255,.75)'; g.font='500 40px Outfit, sans-serif';
+    g.fillText(`crafted exclusively for ${name}`, S/2, 640);
+    // blend bar
+    const bw=620, bx=(S-bw)/2, by=690, split=bw*(mixV/100);
+    g.fillStyle=C2; g.fillRect(bx,by,split,16); g.fillStyle=C3; g.fillRect(bx+split,by,bw-split,16);
+    g.fillStyle='rgba(255,255,255,.6)'; g.font='700 26px Outfit, sans-serif';
+    g.textAlign='left';  g.fillText(`${mixV}% ${base}`, bx, by+50);
+    g.textAlign='right'; g.fillText(`${100-mixV}% ${splash}`, bx+bw, by+50);
+    // reading
+    g.textAlign='center'; g.fillStyle='rgba(255,255,255,.85)'; g.font='400 34px Outfit, sans-serif';
+    wrap(`Today, ${name} is ${b.vibe} — with a splash of ${s.fruit.toLowerCase()}.`, S/2, 810, 860, 46);
+    // footer
+    g.fillStyle=A; g.font='700 26px Outfit, sans-serif'; g.letterSpacing='4px';
+    g.fillText('0 SUGAR · 0 CALORIE · pH BALANCE · 330 mL', S/2, 968); g.letterSpacing='0px';
+    g.fillStyle='#fff'; g.font='800 40px Sora, sans-serif'; g.fillText('DRINK YOUR MOOD', S/2, 1024);
+    g.textAlign='left';
+    made={ name, fname, base, splash, mixV, c1:C1, c2:C2, c3:C3, A };
+  }
+
+  function applyToSite(){
+    if(!made) return;
+    applyMood({ key: made.fname.split(' ')[0].toUpperCase().slice(0,7), flavor: made.fname,
+      c1: made.c1, c2: made.c2, c3: made.c3, ink:'#08080C' });
+  }
+
+  document.getElementById('labMake').addEventListener('click', ()=>{
+    draw(); applyToSite();
+    document.getElementById('labActions').classList.remove('hidden');
+    document.getElementById('labActions').classList.add('grid');
+    const r=cv.getBoundingClientRect(); burst(r.left+r.width/2, r.top+r.height/2, made.c2);
+    if(typeof fizzSound==='function') fizzSound();
+    showToast(`✨ "${made.fname}" is brewing — that's YOUR MyMuuD`, 2600);
+  });
+  document.getElementById('labDownload').addEventListener('click', ()=>{
+    draw(); const a=document.createElement('a');
+    a.download=`MyMuuD-${(made.name||'mood').replace(/\s+/g,'-')}.png`;
+    a.href=cv.toDataURL('image/png'); a.click();
+    showToast('Card saved 📸 share it & tag @mymuud!');
+  });
+  document.getElementById('labShare').addEventListener('click', async ()=>{
+    draw();
+    const txt=`I just brewed "${made.fname}" at the MyMuuD Mood Lab 🧪 what's yours? #DrinkYourMood`;
+    if(navigator.share){
+      try{ const blob=await new Promise(r=>cv.toBlob(r,'image/png'));
+        const file=new File([blob],'mymuud.png',{type:'image/png'});
+        if(navigator.canShare && navigator.canShare({files:[file]})){ await navigator.share({files:[file], text:txt, title:'MyMuuD'}); return; }
+        await navigator.share({text:txt, url:location.href.split('#')[0]}); return;
+      }catch(e){}
+    }
+    navigator.clipboard?.writeText(txt+' '+location.href.split('#')[0]);
+    showToast('Caption copied — paste it with your saved card! 📋');
+  });
+  document.getElementById('labAddCart').addEventListener('click', e=>{
+    if(!made){ draw(); applyToSite(); }
+    applyToSite(); Cart.add(e.currentTarget, 0, 1);
+  });
+
+  mixEl.value=mixV; sync();
+})();
+
+/* ===== Experience the Mood — cinematic sequence ===== */
+(function(){
+  const el=document.getElementById('experience');
+  const title=document.getElementById('expTitle'), flavor=document.getElementById('expFlavor'), kicker=document.getElementById('expKicker');
+  const kickers=['close your eyes for a second…','breathe in…','now… feel it','this is your mood'];
+  let burstT, closeT, active=false;
+  function open(){
+    if(active) return; active=true;
+    const m = window.__mood || moods[0];
+    title.textContent = m.key; flavor.textContent = m.flavor;
+    kicker.textContent = kickers[(Math.random()*kickers.length)|0];
+    el.classList.remove('open'); void el.offsetWidth;   // restart animations
+    el.classList.add('open');
+    if(!Music.isPlaying()){ Music.toggle(); window.setMusicUI && window.setMusicUI(true); }
+    if(typeof fizzSound==='function') fizzSound();
+    const b=()=> burst(innerWidth*(0.28+Math.random()*0.44), innerHeight*(0.3+Math.random()*0.4), m.c2);
+    b(); burstT=setInterval(b, 850);
+    closeT=setTimeout(close, 6200);
+  }
+  function close(){ if(!active) return; active=false; el.classList.remove('open'); clearInterval(burstT); clearTimeout(closeT); }
+  el.addEventListener('click', close);
+  addEventListener('keydown', e=>{ if(e.key==='Escape') close(); });
+  document.getElementById('expBtn').addEventListener('click', e=>{ e.preventDefault(); open(); });
+})();
+</script>
+</body>
+</html>
