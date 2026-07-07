@@ -1792,9 +1792,10 @@ const Cart=(function(){
 
 /* ===== Wire every remaining click ===== */
 (function(){
-  // Nav "Buy Now" → shop section (with page-wipe)
-  document.getElementById('buyNow').addEventListener('click', ()=>{
-    wipeTo(document.getElementById('shop'), 'SHOP', 'ช้อป · GET YOUR MOOD');
+  // Nav "Buy Now" → instant buy: adds the current mood's can and opens the cart, ready to checkout
+  document.getElementById('buyNow').addEventListener('click', e=>{
+    Cart.add(e.currentTarget, 0, 1);            // flying-can animation into the cart icon
+    setTimeout(()=>Cart.openDrawer(), 850);     // then slide the cart open
   });
   // Shop configurator — flavor / pack / quantity with live price
   (function(){
