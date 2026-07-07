@@ -2131,7 +2131,9 @@ const Cart=(function(){
   const DEG=Math.PI/180, noMo=matchMedia('(prefers-reduced-motion: reduce)').matches;
   let base=180, vel=0, hover=0, hoverTgt=0, dragging=false, sx=0, moved=0,
       lastAct=performance.now(), punchAt=-1e9, rx=0, ry=0, vis=true,
-      explodeAt=-1e9, rollAt=-1e9, tiltX=0, tiltY=0, tgtTiltX=0, tgtTiltY=0, gyroAsked=false, px=0, py=0;
+      explodeAt=-1e9, rollAt=-1e9, tiltX=0, tiltY=0, tgtTiltX=0, tgtTiltY=0, gyroAsked=false, px=0, py=0,
+      entranceAt=-1;
+  const introEl=document.getElementById('intro');
   const LID_Y=BODY/2+0.30;
   function askGyro(){ if(gyroAsked) return; gyroAsked=true;
     if(typeof DeviceOrientationEvent!=='undefined' && DeviceOrientationEvent.requestPermission)
@@ -2203,11 +2205,18 @@ const Cart=(function(){
     if(filmGlow) filmGlow.style.background=`radial-gradient(circle, rgba(${cs},.42), transparent 62%)`;
     // one full turn across the scroll: front → side → back (nutrition) → front
     const scrollRot = p*360;
-    canG.rotation.y=(base+hover+scrollRot)*DEG;
+    // grand entrance — the can spins up from below and lands with a pop when the intro splits open
+    if(entranceAt<0 && (!introEl || introEl.classList.contains('done'))) entranceAt=t;
+    const ek = noMo ? 1 : (entranceAt<0 ? 0 : Math.min(1,(t-entranceAt)/1500));
+    const entEase=1-Math.pow(1-ek,3);
+    const entS = ek<=0 ? 0 : 1+2.70158*Math.pow(ek-1,3)+1.70158*Math.pow(ek-1,2);  // back-out overshoot
+    const entSpin=(1-entEase)*540, entY=(1-entEase)*-3.2;
+
+    canG.rotation.y=(base+hover+scrollRot+entSpin)*DEG;
     let roll=0; const dr=t-rollAt;                                     // double-click barrel roll
     if(dr<820){ const k=dr/820, e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2; roll=e*Math.PI*2; }
     canG.rotation.x=Math.sin(p*Math.PI)*0.14 + roll;                   // nod + barrel roll
-    canG.position.y=Math.sin(t*0.0012)*0.1;                            // float bob
+    canG.position.y=Math.sin(t*0.0012)*0.1 + entY;                     // float bob + entrance rise
     cam.position.z=9.6 - Math.sin(p*Math.PI)*1.6;                      // dolly in to inspect, pull back at the ends
     // exploded view — lid flies off, spins, and springs back
     const dex=t-explodeAt;
@@ -2222,7 +2231,7 @@ const Cart=(function(){
     const dp=t-punchAt;                                                // pop spring
     const s=dp<900 ? 1+0.13*Math.exp(-dp/220)*Math.cos(dp/70) : 1;
     const filmScale=1+Math.sin(p*Math.PI)*0.05;                        // subtle breathe
-    canG.scale.setScalar(s*filmScale);
+    canG.scale.setScalar(Math.max(0.001, s*filmScale*entS));           // entrance grows it in
     const mX=(window.__m?window.__m.x:innerWidth/2), mY=(window.__m?window.__m.y:innerHeight/2);
     bubs.forEach(b=>{ const u=b.userData; u.ph+=0.01;
       // scatter away from the cursor (screen-space) in 3D
@@ -2633,6 +2642,9 @@ const Cart=(function(){
     }
     loop();
     const cur = window.__mood ? moods.indexOf(window.__mood) : 0; ringTgt=nearestTgt(cur>=0?cur:0);
+    // choose a flavor ANYWHERE on the site → carousel spins to that can (still fully draggable)
+    const _ap=applyMood;
+    applyMood=m=>{ _ap(m); const i=moods.indexOf(m); if(i>=0){ ringTgt=nearestTgt(i); vel=0; } };
   }
 })();
 </script>
