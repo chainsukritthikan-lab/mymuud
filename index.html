@@ -38,6 +38,7 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -1075,6 +1076,32 @@ const STRIPE_LINKS = {
   pack12: '',   //                                          (12-Pack ฿499)
 };
 
+/* ═══════════ TRUEMONEY / PROMPTPAY QR — works TODAY, no company needed ═══════════
+   Put the phone number of your TrueMoney Wallet (or any PromptPay-registered number)
+   and your LINE add-friend link. Checkout will show a scan-to-pay QR with the exact
+   amount — money goes straight into your wallet, order details go to your LINE.   */
+const PAY_CONFIG = {
+  promptpayId: '',   // e.g. '0812345678' (TrueMoney/PromptPay phone) or 15-digit TrueMoney Wallet ID
+  lineUrl:     '',   // e.g. 'https://line.me/ti/p/xxxxxxx' (LINE app → Add friends → your QR/link)
+};
+/* Thai EMVCo QR payload (PromptPay standard — TrueMoney is on this network) */
+function ppCRC(s){ let c=0xFFFF;
+  for(let i=0;i<s.length;i++){ c^=s.charCodeAt(i)<<8;
+    for(let j=0;j<8;j++){ c=(c&0x8000)?((c<<1)^0x1021):(c<<1); c&=0xFFFF; } }
+  return c.toString(16).toUpperCase().padStart(4,'0'); }
+function ppPayload(id, amount){
+  const f=(t,v)=>t+String(v.length).padStart(2,'0')+v;
+  id=String(id).replace(/[^0-9]/g,'');
+  let type,target;
+  if(id.length>=15){ type='03'; target=id; }                       // e-wallet ID (TrueMoney)
+  else if(id.length===13){ type='02'; target=id; }                 // citizen ID
+  else { type='01'; target='0066'+(id.startsWith('0')?id.slice(1):id); } // phone
+  const merchant=f('00','A000000677010111')+f(type,target);
+  let p=f('00','01')+f('01','12')+f('29',merchant)+f('53','764')
+      +(amount?f('54',amount.toFixed(2)):'')+f('58','TH')+'6304';
+  return p+ppCRC(p);
+}
+
 /* ===== Cinematic intro — drop → ripple → logo → claims → explosion → split ===== */
 (function(){
   const intro=document.getElementById('intro');
@@ -1796,6 +1823,14 @@ const Cart=(function(){
             <i data-lucide="credit-card" class="w-5 h-5"></i> Pay ${n} × ${SIZES[g].label} — ฿${amt}</a>`; }).join('')
         + `<p class="mt-3 text-center text-[11px] text-white/40">🔒 Secure payment by Stripe — cards &amp; PromptPay. Pick your flavor &amp; quantity on the payment page.</p>
            <button id="placeOrder" data-hover class="mt-2 w-full rounded-2xl border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-white/60 hover:bg-white/10 transition">…or place a test order</button>`
+      : (typeof PAY_CONFIG!=='undefined' && PAY_CONFIG.promptpayId)
+      ? `<div class="mt-5 rounded-2xl bg-white p-4 flex flex-col items-center">
+           <canvas id="ppQR" width="220" height="220"></canvas>
+           <div class="mt-2 text-[12px] font-bold text-black/75">สแกนจ่าย ฿${tot} · TrueMoney หรือแอปธนาคารใดก็ได้</div>
+         </div>
+         <button id="paidBtn" data-hover class="btn-glow mt-4 w-full rounded-2xl bg-gradient-to-r from-[var(--c1)] via-[var(--c2)] to-[var(--c3)] px-6 py-4 font-semibold flex items-center justify-center gap-2">
+           <i data-lucide="check-circle-2" class="w-5 h-5"></i> I've paid — send my order via LINE</button>
+         <p class="mt-3 text-center text-[11px] text-white/40">The QR includes the exact amount. After paying, tap the button — your order copies itself, then paste it in LINE with your slip &amp; address.</p>`
       : `<button id="placeOrder" data-hover class="btn-glow mt-6 w-full rounded-2xl bg-gradient-to-r from-[var(--c1)] via-[var(--c2)] to-[var(--c3)] px-6 py-4 font-semibold">Place Order — ฿${tot}</button>
          <p class="mt-3 text-center text-[11px] text-white/35">Demo checkout — no payment is taken yet.</p>`;
     Modal.open(`
@@ -1813,6 +1848,30 @@ const Cart=(function(){
       </div>
       ${payHtml}`);
     setTimeout(()=>{
+      // TrueMoney / PromptPay QR + LINE order flow
+      const qc=document.getElementById('ppQR');
+      if(qc && typeof QRious!=='undefined')
+        new QRious({ element:qc, value:ppPayload(PAY_CONFIG.promptpayId, tot), size:220, level:'M' });
+      const pb=document.getElementById('paidBtn');
+      if(pb) pb.addEventListener('click', ()=>{
+        const no='MUUD-'+Math.random().toString(36).slice(2,7).toUpperCase();
+        const txt=`🧾 MyMuuD ORDER ${no}\n`
+          + items.map(i=>`• ${i.qty} × ${i.key} (${SIZES[i.size].label}) — ฿${SIZES[i.size].price*i.qty}`).join('\n')
+          + `\nรวมชำระ / Total paid: ฿${tot}\nชื่อ-ที่อยู่จัดส่ง (name & address): `;
+        try{ navigator.clipboard.writeText(txt); }catch(e){}
+        if(PAY_CONFIG.lineUrl) window.open(PAY_CONFIG.lineUrl, '_blank', 'noopener');
+        document.getElementById('modalBody').innerHTML=`
+          <div class="text-center py-4">
+            <div class="okring"><i data-lucide="check" class="w-10 h-10" style="color:var(--accent)"></i></div>
+            <h3 class="mt-5 font-display font-extrabold text-3xl">Almost done!</h3>
+            <p class="mt-2 text-white/60">Order <b class="text-white">${no}</b> copied 📋<br/>Paste it in our LINE chat with your <b class="text-white">payment slip</b> and <b class="text-white">delivery address</b> 💗</p>
+            <button id="okDone" data-hover class="mt-7 rounded-2xl border border-white/20 bg-white/5 px-8 py-3.5 font-semibold hover:bg-white/10 transition">Done</button>
+          </div>`;
+        lucide.createIcons();
+        burst(innerWidth/2, innerHeight/2); if(typeof fizzSound==='function') fizzSound();
+        items.length=0; render(); closeDrawer();
+        const d2=document.getElementById('okDone'); if(d2) d2.addEventListener('click', Modal.close);
+      });
       const b=document.getElementById('placeOrder'); if(!b) return;
       b.addEventListener('click', ()=>{
         const no='MUUD-'+Math.random().toString(36).slice(2,7).toUpperCase();
