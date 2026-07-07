@@ -558,7 +558,7 @@
 
       <!-- drag/scroll cue -->
       <div class="film-cue text-white/45 text-[11px] font-mono flex flex-col items-center gap-1">
-        <span id="filmHint">scroll to explore · drag to spin · tap to open · double-click to flip</span>
+        <span id="filmHint">drag to spin · tap can to erupt · pop the bubbles 🫧 · double-click to flip</span>
         <i data-lucide="chevron-down" class="w-4 h-4 cue"></i>
       </div>
       <span id="chipFlavor" class="hidden"></span>
@@ -2119,7 +2119,7 @@ const Cart=(function(){
   const DEG=Math.PI/180, noMo=matchMedia('(prefers-reduced-motion: reduce)').matches;
   let base=180, vel=0, hover=0, hoverTgt=0, dragging=false, sx=0, moved=0,
       lastAct=performance.now(), punchAt=-1e9, rx=0, ry=0, vis=true,
-      explodeAt=-1e9, rollAt=-1e9, tiltX=0, tiltY=0, tgtTiltX=0, tgtTiltY=0, gyroAsked=false;
+      explodeAt=-1e9, rollAt=-1e9, tiltX=0, tiltY=0, tgtTiltX=0, tgtTiltY=0, gyroAsked=false, px=0, py=0;
   const LID_Y=BODY/2+0.30;
   function askGyro(){ if(gyroAsked) return; gyroAsked=true;
     if(typeof DeviceOrientationEvent!=='undefined' && DeviceOrientationEvent.requestPermission)
@@ -2134,13 +2134,23 @@ const Cart=(function(){
   const move=x=>{ if(!dragging) return; const dx=x-sx; moved+=Math.abs(dx);
     base+=dx*0.55; vel=dx*0.55; sx=x; lastAct=performance.now(); };
   const up=()=>{ if(!dragging) return; dragging=false; lastAct=performance.now();
-    if(moved<6){ const r=stage.getBoundingClientRect();                  // tap = pop the lid open (exploded view)
+    if(moved<6){
+      // did we tap a bubble? pop it 🫧
+      let best=null, bd=1e9;
+      bubs.forEach(b=>{ const u=b.userData; if(u.sx==null) return;
+        const d=Math.hypot(u.sx-px, u.sy-py), hit=24+u.sz*180;
+        if(d<hit && d<bd){ bd=d; best=b; } });
+      if(best){ burst(px,py); fizzSound(); best.userData.vx=best.userData.vy=best.userData.vz=0; resetB(best); return; }
+      // else pop the can lid open + erupt a fizz of bubbles
+      const r=stage.getBoundingClientRect();
       burst(r.left+r.width/2, r.top+r.height*0.3); fizzSound();
-      punchAt=performance.now(); explodeAt=performance.now(); vel+=6; } };
-  cv.addEventListener('mousedown', e=>{ e.preventDefault(); down(e.clientX); });
+      punchAt=performance.now(); explodeAt=performance.now(); vel+=6;
+      bubs.forEach(b=>{ if(Math.abs(b.position.x)<1.7 && Math.abs(b.position.z)<1.7) b.userData.vy+=0.11+Math.random()*0.13; });
+    } };
+  cv.addEventListener('mousedown', e=>{ e.preventDefault(); px=e.clientX; py=e.clientY; down(e.clientX); });
   addEventListener('mousemove', e=>move(e.clientX));
   addEventListener('mouseup', up);
-  cv.addEventListener('touchstart', e=>down(e.touches[0].clientX), {passive:true});
+  cv.addEventListener('touchstart', e=>{ const tt=e.touches[0]; px=tt.clientX; py=tt.clientY; down(tt.clientX); }, {passive:true});
   addEventListener('touchmove', e=>{ if(dragging) move(e.touches[0].clientX); }, {passive:true});
   addEventListener('touchend', up);
   cv.addEventListener('dblclick', ()=>{ rollAt=performance.now();       // double-click = barrel roll
@@ -2206,6 +2216,7 @@ const Cart=(function(){
       // scatter away from the cursor (screen-space) in 3D
       b.getWorldPosition(tmp); tmp.project(cam);
       const bsx=crect.left+(tmp.x*0.5+0.5)*crect.width, bsy=crect.top+(-tmp.y*0.5+0.5)*crect.height;
+      u.sx=bsx; u.sy=bsy;                                                     // cache screen pos for tap-to-pop
       const ddx=bsx-mX, ddy=bsy-mY, d=Math.hypot(ddx,ddy);
       if(d<140 && d>0.5){ const f=(1-d/140)*0.055; u.vx+=(ddx/d)*f; u.vy+=(-ddy/d)*f; u.vz+=(Math.random()-0.5)*f*0.5; }
       u.vx*=0.9; u.vy*=0.9; u.vz*=0.9;
