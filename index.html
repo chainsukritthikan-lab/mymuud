@@ -158,6 +158,10 @@
   .tilt-card:hover .card-sheen{ opacity:1; }
 
   /* ===== WebGL 3D can ===== */
+  /* 3D flavor carousel */
+  .carousel-gl{ width:min(760px,96vw); aspect-ratio:760/440; height:auto; touch-action:pan-y; cursor:grab; display:block; }
+  .carousel-gl:active{ cursor:grabbing; }
+
   /* Scroll-film hero */
   .film-track{ position:relative; z-index:10; }
   #canStage{ position:sticky; top:0; height:100svh; overflow:hidden; display:block; }
@@ -634,7 +638,15 @@
       <h2 class="mt-3 font-display font-extrabold text-4xl sm:text-5xl tracking-tight">Five moods. <span class="grad-text">One you.</span></h2>
       <p class="mt-4 text-white/60">Tap a can — the whole world changes to match. เลือกมู้ดของคุณ 🫧</p>
     </div>
-    <div class="mt-14 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5">
+
+    <!-- Interactive 3D flavor carousel -->
+    <div class="reveal mt-12 flex flex-col items-center">
+      <canvas id="lineupGL" class="carousel-gl"></canvas>
+      <div class="mt-2 text-xs text-white/40 font-mono flex items-center gap-2">
+        <i data-lucide="rotate-3d" class="w-4 h-4"></i> drag to spin the carousel · click a can to choose its mood</div>
+    </div>
+
+    <div class="mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5">
       <button data-lineup="0" data-hover class="lineup-card reveal rounded-3xl border border-white/10 bg-white/[0.04] p-6 text-center hover:bg-white/[0.07]">
         <div class="mini-can" style="background:linear-gradient(180deg,#fff 42%, #FF3E9A 50%)"></div>
         <div class="mt-4 font-display font-bold">PINK</div>
@@ -2520,6 +2532,108 @@ const Cart=(function(){
   el.addEventListener('click', close);
   addEventListener('keydown', e=>{ if(e.key==='Escape') close(); });
   document.getElementById('expBtn').addEventListener('click', e=>{ e.preventDefault(); open(); });
+})();
+
+/* ═══════════ 3D FLAVOR CAROUSEL (Lineup) ═══════════ */
+(function(){
+  const cv=document.getElementById('lineupGL'); if(!cv || typeof THREE==='undefined') return;
+  let started=false;
+  const io=new IntersectionObserver(es=>{ if(es[0].isIntersecting){ io.disconnect(); start(); } },{threshold:0.15});
+  io.observe(cv);
+
+  function bodyTex(m){
+    const c=document.createElement('canvas'); c.width=256; c.height=512; const x=c.getContext('2d');
+    x.fillStyle='#fff'; x.fillRect(0,0,256,512);
+    const wy=232; x.fillStyle=m.c2; x.beginPath(); x.moveTo(0,wy);
+    for(let i=0;i<=256;i+=10) x.lineTo(i, wy+Math.sin(i/256*Math.PI*6)*12); x.lineTo(256,512); x.lineTo(0,512); x.closePath(); x.fill();
+    const sh=x.createLinearGradient(0,wy,0,512); sh.addColorStop(0,'rgba(255,255,255,.15)'); sh.addColorStop(1,'rgba(0,0,0,.2)'); x.fillStyle=sh; x.fillRect(0,wy,256,280);
+    const t=new THREE.CanvasTexture(c); t.anisotropy=2; return t;
+  }
+  function decalTex(m){
+    const c=document.createElement('canvas'); c.width=360; c.height=560; const x=c.getContext('2d');
+    x.textAlign='center';
+    x.strokeStyle=m.c1; x.lineWidth=15; x.lineCap='round'; x.lineJoin='round';
+    x.beginPath(); x.moveTo(135,150); x.lineTo(135,96); x.bezierCurveTo(135,70,180,70,186,110); x.bezierCurveTo(192,70,237,70,237,96); x.lineTo(237,150); x.stroke();
+    x.fillStyle='#111'; x.font='800 46px Sora,sans-serif'; x.fillText('MyMuuD',180,214);
+    x.fillStyle='rgba(17,17,17,.55)'; x.font='600 15px Outfit,sans-serif'; x.fillText('DRINK YOUR MOOD',180,244);
+    x.fillStyle='#fff'; x.font='800 50px Sora,sans-serif'; x.fillText(m.key,180,420);
+    x.font='600 14px Outfit,sans-serif'; x.fillText('0 SUGAR · CALORIE 0 · pH',180,452);
+    x.font='700 22px Outfit,sans-serif'; x.fillText('330 mL',180,486);
+    const t=new THREE.CanvasTexture(c); t.anisotropy=2; return t;
+  }
+
+  function start(){
+    if(started) return; started=true;
+    const W=760,H=440;
+    const renderer=new THREE.WebGLRenderer({canvas:cv, antialias:true, alpha:true});
+    renderer.setPixelRatio(Math.min(devicePixelRatio||1,2)); renderer.setSize(W,H,false);
+    const scene=new THREE.Scene();
+    const cam=new THREE.PerspectiveCamera(34,W/H,0.1,50); cam.position.set(0,0.5,7.6); cam.lookAt(0,-0.1,0);
+    scene.add(new THREE.AmbientLight(0xffffff,0.75));
+    const key=new THREE.DirectionalLight(0xffffff,0.9); key.position.set(2,4,5); scene.add(key);
+    const pl=new THREE.PointLight(0xff3e9a,0.7,30); pl.position.set(-4,2,4); scene.add(pl);
+
+    const ring=new THREE.Group(); scene.add(ring);
+    const N=moods.length, step=Math.PI*2/N, RAD=3.0;
+    const cans=[], bodies=[];
+    const capMat=new THREE.MeshStandardMaterial({color:0xcfcfd6, metalness:.92, roughness:.28});
+    for(let i=0;i<N;i++){
+      const g=new THREE.Group();
+      const body=new THREE.Mesh(new THREE.CylinderGeometry(0.72,0.72,2.5,48,1,true),
+        new THREE.MeshStandardMaterial({map:bodyTex(moods[i]), metalness:.35, roughness:.34}));
+      const top=new THREE.Mesh(new THREE.CylinderGeometry(0.62,0.62,0.08,40), capMat); top.position.y=1.29;
+      const bot=new THREE.Mesh(new THREE.CylinderGeometry(0.66,0.66,0.1,40), capMat); bot.position.y=-1.29;
+      const decal=new THREE.Mesh(new THREE.PlaneGeometry(1.15,2.3),
+        new THREE.MeshBasicMaterial({map:decalTex(moods[i]), transparent:true, depthWrite:false}));
+      decal.position.z=0.735;
+      g.add(body,top,bot,decal);
+      const a=i*step; g.position.set(Math.sin(a)*RAD,0,Math.cos(a)*RAD); g.rotation.y=a;
+      g.userData={i,a,body}; ring.add(g); cans.push(g); bodies.push(body);
+    }
+
+    let ringRot=0, ringTgt=0, vel=0, dragging=false, sx=0, moved=0, downX=0, downY=0, lastAct=performance.now(), vis=true;
+    const nearestTgt=idx=>{ let want=-idx*step; while(want-ringRot>Math.PI) want-=Math.PI*2; while(want-ringRot<-Math.PI) want+=Math.PI*2; return want; };
+    const frontIndex=()=>{ let best=0,bd=1e9; cans.forEach(g=>{ let d=g.userData.a+ringRot; d=Math.atan2(Math.sin(d),Math.cos(d)); if(Math.abs(d)<bd){bd=Math.abs(d);best=g.userData.i;} }); return best; };
+
+    function select(i){
+      applyMood(moods[i]);
+      if(moodBar) moodBar.querySelectorAll('.mood').forEach((b,j)=>{ const m=moods[i];
+        b.classList.toggle('active',j===i); b.style.borderColor=j===i?m.c2:'rgba(255,255,255,.15)'; b.style.background=j===i?m.c2+'22':'rgba(255,255,255,.05)'; });
+      ringTgt=nearestTgt(i);
+      const r=cv.getBoundingClientRect(); if(typeof burst==='function') burst(r.left+r.width/2, r.top+r.height*0.42, moods[i].c2);
+      if(typeof fizzSound==='function') fizzSound();
+      if(typeof showToast==='function') showToast(`${moods[i].key} — ${moods[i].flavor} 🥤`);
+    }
+
+    const ray=new THREE.Raycaster(), ndc=new THREE.Vector2();
+    function pick(cx,cy){ const r=cv.getBoundingClientRect();
+      ndc.x=((cx-r.left)/r.width)*2-1; ndc.y=-((cy-r.top)/r.height)*2+1;
+      ray.setFromCamera(ndc,cam); const hit=ray.intersectObjects(bodies)[0];
+      if(hit){ const g=cans.find(c=>c.userData.body===hit.object); if(g){ select(g.userData.i); return; } }
+      select(frontIndex()); }
+
+    const dn=(x,y)=>{ dragging=true; sx=x; moved=0; vel=0; downX=x; downY=y; lastAct=performance.now(); };
+    const mv=x=>{ if(!dragging) return; const dx=x-sx; moved+=Math.abs(dx); ringTgt+=dx*0.006; vel=dx*0.006; sx=x; lastAct=performance.now(); };
+    const upp=(x,y)=>{ if(!dragging) return; dragging=false; lastAct=performance.now(); if(moved<7) pick(downX,downY); };
+    cv.addEventListener('mousedown',e=>{ e.preventDefault(); dn(e.clientX,e.clientY); });
+    addEventListener('mousemove',e=>mv(e.clientX));
+    addEventListener('mouseup',e=>upp(e.clientX,e.clientY));
+    cv.addEventListener('touchstart',e=>{ const t=e.touches[0]; dn(t.clientX,t.clientY); },{passive:true});
+    addEventListener('touchmove',e=>{ if(dragging) mv(e.touches[0].clientX); },{passive:true});
+    addEventListener('touchend',e=>{ const t=e.changedTouches[0]; upp(t.clientX,t.clientY); });
+    new IntersectionObserver(es=>vis=es[0].isIntersecting,{threshold:0}).observe(cv);
+
+    function loop(){ requestAnimationFrame(loop); if(!vis) return;
+      if(!dragging){ ringTgt+=vel; vel*=0.94; if(Math.abs(vel)<0.0004) vel=0;
+        if(performance.now()-lastAct>3500) ringTgt+=0.0032; }         // idle showroom spin
+      ringRot+=(ringTgt-ringRot)*0.12; ring.rotation.y=ringRot;
+      const fi=frontIndex();
+      cans.forEach(g=>{ const s=g.userData.i===fi?1.13:0.9; g.scale.x+=(s-g.scale.x)*0.12; g.scale.y=g.scale.z=g.scale.x; });
+      renderer.render(scene,cam);
+    }
+    loop();
+    const cur = window.__mood ? moods.indexOf(window.__mood) : 0; ringTgt=nearestTgt(cur>=0?cur:0);
+  }
 })();
 </script>
 </body>
