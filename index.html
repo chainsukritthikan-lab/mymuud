@@ -384,6 +384,15 @@
   @keyframes expUp{ from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:none} }
   @keyframes expPop{ from{opacity:0;transform:scale(.7)} to{opacity:1;transform:none} }
 
+  /* Lite mode — for older GPUs / flickering displays */
+  #liteBtn{ position:fixed; left:20px; bottom:72px; z-index:95; }
+  @media (max-width:640px){ #liteBtn{ bottom:150px; } }
+  body.lite .grain, body.lite .aurora, body.lite #spot, body.lite .goo-wrap,
+  body.lite #bgCanvas, body.lite .wm{ display:none !important; }
+  body.lite .film-glow{ filter:none; opacity:.4; }
+  body.lite *{ backdrop-filter:none !important; }
+  body.lite .can-float{ animation:none; }
+
   /* Music equalizer */
   .eq{ display:flex; align-items:flex-end; gap:2px; height:16px; color:var(--accent); }
   .eq i{ width:3px; height:5px; border-radius:2px; background:currentColor; display:block; }
@@ -1040,6 +1049,12 @@
   <span id="musicLabel">Play chill</span>
 </button>
 
+<!-- Lite mode toggle -->
+<button id="liteBtn" data-hover aria-label="Toggle lite mode"
+  class="flex items-center gap-2 rounded-full border border-white/15 bg-white/5 backdrop-blur-xl px-4 py-2.5 text-sm font-semibold transition hover:bg-white/10">
+  ⚡ <span id="liteLabel">Lite mode</span>
+</button>
+
 <!-- Side dot navigation -->
 <nav id="dots" class="hidden xl:flex fixed right-6 top-1/2 -translate-y-1/2 z-40 flex-col gap-3.5" aria-label="Sections"></nav>
 
@@ -1415,7 +1430,8 @@ document.querySelectorAll('.scramble').forEach(el=>{ const real=el.dataset.text,
 
 const palette=()=>{ const s=getComputedStyle(document.documentElement);
   return [s.getPropertyValue('--c1'),s.getPropertyValue('--c2'),s.getPropertyValue('--c3'),'#ffffff'].map(x=>x.trim()); };
-function fizz(x,y){ const el=document.createElement('div'); el.className='fizz';
+function fizz(x,y){ if(document.body.classList.contains('lite')) return;
+  const el=document.createElement('div'); el.className='fizz';
   const s=4+Math.random()*8,col=palette()[(Math.random()*4)|0];
   el.style.width=el.style.height=s+'px'; el.style.left=(x-s/2)+'px'; el.style.top=(y-s/2)+'px';
   el.style.setProperty('--ex',(Math.random()*40-20)+'px');
@@ -1472,7 +1488,9 @@ let raveSpeed = 1;
   const mk=(y)=>({x:Math.random()*W,y:y!=null?y:H+Math.random()*H,r:(3+Math.random()*20)*DPR,sp:(0.3+Math.random()*0.9)*DPR,drift:(Math.random()*0.5-0.25)*DPR,ph:Math.random()*Math.PI*2,a:0.05+Math.random()*0.28,vx:0,vy:0});
   for(let i=0;i<N;i++) parts.push(mk(Math.random()*H));
   const hex=h=>{h=h.replace('#','');return[parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)];};
-  function draw(){ ctx.clearRect(0,0,W,H);
+  function draw(){
+    if(document.body.classList.contains('lite')){ requestAnimationFrame(draw); return; }
+    ctx.clearRect(0,0,W,H);
     const hx=bgHue.trim(); const [r,g,b]=hex(hx.length===7?hx:'#FF3E9A');
     const mxp=window.__m.x*DPR, myp=window.__m.y*DPR, RAD=120*DPR;
     parts.forEach(p=>{
@@ -1982,8 +2000,10 @@ const Cart=(function(){
   catch(e){ fallback(); return; }
 
   const W=760, H=900;
-  renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));
+  const dprFor=()=>document.body.classList.contains('lite') ? 1 : Math.min(devicePixelRatio||1,2);
+  renderer.setPixelRatio(dprFor());
   renderer.setSize(W,H,false);
+  addEventListener('muud-lite', ()=>{ renderer.setPixelRatio(dprFor()); renderer.setSize(W,H,false); });
   const scene=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(30, W/H, 0.1, 50);
   cam.position.set(0, 0.1, 9.6);
@@ -2365,6 +2385,19 @@ const Cart=(function(){
   addEventListener('scroll', spy, {passive:true}); spy();
 })();
 
+/* ===== Lite mode — smoother on older GPUs / flickering displays ===== */
+(function(){
+  const btn=document.getElementById('liteBtn'); if(!btn) return;
+  const label=document.getElementById('liteLabel');
+  const set=on=>{ document.body.classList.toggle('lite', on);
+    label.textContent = on ? 'Lite: ON' : 'Lite mode';
+    dispatchEvent(new CustomEvent('muud-lite',{detail:on}));
+    try{ localStorage.setItem('muudLite', on?'1':'0'); }catch(e){} };
+  btn.addEventListener('click', ()=>{ const on=!document.body.classList.contains('lite'); set(on);
+    showToast(on ? '⚡ Lite mode ON — smoother & flicker-free' : '✨ Full effects restored'); });
+  try{ if(localStorage.getItem('muudLite')==='1') set(true); }catch(e){}
+})();
+
 /* ===== Share / growth loop ===== */
 (function(){
   const box=document.getElementById('shareBtn'); if(!box) return;
@@ -2602,7 +2635,9 @@ const Cart=(function(){
     if(started) return; started=true;
     const W=760,H=440;
     const renderer=new THREE.WebGLRenderer({canvas:cv, antialias:true, alpha:true});
-    renderer.setPixelRatio(Math.min(devicePixelRatio||1,2)); renderer.setSize(W,H,false);
+    const dprFor=()=>document.body.classList.contains('lite') ? 1 : Math.min(devicePixelRatio||1,2);
+    renderer.setPixelRatio(dprFor()); renderer.setSize(W,H,false);
+    addEventListener('muud-lite', ()=>{ renderer.setPixelRatio(dprFor()); renderer.setSize(W,H,false); });
     const scene=new THREE.Scene();
     const cam=new THREE.PerspectiveCamera(34,W/H,0.1,50); cam.position.set(0,0.5,7.6); cam.lookAt(0,-0.1,0);
     scene.add(new THREE.AmbientLight(0xffffff,0.75));
