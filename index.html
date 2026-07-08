@@ -3,8 +3,10 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>MyMuuD® — Premium Sparkling Mood Water | 0 Sugar · 0 Cal · pH Balanced</title>
-<meta name="description" content="MyMuuD PINK — 0 Sugar, 0 Calorie, pH Balance. Drink Your Mood, Refresh Your Mind." />
+<title>MyMuuD® มาย มู้ด — น้ำซ่าอารมณ์ดี 0 น้ำตาล | Premium Sparkling Mood Water</title>
+<meta name="description" content="MyMuuD (มาย มู้ด) — น้ำซ่าไม่มีน้ำตาล 0 แคลอรี่ pH สมดุล 330mL สั่งออนไลน์ส่งทั่วไทย · Premium sparkling mood water, 0 sugar, pH balanced. Drink Your Mood." />
+<link rel="canonical" href="https://chainsukritthikan-lab.github.io/mymuud/" />
+<meta property="og:url" content="https://chainsukritthikan-lab.github.io/mymuud/" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='100' y2='100'%3E%3Cstop offset='0' stop-color='%238B5CF6'/%3E%3Cstop offset='1' stop-color='%2338BDF8'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M20 78 V38 C20 22 42 22 50 40 C58 22 80 22 80 38 V78' stroke='url(%23g)' stroke-width='11' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E" />
 <meta property="og:title" content="MyMuuD — Drink Your Mood" />
 <meta property="og:description" content="0 Sugar · 0 Calorie · pH Balance · 330 mL. Five moods, one you. มาย มู้ด" />
@@ -27,6 +29,7 @@
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
+    { "@type": "Question", "name": "จ่ายเงินยังไง? How do I pay?", "acceptedAnswer": { "@type": "Answer", "text": "สแกน QR จ่ายผ่าน TrueMoney หรือแอปธนาคารใดก็ได้ แล้วส่งออเดอร์พร้อมสลิปทาง LINE — Scan the QR with TrueMoney or any Thai bank app, then send your order via LINE." } },
     { "@type": "Question", "name": "Is MyMuuD really zero sugar?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — sweetened with a balanced stevia blend. No sucrose, no syrup, lab-verified per batch." } },
     { "@type": "Question", "name": "Is it soda or sparkling water?", "acceptedAnswer": { "@type": "Answer", "text": "pH-balanced sparkling water with natural fruit character — around pH 7 versus pH 2.5 for regular soda." } },
     { "@type": "Question", "name": "Does MyMuuD contain caffeine?", "acceptedAnswer": { "@type": "Answer", "text": "No. All five moods are completely caffeine-free." } },
@@ -633,6 +636,9 @@
             <i data-lucide="cup-soda" class="w-5 h-5"></i> <span id="resCta">Sip this mood</span></a>
           <button data-hover id="quizRetry" class="rounded-2xl border border-white/20 bg-white/5 px-7 py-4 font-semibold text-white/90 hover:bg-white/10 transition flex items-center gap-2">
             <i data-lucide="rotate-ccw" class="w-5 h-5"></i> Try again</button>
+          <button data-hover class="rounded-2xl border border-white/20 bg-white/5 px-7 py-4 font-semibold text-white/90 hover:bg-white/10 transition flex items-center gap-2"
+            onclick="window.__shareMuud&&window.__shareMuud('มู้ดวันนี้ของฉันคือ '+document.getElementById('resTitle').textContent+' 🫧 มาเช็คมู้ดของคุณบ้าง!')">
+            <i data-lucide="share-2" class="w-5 h-5" style="color:var(--accent)"></i> Share my mood</button>
         </div>
       </div>
     </div>
@@ -646,7 +652,8 @@
     <div class="reveal text-center max-w-2xl mx-auto">
       <span class="text-sm font-semibold tracking-widest uppercase" style="color:var(--accent)">Why MyMuuD</span>
       <h2 class="mt-3 font-display font-extrabold text-4xl sm:text-5xl tracking-tight">Refreshment, <span class="grad-text">reimagined.</span></h2>
-      <p class="mt-4 text-white/60">Every can is engineered to lift your mood without a single compromise.</p></div>
+      <p class="mt-4 text-white/60">ทุกกระป๋องออกแบบมาเพื่อให้คุณอารมณ์ดี โดยไม่ต้องแลกกับสุขภาพ<br/>
+        <span class="text-white/40 text-sm">Every can is engineered to lift your mood without a single compromise.</span></p></div>
     <div class="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="featureGrid"></div>
   </div>
 </section>
@@ -739,7 +746,7 @@
         <div id="labActions" class="mt-3 hidden grid-cols-2 gap-3">
           <button id="labDownload" data-hover class="rounded-2xl border border-white/20 bg-white/5 px-5 py-3.5 font-semibold hover:bg-white/10 transition flex items-center justify-center gap-2"><i data-lucide="download" class="w-5 h-5" style="color:var(--accent)"></i> Save card</button>
           <button id="labShare" data-hover class="rounded-2xl border border-white/20 bg-white/5 px-5 py-3.5 font-semibold hover:bg-white/10 transition flex items-center justify-center gap-2"><i data-lucide="share-2" class="w-5 h-5" style="color:var(--accent)"></i> Share</button>
-          <button id="labAddCart" data-hover class="col-span-2 btn-glow rounded-2xl bg-gradient-to-r from-[var(--c1)] via-[var(--c2)] to-[var(--c3)] px-5 py-3.5 font-semibold flex items-center justify-center gap-2"><i data-lucide="shopping-bag" class="w-5 h-5"></i> Add my custom can — ฿55</button>
+          <button id="labAddCart" data-hover class="col-span-2 btn-glow rounded-2xl bg-gradient-to-r from-[var(--c1)] via-[var(--c2)] to-[var(--c3)] px-5 py-3.5 font-semibold flex items-center justify-center gap-2"><i data-lucide="shopping-bag" class="w-5 h-5"></i> Add my custom can — ฿45</button>
         </div>
       </div>
 
@@ -959,6 +966,7 @@
           <li><a href="#faq" data-hover class="hover:text-white transition">FAQ</a></li>
           <li><a href="#" data-hover class="hover:text-white transition">Shipping &amp; Delivery</a></li>
           <li><a href="#" data-hover class="hover:text-white transition">Wholesale</a></li>
+          <li><a href="https://line.me/ti/p/9aF3u096H4" target="_blank" rel="noopener" data-hover class="hover:text-white transition" style="color:var(--accent)">💬 สั่งผ่าน LINE</a></li>
           <li><a href="mailto:hello@mymuud.com" data-hover class="hover:text-white transition">hello@mymuud.com</a></li>
         </ul>
       </div>
@@ -968,7 +976,8 @@
       <div class="flex items-center gap-5 text-xs text-white/40">
         <a href="#" data-hover class="hover:text-white transition">Privacy Policy</a>
         <a href="#" data-hover class="hover:text-white transition">Terms of Service</a>
-        <span class="hidden lg:inline text-white/15 select-none" title="psst… try it">↑↑↓↓←→←→BA</span>
+        <button data-hover class="hover:text-white/60 transition" onclick="try{localStorage.removeItem('muudIntroSeen')}catch(e){};scrollTo(0,0);location.reload()">🎬 Replay intro</button>
+        <button class="hidden lg:inline text-white/15 select-none hover:text-white/50 transition" title="psst… click me" data-hover onclick="window.__rave&&window.__rave()">↑↑↓↓←→←→BA</button>
       </div>
       <div class="flex items-center gap-2 text-[10px] font-bold text-white/50">
         <span class="rounded border border-white/15 bg-white/5 px-2 py-1">VISA</span>
@@ -1013,6 +1022,8 @@
   <div class="p-5">
     <div class="flex justify-between mb-4 text-sm text-white/70"><span>Total</span><span id="cartTotal" class="font-bold text-white text-lg">฿0</span></div>
     <button id="checkout" data-hover class="btn-glow w-full rounded-2xl bg-gradient-to-r from-[var(--c1)] via-[var(--c2)] to-[var(--c3)] px-6 py-3.5 font-semibold">Checkout</button>
+    <a href="https://line.me/ti/p/9aF3u096H4" target="_blank" rel="noopener" data-hover
+       class="block mt-3 text-center text-xs text-white/45 hover:text-white transition">มีคำถามก่อนสั่ง? ทัก LINE เราได้เลย 💬</a>
   </div>
 </div>
 
@@ -1432,6 +1443,7 @@ addEventListener('scroll',()=>{ document.getElementById('navPill').classList.tog
     idx = (k===seq[idx]) ? idx+1 : (k===seq[0]?1:0);
     if(idx===seq.length){ idx=0; toggleRave(); }
   });
+  window.__rave=()=>toggleRave();
   function toggleRave(){
     on=!on; const t=document.getElementById('toast');
     if(on){
@@ -1556,7 +1568,7 @@ window.showToast = (msg, ms=1900)=>{ const t=document.getElementById('toast');
 
 /* ===== Scrollspy — nav highlights the section you're in ===== */
 (function(){
-  const ids=['home','quiz','benefits','lineup','product','shop'];
+  const ids=['home','quiz','benefits','lineup','lab','product','shop'];
   const links=[...document.querySelectorAll('.navlink')];
   function spy(){
     let cur='home';
@@ -1714,7 +1726,9 @@ const Cart=(function(){
          </div>
          <button id="paidBtn" data-hover class="btn-glow mt-4 w-full rounded-2xl bg-gradient-to-r from-[var(--c1)] via-[var(--c2)] to-[var(--c3)] px-6 py-4 font-semibold flex items-center justify-center gap-2">
            <i data-lucide="check-circle-2" class="w-5 h-5"></i> I've paid — send my order via LINE</button>
-         <p class="mt-3 text-center text-[11px] text-white/40">The QR includes the exact amount. After paying, tap the button — your order copies itself, then paste it in LINE with your slip &amp; address.</p>`
+         <div class="mt-3 text-center text-[11px] leading-relaxed text-white/50">
+           1️⃣ สแกน QR ด้วย TrueMoney / แอปธนาคาร → 2️⃣ จ่ายตามยอด → 3️⃣ กดปุ่มด้านบน<br/>
+           <span class="text-white/35">ออเดอร์จะคัดลอกอัตโนมัติ — วางใน LINE พร้อมสลิปและที่อยู่จัดส่ง</span></div>`
       : `<button id="placeOrder" data-hover class="btn-glow mt-6 w-full rounded-2xl bg-gradient-to-r from-[var(--c1)] via-[var(--c2)] to-[var(--c3)] px-6 py-4 font-semibold">Place Order — ฿${tot}</button>
          <p class="mt-3 text-center text-[11px] text-white/35">Demo checkout — no payment is taken yet.</p>`;
     Modal.open(`
@@ -1749,7 +1763,8 @@ const Cart=(function(){
             <div class="okring"><i data-lucide="check" class="w-10 h-10" style="color:var(--accent)"></i></div>
             <h3 class="mt-5 font-display font-extrabold text-3xl">Almost done!</h3>
             <p class="mt-2 text-white/60">Order <b class="text-white">${no}</b> copied 📋<br/>Paste it in our LINE chat with your <b class="text-white">payment slip</b> and <b class="text-white">delivery address</b> 💗</p>
-            <button id="okDone" data-hover class="mt-7 rounded-2xl border border-white/20 bg-white/5 px-8 py-3.5 font-semibold hover:bg-white/10 transition">Done</button>
+            <a href="${PAY_CONFIG.lineUrl}" target="_blank" rel="noopener" data-hover class="btn-glow inline-flex items-center gap-2 mt-6 rounded-2xl bg-gradient-to-r from-[var(--c1)] via-[var(--c2)] to-[var(--c3)] px-8 py-3.5 font-semibold">💬 เปิด LINE ส่งออเดอร์</a>
+            <button id="okDone" data-hover class="mt-3 block mx-auto rounded-2xl border border-white/20 bg-white/5 px-8 py-3 font-semibold hover:bg-white/10 transition">Done</button>
           </div>`;
         lucide.createIcons();
         burst(innerWidth/2, innerHeight/2); if(typeof fizzSound==='function') fizzSound();
@@ -2265,6 +2280,8 @@ const Cart=(function(){
 /* ===== FAQ accordion ===== */
 (function(){
   const faqs=[
+    ['จ่ายเงินยังไง? · How do I pay?',
+     'ง่ายมาก! กด Checkout แล้วสแกน QR ด้วย TrueMoney หรือแอปธนาคารไหนก็ได้ ยอดเงินจะใส่มาให้เป๊ะ ๆ จ่ายเสร็จกดปุ่มส่งออเดอร์ผ่าน LINE พร้อมแนบสลิปกับที่อยู่จัดส่ง — เท่านี้รอรับมู้ดที่บ้านได้เลย 🛵'],
     ['Is MyMuuD really zero sugar?',
      'Yes — we sweeten with a balanced stevia blend. No sucrose, no syrup, no hidden carbs, and every batch is lab-verified. All the treat, none of the crash.'],
     ['Is it soda or sparkling water?',
@@ -2349,6 +2366,11 @@ const Cart=(function(){
   const trigger=box.querySelector('button');
   const url=location.href.split('#')[0];
   const text='MyMuuD — Drink Your Mood 🫧 0 sugar · 0 calories · pH balanced. Which mood are you?';
+  window.__shareMuud=async custom=>{
+    const data={ title:'MyMuuD', text:custom||text, url };
+    if(navigator.share){ try{ await navigator.share(data); return; }catch(e){ if(e.name==='AbortError') return; } }
+    try{ await navigator.clipboard.writeText((custom||text)+' '+url); showToast('Copied — share it anywhere! 📋'); }catch(e){}
+  };
   // On phones with native share, one tap = OS share sheet (best for LINE etc.)
   trigger.addEventListener('click', async ()=>{
     if(navigator.share && matchMedia('(hover:none)').matches){
@@ -2504,7 +2526,7 @@ const Cart=(function(){
   });
   document.getElementById('labShare').addEventListener('click', async ()=>{
     draw();
-    const txt=`I just brewed "${made.fname}" at the MyMuuD Mood Lab 🧪 what's yours? #DrinkYourMood`;
+    const txt=`ฉันเพิ่งปรุงรส "${made.fname}" ที่ MyMuuD Mood Lab 🧪 มาปรุงมู้ดของคุณบ้าง! #DrinkYourMood`;
     if(navigator.share){
       try{ const blob=await new Promise(r=>cv.toBlob(r,'image/png'));
         const file=new File([blob],'mymuud.png',{type:'image/png'});
