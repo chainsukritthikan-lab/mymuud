@@ -425,7 +425,7 @@
   @keyframes eqbar{ 0%,100%{height:4px} 50%{height:16px} }
 
   ::selection{ background:color-mix(in srgb,var(--accent) 40%,transparent); color:#fff; }
-  @media (prefers-reduced-motion:reduce){ *{animation:none!important;transition:none!important} .reveal{opacity:1;transform:none} #intro{display:none} }
+  /* cinematic brand site — animations always on (owner's choice); ⚡ Lite mode is the opt-out */
 </style>
 </head>
 
@@ -1138,7 +1138,7 @@ function ppPayload(id, amount){
 (function(){
   const intro=document.getElementById('intro');
   const unlock=()=>document.body.classList.remove('locked');
-  if(matchMedia('(prefers-reduced-motion: reduce)').matches){ intro.classList.add('done'); unlock(); return; }
+  // intro always plays — this is the show
   const scenes=['is1','is2'].map(id=>document.getElementById(id));
   const timers=[]; let finished=false;
   const at=(fn,t)=>timers.push(setTimeout(fn,t));
@@ -1590,7 +1590,7 @@ window.showToast = (msg, ms=1900)=>{ const t=document.getElementById('toast');
 let wiping=false;
 function wipeTo(target, label, sub){
   if(!target) return;
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reduced = false;   // page-wipes always animate
   // already there? just glide
   if(Math.abs(target.getBoundingClientRect().top) < 80){ target.scrollIntoView({behavior:'smooth'}); return; }
   if(reduced){ target.scrollIntoView(); return; }
@@ -2160,7 +2160,7 @@ const Cart=(function(){
   }
 
   /* ── physics: drag spin + inertia + turntable + scroll-spin + parallax ── */
-  const DEG=Math.PI/180, noMo=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const DEG=Math.PI/180, noMo=false;   // full motion always — the pour & turntable are the product
   let base=180, vel=0, hover=0, hoverTgt=0, dragging=false, sx=0, moved=0,
       lastAct=performance.now(), punchAt=-1e9, rx=0, ry=0, vis=true,
       explodeAt=-1e9, rollAt=-1e9, tiltX=0, tiltY=0, tgtTiltX=0, tgtTiltY=0, gyroAsked=false, px=0, py=0,
