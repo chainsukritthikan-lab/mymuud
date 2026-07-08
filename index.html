@@ -189,6 +189,8 @@
   .fcap .interactive{ pointer-events:none; }
   .fcap.active .interactive{ pointer-events:auto; }
   .film-cue{ position:absolute; bottom:22px; left:50%; transform:translateX(-50%); z-index:3; }
+  .film-cue, .film-rail{ transition:opacity .6s ease; }
+  #canStage.pouring .fcap, #canStage.pouring .film-cue, #canStage.pouring .film-rail{ opacity:0 !important; pointer-events:none; }
   .film-rail{ position:absolute; left:26px; top:50%; transform:translateY(-50%); z-index:3; display:flex; flex-direction:column; gap:11px; }
   .film-rail span{ width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,.2); transition:all .35s var(--ease); }
   .film-rail span.on{ background:var(--accent); box-shadow:0 0 14px var(--accent); height:26px; border-radius:5px; }
@@ -2099,7 +2101,7 @@ const Cart=(function(){
   }
   paint();
   if(document.fonts && document.fonts.ready) document.fonts.ready.then(paint);
-  const _am=applyMood; applyMood=m=>{ _am(m); paint(); };
+  const _am=applyMood; applyMood=m=>{ _am(m); paint(); if(typeof dropMat!=='undefined') dropMat.color.set(m.c2); };
 
   /* ── geometry: body + tapered neck + chime + lid + pull tab ── */
   const R=1, BODY=3.1;
@@ -2139,6 +2141,25 @@ const Cart=(function(){
   const updRect=()=>{ crect=cv.getBoundingClientRect(); };
   addEventListener('scroll', updRect, {passive:true}); addEventListener('resize', updRect);
 
+  /* liquid droplets for the opening pour — the can empties, then the site appears */
+  const dropGeo=new THREE.SphereGeometry(1,8,8);
+  const dropMat=new THREE.MeshStandardMaterial({color:0xFF3E9A, transparent:true, opacity:.9, roughness:.2, metalness:.1});
+  const drops=[];
+  for(let i=0;i<90;i++){ const d=new THREE.Mesh(dropGeo,dropMat);
+    d.visible=false; d.userData={on:false,vx:0,vy:0,vz:0}; root.add(d); drops.push(d); }
+  let pourEnded=false, pourSnd=false, curTilt=0;
+  function spawnDrop(n){
+    for(let i=0;i<n;i++){
+      const d=drops.find(x=>!x.userData.on); if(!d) return;
+      tmp.set(0.1, BODY/2+0.28, 0); canG.localToWorld(tmp);
+      d.position.copy(tmp);
+      d.position.x+=Math.random()*0.14; d.position.z+=(Math.random()-0.5)*0.1;
+      d.scale.setScalar(0.05+Math.random()*0.07);
+      const u=d.userData; u.on=true; d.visible=true;
+      u.vx=0.018+Math.random()*0.024; u.vy=-0.004-Math.random()*0.012; u.vz=(Math.random()-0.5)*0.012;
+    }
+  }
+
   /* ── physics: drag spin + inertia + turntable + scroll-spin + parallax ── */
   const DEG=Math.PI/180, noMo=matchMedia('(prefers-reduced-motion: reduce)').matches;
   let base=180, vel=0, hover=0, hoverTgt=0, dragging=false, sx=0, moved=0,
@@ -2151,6 +2172,7 @@ const Cart=(function(){
     if(typeof DeviceOrientationEvent!=='undefined' && DeviceOrientationEvent.requestPermission)
       DeviceOrientationEvent.requestPermission().catch(()=>{}); }
   new IntersectionObserver(es=>vis=es[0].isIntersecting,{threshold:0}).observe(stage);
+  if(!noMo) stage.classList.add('pouring');   // page content stays hidden until the can has poured
 
   stage.addEventListener('mousemove', e=>{ if(dragging) return; const r=stage.getBoundingClientRect();
     hoverTgt=((e.clientX-r.left)/r.width-0.5)*30; lastAct=performance.now(); });
@@ -2224,10 +2246,28 @@ const Cart=(function(){
     const entS = ek<=0 ? 0 : 1+2.70158*Math.pow(ek-1,3)+1.70158*Math.pow(ek-1,2);  // back-out overshoot
     const entSpin=(1-entEase)*540, entY=(1-entEase)*-3.2;
 
+    // ── the pour: the can tips over and empties itself; the site appears when it's done ──
+    let tilt=0;
+    if(!noMo && entranceAt>0 && !pourEnded){
+      const pt=t-entranceAt-1650;
+      if(p>0.12){ pourEnded=true; stage.classList.remove('pouring'); }        // user scrolled — skip ahead
+      else if(pt>=0){
+        if(pt<2400){ const k=Math.min(1,pt/700); tilt=(1-Math.pow(1-k,3))*2.05;
+          if(!pourSnd){ pourSnd=true; fizzSound(); }
+          if(tilt>1.4) spawnDrop(3);
+        } else if(pt<3050){ const k=(pt-2400)/650; tilt=(1-(k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2))*2.05; }
+        else { pourEnded=true; stage.classList.remove('pouring'); punchAt=t;  // can is empty — reveal!
+          const r=cv.getBoundingClientRect();
+          burst(r.left+r.width/2, r.top+r.height*0.5); fizzSound(); }
+      }
+    }
+    curTilt+=(tilt-curTilt)*0.16;                                             // always smooth, even on skip
+
     canG.rotation.y=(base+hover+scrollRot+entSpin)*DEG;
     let roll=0; const dr=t-rollAt;                                     // double-click barrel roll
     if(dr<820){ const k=dr/820, e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2; roll=e*Math.PI*2; }
     canG.rotation.x=Math.sin(p*Math.PI)*0.14 + roll;                   // nod + barrel roll
+    canG.rotation.z=-curTilt;                                          // pour tilt (to the right)
     canG.position.y=Math.sin(t*0.0012)*0.1 + entY;                     // float bob + entrance rise
     cam.position.z=9.6 - Math.sin(p*Math.PI)*1.6;                      // dolly in to inspect, pull back at the ends
     // exploded view — lid flies off, spins, and springs back
@@ -2256,6 +2296,9 @@ const Cart=(function(){
       b.position.x+=u.vx+Math.sin(u.ph)*0.003; b.position.y+=u.vy+u.sp; b.position.z+=u.vz;
       const pop=0.9+0.1*Math.sin(u.ph*3); b.scale.setScalar(u.sz*pop);         // gentle throb
       if(b.position.y>3.7 || b.position.y<-4.2 || Math.abs(b.position.x)>6) resetB(b); });
+    drops.forEach(d=>{ const u=d.userData; if(!u.on) return;                 // falling liquid
+      d.position.x+=u.vx; d.position.y+=u.vy; d.position.z+=u.vz; u.vy-=0.0036;
+      if(d.position.y<-4.5){ u.on=false; d.visible=false; } });
     renderer.render(scene,cam);
   }
   requestAnimationFrame(anim);
