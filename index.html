@@ -1138,8 +1138,7 @@ function ppPayload(id, amount){
 (function(){
   const intro=document.getElementById('intro');
   const unlock=()=>document.body.classList.remove('locked');
-  let seen=false; try{ seen=sessionStorage.getItem('muudIntroSeen')==='1'; }catch(e){}
-  if(seen || matchMedia('(prefers-reduced-motion: reduce)').matches){ intro.classList.add('done'); unlock(); return; }
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){ intro.classList.add('done'); unlock(); return; }
   const scenes=['is1','is2'].map(id=>document.getElementById(id));
   const timers=[]; let finished=false;
   const at=(fn,t)=>timers.push(setTimeout(fn,t));
