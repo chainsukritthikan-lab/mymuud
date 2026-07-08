@@ -190,6 +190,7 @@
   .fcap.active .interactive{ pointer-events:auto; }
   .film-cue{ position:absolute; bottom:22px; left:50%; transform:translateX(-50%); z-index:3; }
   .film-cue, .film-rail{ transition:opacity .6s ease; }
+  #canStage.landing .fcap, #canStage.landing .film-cue, #canStage.landing .film-rail{ opacity:0 !important; pointer-events:none; }
   .film-rail{ position:absolute; left:26px; top:50%; transform:translateY(-50%); z-index:3; display:flex; flex-direction:column; gap:11px; }
   .film-rail span{ width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,.2); transition:all .35s var(--ease); }
   .film-rail span.on{ background:var(--accent); box-shadow:0 0 14px var(--accent); height:26px; border-radius:5px; }
@@ -2151,6 +2152,7 @@ const Cart=(function(){
     if(typeof DeviceOrientationEvent!=='undefined' && DeviceOrientationEvent.requestPermission)
       DeviceOrientationEvent.requestPermission().catch(()=>{}); }
   new IntersectionObserver(es=>vis=es[0].isIntersecting,{threshold:0}).observe(stage);
+  stage.classList.add('landing'); let landedOnce=false;   // page content waits until the can lands
 
   stage.addEventListener('mousemove', e=>{ if(dragging) return; const r=stage.getBoundingClientRect();
     hoverTgt=((e.clientX-r.left)/r.width-0.5)*30; lastAct=performance.now(); });
@@ -2223,13 +2225,18 @@ const Cart=(function(){
     const entEase=1-Math.pow(1-ek,3);
     const entS = ek<=0 ? 0 : 1+2.70158*Math.pow(ek-1,3)+1.70158*Math.pow(ek-1,2);  // back-out overshoot
     const entSpin=(1-entEase)*720, entY=(1-entEase)*-3.2;   // two full spins — the can IS the show
+    if(!landedOnce){
+      if(ek>=1){ landedOnce=true; stage.classList.remove('landing'); punchAt=t;   // touchdown! reveal the site
+        const r=cv.getBoundingClientRect(); burst(r.left+r.width/2, r.top+r.height*0.45); fizzSound(); }
+      else if(p>0.12){ landedOnce=true; stage.classList.remove('landing'); }      // user scrolled — no drama
+    }
 
     canG.rotation.y=(base+hover+scrollRot+entSpin)*DEG;
     let roll=0; const dr=t-rollAt;                                     // double-click barrel roll
     if(dr<820){ const k=dr/820, e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2; roll=e*Math.PI*2; }
     canG.rotation.x=Math.sin(p*Math.PI)*0.14 + roll;                   // nod + barrel roll
     canG.position.y=Math.sin(t*0.0012)*0.1 + entY;                     // float bob + entrance rise
-    cam.position.z=9.6 - Math.sin(p*Math.PI)*1.6;                      // dolly in to inspect, pull back at the ends
+    cam.position.z=9.6 - Math.sin(p*Math.PI)*1.6 - (1-entEase)*2.6;    // close-up on the spin, pulls back to land; film dolly after
     // exploded view — lid flies off, spins, and springs back
     const dex=t-explodeAt;
     if(dex<1300){ const k=dex/1300, lift=Math.sin(Math.min(k,1)*Math.PI);
