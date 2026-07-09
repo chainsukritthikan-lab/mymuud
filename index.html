@@ -500,7 +500,9 @@
         <a href="#lineup" class="navlink hover:text-white transition" data-hover>Lineup</a>
         <a href="#lab" class="navlink hover:text-white transition font-bold" data-hover style="color:var(--accent)">Mood Lab ★</a>
         <a href="#shop" class="navlink hover:text-white transition" data-hover>Shop</a></nav>
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2 sm:gap-3">
+        <button id="langBtn" data-hover aria-label="Switch language"
+          class="grid place-items-center h-10 px-2.5 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 transition text-xs font-bold">ไทย</button>
         <button id="cartBtn" data-hover aria-label="Open cart"
           class="grid place-items-center w-10 h-10 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 transition">
           <i data-lucide="shopping-cart" class="w-5 h-5"></i><span id="cartCount">0</span></button>
@@ -2871,6 +2873,86 @@ const Cart=(function(){
     }
     requestAnimationFrame(loop);
   }
+})();
+
+/* ═══════════ 🇹🇭 TH / EN LANGUAGE TOGGLE ═══════════ */
+(function(){
+  const btn=document.getElementById('langBtn'); if(!btn) return;
+  const dict={
+    // nav
+    'Home':'หน้าแรก','Mood Check':'เช็คมู้ด','Benefits':'ข้อดี','Lineup':'รสชาติ','Shop':'ช้อป',
+    'Mood Lab ★':'ห้องแล็บมู้ด ★','Buy Now':'สั่งเลย',
+    '🏠 Home':'🏠 หน้าแรก','💗 Mood Check':'💗 เช็คมู้ด','✨ Benefits':'✨ ข้อดี','🥤 Lineup':'🥤 รสชาติ','🛒 Shop':'🛒 ช้อป',
+    // film chapters
+    'The promise':'คำสัญญา','Zero sugar.':'ไม่มีน้ำตาล','Zero calories.':'ไม่มีแคลอรี่',
+    'All the sparkling flavor — none of the crash.':'ซ่าครบรส ไม่มีน้ำตาล ไม่มีดาวน์',
+    'The feel':'สัมผัส','Micro-':'ฟองซ่า','carbonated.':'ระดับไมโคร',
+    'Champagne-fine bubbles that dance to the last sip — never flat.':'ฟองละเอียดดุจแชมเปญ ซ่าถึงหยดสุดท้าย ไม่มีวันจืด',
+    'The science':'วิทยาศาสตร์','balanced.':'สมดุล',
+    'Real fruit character. Gentle on you. 🇹🇭 Crafted in Thailand.':'รสผลไม้แท้ อ่อนโยนต่อร่างกาย 🇹🇭 ผลิตในประเทศไทย',
+    'The planet':'โลกของเรา','Infinitely':'รีไซเคิลได้','recyclable.':'ไม่รู้จบ',
+    '100% aluminum · BPA-free lining · a good mood for you and the earth. ♻':'อะลูมิเนียม 100% · ไม่มี BPA · ดีต่อคุณและโลก ♻',
+    'Five moods.':'ห้ามู้ด','One you.':'หนึ่งคุณ','◈ Choose your muud':'◈ เลือกมู้ดของคุณ',
+    'Experience the Mood':'สัมผัสประสบการณ์มู้ด','Brew Your Own':'ปรุงมู้ดเอง',
+    'สั่งเลย — Shop ฿45':'สั่งเลย ฿45 🛒','▶ ดูเรื่องราว · watch the story':'▶ เลื่อนดูเรื่องราวของเรา',
+    // benefits
+    'Why MyMuuD':'ทำไมต้อง MyMuuD','Refreshment,':'ความสดชื่น','reimagined.':'ในแบบใหม่',
+    'Zero Sugar':'ไม่มีน้ำตาล','0 Calorie':'0 แคลอรี่','pH Balanced':'pH สมดุล','Ultra Fizzy':'ซ่าสุด ๆ','Natural Twist':'รสธรรมชาติ','Mood Boost':'บูสต์มู้ด',
+    'All the sparkling flavor, none of the sugar crash. Sweetened to perfection, guilt-free.':'ซ่าเต็มรส ไร้น้ำตาล หวานพอดีแบบไม่ต้องรู้สึกผิด',
+    'Sip freely all day long. A refreshing lift that keeps your goals perfectly on track.':'ดื่มได้ทั้งวันไม่ต้องกลัวอ้วน สดชื่นโดยไม่เสียเป้าหมายสุขภาพ',
+    'A clean, balanced pH for a smooth, crisp finish that feels as good as it tastes.':'pH สมดุล นุ่มละมุน อ่อนโยนต่อร่างกาย',
+    'Fine, lively carbonation that dances on your tongue — refreshment you can feel.':'ฟองละเอียดเต้นบนปลายลิ้น ความสดชื่นที่สัมผัสได้',
+    'Bright, real-fruit flavor profiles crafted for a youthful, energetic vibe.':'กลิ่นผลไม้แท้ สดใส มีพลัง',
+    'Every can is designed to reset your mind and lift your mood, one crisp sip at a time.':'ทุกกระป๋องออกแบบมาเพื่อรีเซ็ตใจและเติมมู้ดดี ทีละจิบ',
+    'Learn more':'ดูเพิ่มเติม',
+    // quiz
+    'How do you feel':'วันนี้คุณรู้สึก','today?':'อย่างไร?',
+    "No wrong answers — just tap what's closest. We'll match you a MyMuuD mood to sip on. 💗":'ไม่มีคำตอบผิด แตะอันที่ใกล้เคียงที่สุด แล้วเราจะจับคู่มู้ด MyMuuD ให้คุณ 💗',
+    'Stressed':'เครียด','Tired':'เหนื่อย','Happy':'มีความสุข','Chill':'ชิลล์','Focused':'โฟกัส',
+    'Try again':'ลองใหม่','Share my mood':'แชร์มู้ดของฉัน','Sip this mood':'จิบมู้ดนี้เลย',
+    '🔮 แตะ / จิ้ม / หมุน มู้ดของคุณ · poke & spin your mood':'🔮 แตะ จิ้ม หมุน — มู้ดของคุณเอง',
+    // lineup + lab
+    'The Lineup':'รสชาติทั้งหมด','Tap a can — the whole world changes to match. เลือกมู้ดของคุณ 🫧':'แตะกระป๋อง — ทั้งเว็บจะเปลี่ยนตามมู้ดของคุณ 🫧',
+    'drag to spin the carousel · click a can to choose its mood':'ลากเพื่อหมุน · คลิกกระป๋องเพื่อเลือกมู้ด',
+    '฿45 / can':'฿45 / กระป๋อง','＋ Quick add':'＋ หยิบใส่ตะกร้า',
+    'The Mood Lab · ★ signature':'ห้องแล็บมู้ด · ★ ซิกเนเจอร์','Five moods, or':'ห้ามู้ด หรือ','infinite you.':'คุณแบบไม่จำกัด',
+    "Blend two moods, name your own flavor, and we'll brew a one-of-a-kind MyMuuD — with a card you can save & share. 🧪":'ผสมสองมู้ด ตั้งชื่อรสของคุณเอง แล้วรับการ์ดสวย ๆ ไว้เซฟและแชร์ 🧪',
+    '◈ Your name':'◈ ชื่อของคุณ','◈ Base mood':'◈ มู้ดหลัก','◈ Splash of':'◈ ผสมกับ','Balance':'สัดส่วน',
+    'Brew My Mood':'ปรุงมู้ดของฉัน','Save card':'บันทึกการ์ด','Share':'แชร์','Add my custom can — ฿45':'หยิบกระป๋องของฉัน — ฿45',
+    // stats + reviews + compare + shop + faq
+    'Grams of Sugar':'กรัมน้ำตาล','Calories':'แคลอรี่','Balanced pH':'pH สมดุล','mL of Pure Vibe':'มล. แห่งความสดชื่น',
+    'The MuuD Fam':'ครอบครัว MuuD','Loved by':'ที่รักของ','good moods':'สายมู้ดดี','everywhere.':'ทุกที่',
+    'The Honest Comparison':'เปรียบเทียบกันชัด ๆ','Why switch to':'ทำไมต้องเปลี่ยนมา',
+    'Ready to':'พร้อม','drink your mood?':'ดื่มมู้ดของคุณหรือยัง?',
+    '◈ Flavor':'◈ รสชาติ','◈ Pack':'◈ แพ็ค','◈ Quantity':'◈ จำนวน','Total':'รวม','Add to Cart':'ใส่ตะกร้า','Find a Store':'ค้นหาร้านค้า',
+    'Good Questions':'คำถามยอดฮิต',"Everything you're":'ทุกเรื่องที่คุณ','wondering.':'สงสัย',
+    // footer + cart
+    'Company':'บริษัท','Support':'ช่วยเหลือ','Our Story':'เรื่องราวของเรา','Sustainability':'ความยั่งยืน','Press Kit':'สื่อประชาสัมพันธ์','Careers':'ร่วมงานกับเรา',
+    'Shipping & Delivery':'การจัดส่ง','Wholesale':'ขายส่ง','Privacy Policy':'นโยบายความเป็นส่วนตัว','Terms of Service':'ข้อกำหนดการใช้งาน',
+    'Your Cart':'ตะกร้าของคุณ','Checkout':'ชำระเงิน',
+    'Join the MuuD fam 💌':'เข้าร่วมครอบครัว MuuD 💌',
+    'New flavors, drops & good vibes in your inbox. No spam, ever.':'รสชาติใหม่ โปรโมชั่น และเรื่องดี ๆ ส่งถึงอีเมลคุณ ไม่มีสแปม',
+    'Subscribe':'สมัครรับข่าว','🎬 Replay intro':'🎬 ดูอินโทรอีกครั้ง',
+    'Premium sparkling mood water, crafted in Bangkok. Zero sugar, zero calories, perfectly pH-balanced — drink your mood.':'น้ำซ่าพรีเมียมจากกรุงเทพฯ ไม่มีน้ำตาล ไม่มีแคลอรี่ pH สมดุล — ดื่มมู้ดของคุณ',
+  };
+  let th=false;
+  function walk(fn){
+    const w=document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
+    let n; const skip={SCRIPT:1,STYLE:1};
+    while(n=w.nextNode()){ if(n.parentNode && skip[n.parentNode.nodeName]) continue; fn(n); }
+  }
+  function apply(on, silent){
+    th=on; btn.textContent=on?'EN':'ไทย';
+    walk(n=>{
+      if(on){ const key=n.textContent.trim(); if(!key) return;
+        const tr=dict[key]; if(tr){ if(n.__orig==null) n.__orig=n.textContent; n.textContent=n.textContent.replace(key,tr); } }
+      else if(n.__orig!=null){ n.textContent=n.__orig; }
+    });
+    try{ localStorage.setItem('muudLang', on?'th':'en'); }catch(e){}
+    if(!silent && typeof showToast==='function') showToast(on?'🇹🇭 เปลี่ยนเป็นภาษาไทยแล้ว':'🇬🇧 Switched to English');
+  }
+  btn.addEventListener('click', ()=>apply(!th));
+  try{ if(localStorage.getItem('muudLang')==='th') setTimeout(()=>apply(true,true), 400); }catch(e){}
 })();
 </script>
 </body>
