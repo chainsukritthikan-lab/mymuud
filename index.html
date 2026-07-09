@@ -1756,7 +1756,8 @@ const Cart=(function(){
   document.getElementById('checkout').addEventListener('click', ()=>{
     if(!items.length){ showToast('Cart is empty — add a mood first 🥤'); return; }
     const sub=items.reduce((s,i)=>s+SIZES[i.size].price*i.qty,0);
-    const ship=sub>=300?0:40, tot=sub+ship;
+    let disc=0; try{ if(localStorage.getItem('muudGold')==='1') disc=Math.round(sub*0.10); }catch(e){}
+    const ship=sub>=300?0:40, tot=sub-disc+ship;
     // Stripe Payment Links (real payments) — one pay button per pack size in the cart
     const LKEY=['single','pack6','pack12'];
     const groups=[...new Set(items.map(i=>i.size))].sort();
@@ -1791,6 +1792,7 @@ const Cart=(function(){
       </div>
       <div class="mt-4 pt-4 border-t border-white/10 space-y-1.5 text-sm">
         <div class="flex justify-between text-white/60"><span>Subtotal</span><span>฿${sub}</span></div>
+        ${disc? `<div class="flex justify-between font-semibold" style="color:var(--accent)"><span>🏆 Golden balloon −10%</span><span>−฿${disc}</span></div>`:''}
         <div class="flex justify-between text-white/60"><span>Shipping</span><span>${ship===0?'<b style="color:var(--accent)">FREE</b>':'฿'+ship}</span></div>
         <div class="flex justify-between font-display font-extrabold text-xl pt-1"><span>Total</span><span class="grad-text">฿${tot}</span></div>
       </div>
@@ -2190,7 +2192,15 @@ const Cart=(function(){
   function resetBalloon(g,init){
     const a=Math.random()*6.283, r=2.0+Math.random()*1.4;
     g.position.set(Math.cos(a)*r, init?(-4+Math.random()*8):(-4.6-Math.random()*2), Math.sin(a)*r);
-    g.visible=true; g.userData.alive=true;
+    const u=g.userData;
+    u.golden = !init && Math.random()<0.11;                       // 🏆 rare golden balloon
+    u.col = u.golden ? '#FFD700' : u.baseCol;
+    if(u.bm){ u.bm.color.set(u.col);
+      u.bm.metalness = u.golden ? .85 : .15;
+      u.bm.roughness = u.golden ? .14 : .2;
+      u.bm.emissive.set(u.golden ? 0x6b5200 : 0x000000); }
+    u.sp = u.golden ? .0115 : .006+Math.random()*.006;            // golden flies faster — earn it
+    g.visible=true; u.alive=true;
   }
   for(let i=0;i<6;i++){
     const col=BCOLS[i%BCOLS.length];
@@ -2200,7 +2210,7 @@ const Cart=(function(){
     const knot=new THREE.Mesh(knotGeo, bm); knot.position.y=-.47; knot.rotation.x=Math.PI;
     const str=new THREE.Mesh(strGeo, strMat); str.position.y=-1.05;
     g.add(body,knot,str);
-    g.userData={sp:.006+Math.random()*.006, ph:Math.random()*6.28, col, sx:null, sy:null, alive:true};
+    g.userData={sp:.006+Math.random()*.006, ph:Math.random()*6.28, col, baseCol:col, bm, golden:false, sx:null, sy:null, alive:true};
     resetBalloon(g,true); root.add(g); balloons.push(g);
   }
 
@@ -2231,10 +2241,19 @@ const Cart=(function(){
       let hitB=null, bd2=1e9;
       balloons.forEach(g=>{ const u=g.userData; if(!u.alive||u.sx==null) return;
         const d=Math.hypot(u.sx-px, u.sy-py); if(d<48 && d<bd2){ bd2=d; hitB=g; } });
-      if(hitB){ const u=hitB.userData; u.alive=false; hitB.visible=false;
-        burst(px,py,u.col); popSound(); popCount++;
-        if(popCount===1) showToast('🎈 POP! Get them all!');
-        else if(popCount%5===0) showToast(`🎈 ${popCount} balloons popped — สุดยอด!`);
+      if(hitB){ const u=hitB.userData; u.alive=false; hitB.visible=false; popCount++;
+        if(u.golden){                                                            // 🏆 JACKPOT
+          for(let i=0;i<3;i++) setTimeout(()=>burst(px+(Math.random()*90-45), py+(Math.random()*70-35), i%2?'#FFD700':'#FF3E9A'), i*150);
+          popSound(); fizzSound();
+          try{ localStorage.setItem('muudGold','1'); }catch(e){}
+          showToast('🏆 GOLDEN BALLOON! 10% off unlocked — already applied at checkout 🤫', 4500);
+        } else {
+          burst(px,py,u.col); popSound();
+          let best=0; try{ best=+localStorage.getItem('muudPops')||0; }catch(e){}
+          if(popCount===1) showToast('🎈 POP! Get them all — rumor says one is golden…');
+          else if(popCount%5===0) showToast(popCount>best? `🎈 ${popCount} popped — NEW RECORD!` : `🎈 ${popCount} popped · best: ${best}`);
+          try{ if(popCount>best) localStorage.setItem('muudPops', String(popCount)); }catch(e){}
+        }
         setTimeout(()=>resetBalloon(hitB), 1600+Math.random()*2600); return; }
       // did we tap a bubble? pop it 🫧
       let best=null, bd=1e9;
@@ -2342,6 +2361,7 @@ const Cart=(function(){
     balloons.forEach(g=>{ const u=g.userData; if(!u.alive) return;              // 🎈 drift up + sway
       u.ph+=0.008; g.position.y+=u.sp; g.position.x+=Math.sin(u.ph)*0.0035;
       g.rotation.z=Math.sin(u.ph*1.3)*0.12;
+      g.scale.setScalar(u.golden ? 1+Math.sin(u.ph*7)*0.07 : 1);                // golden one shimmers
       g.getWorldPosition(tmp); tmp.project(cam);
       u.sx=crect.left+(tmp.x*0.5+0.5)*crect.width; u.sy=crect.top+(-tmp.y*0.5+0.5)*crect.height;
       if(g.position.y>4.3) resetBalloon(g); });
