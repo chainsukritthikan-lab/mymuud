@@ -181,6 +181,10 @@
   .carousel-gl{ width:min(760px,96vw); aspect-ratio:760/440; height:auto; touch-action:pan-y; cursor:grab; display:block; }
   .carousel-gl:active{ cursor:grabbing; }
 
+  /* 🎈 Balloons everywhere */
+  #balloonGL{ position:fixed; inset:0; width:100%; height:100%; z-index:30; pointer-events:none; }
+  body.lite #balloonGL{ display:none; }
+
   /* The Mood Orb */
   #orbGL{ width:min(230px,55vw); aspect-ratio:1; height:auto; display:block; cursor:grab; touch-action:pan-y; }
   #orbGL:active{ cursor:grabbing; }
@@ -2191,36 +2195,6 @@ const Cart=(function(){
   const updRect=()=>{ crect=cv.getBoundingClientRect(); };
   addEventListener('scroll', updRect, {passive:true}); addEventListener('resize', updRect);
 
-  /* 🎈 mood balloons — click one to POP it */
-  const BCOLS=['#FF3E9A','#06B6D4','#A855F7','#FB7185','#34D399'];
-  const balloons=[]; let popCount=0;
-  const knotGeo=new THREE.ConeGeometry(.07,.12,10), strGeo=new THREE.CylinderGeometry(.008,.008,1.1,4);
-  const strMat=new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:.3});
-  function resetBalloon(g,init){
-    const a=Math.random()*6.283, r=2.0+Math.random()*1.4;
-    g.position.set(Math.cos(a)*r, init?(-4+Math.random()*8):(-4.6-Math.random()*2), Math.sin(a)*r);
-    const u=g.userData;
-    u.golden = !init && Math.random()<0.11;                       // 🏆 rare golden balloon
-    u.col = u.golden ? '#FFD700' : u.baseCol;
-    if(u.bm){ u.bm.color.set(u.col);
-      u.bm.metalness = u.golden ? .85 : .15;
-      u.bm.roughness = u.golden ? .14 : .2;
-      u.bm.emissive.set(u.golden ? 0x6b5200 : 0x000000); }
-    u.sp = u.golden ? .0115 : .006+Math.random()*.006;            // golden flies faster — earn it
-    g.visible=true; u.alive=true;
-  }
-  for(let i=0;i<6;i++){
-    const col=BCOLS[i%BCOLS.length];
-    const g=new THREE.Group();
-    const bm=new THREE.MeshStandardMaterial({color:col, roughness:.2, metalness:.15, transparent:true, opacity:.94});
-    const body=new THREE.Mesh(bubGeo, bm); body.scale.set(.34,.43,.34);
-    const knot=new THREE.Mesh(knotGeo, bm); knot.position.y=-.47; knot.rotation.x=Math.PI;
-    const str=new THREE.Mesh(strGeo, strMat); str.position.y=-1.05;
-    g.add(body,knot,str);
-    g.userData={sp:.006+Math.random()*.006, ph:Math.random()*6.28, col, baseCol:col, bm, golden:false, sx:null, sy:null, alive:true};
-    resetBalloon(g,true); root.add(g); balloons.push(g);
-  }
-
   /* ── physics: drag spin + inertia + turntable + scroll-spin + parallax ── */
   const DEG=Math.PI/180, noMo=false;   // full motion always — the pour & turntable are the product
   let base=180, vel=0, hover=0, hoverTgt=0, dragging=false, sx=0, moved=0,
@@ -2244,24 +2218,6 @@ const Cart=(function(){
     base+=dx*0.55; vel=dx*0.55; sx=x; lastAct=performance.now(); };
   const up=()=>{ if(!dragging) return; dragging=false; lastAct=performance.now();
     if(moved<6){
-      // did we tap a balloon? POP! 🎈
-      let hitB=null, bd2=1e9;
-      balloons.forEach(g=>{ const u=g.userData; if(!u.alive||u.sx==null) return;
-        const d=Math.hypot(u.sx-px, u.sy-py); if(d<48 && d<bd2){ bd2=d; hitB=g; } });
-      if(hitB){ const u=hitB.userData; u.alive=false; hitB.visible=false; popCount++;
-        if(u.golden){                                                            // 🏆 JACKPOT
-          for(let i=0;i<3;i++) setTimeout(()=>burst(px+(Math.random()*90-45), py+(Math.random()*70-35), i%2?'#FFD700':'#FF3E9A'), i*150);
-          popSound(); fizzSound();
-          try{ localStorage.setItem('muudGold','1'); }catch(e){}
-          showToast('🏆 GOLDEN BALLOON! 10% off unlocked — already applied at checkout 🤫', 4500);
-        } else {
-          burst(px,py,u.col); popSound();
-          let best=0; try{ best=+localStorage.getItem('muudPops')||0; }catch(e){}
-          if(popCount===1) showToast('🎈 POP! Get them all — rumor says one is golden…');
-          else if(popCount%5===0) showToast(popCount>best? `🎈 ${popCount} popped — NEW RECORD!` : `🎈 ${popCount} popped · best: ${best}`);
-          try{ if(popCount>best) localStorage.setItem('muudPops', String(popCount)); }catch(e){}
-        }
-        setTimeout(()=>resetBalloon(hitB), 1600+Math.random()*2600); return; }
       // did we tap a bubble? pop it 🫧
       let best=null, bd=1e9;
       bubs.forEach(b=>{ const u=b.userData; if(u.sx==null) return;
@@ -2365,13 +2321,6 @@ const Cart=(function(){
       b.position.x+=u.vx+Math.sin(u.ph)*0.003; b.position.y+=u.vy+u.sp*(1+fz*2.6); b.position.z+=u.vz;
       const pop=(0.9+0.1*Math.sin(u.ph*3))*(1+fz*0.3); b.scale.setScalar(u.sz*pop);   // throb harder mid-fizz chapter
       if(b.position.y>3.7 || b.position.y<-4.2 || Math.abs(b.position.x)>6) resetB(b); });
-    balloons.forEach(g=>{ const u=g.userData; if(!u.alive) return;              // 🎈 drift up + sway
-      u.ph+=0.008; g.position.y+=u.sp; g.position.x+=Math.sin(u.ph)*0.0035;
-      g.rotation.z=Math.sin(u.ph*1.3)*0.12;
-      g.scale.setScalar(u.golden ? 1+Math.sin(u.ph*7)*0.07 : 1);                // golden one shimmers
-      g.getWorldPosition(tmp); tmp.project(cam);
-      u.sx=crect.left+(tmp.x*0.5+0.5)*crect.width; u.sy=crect.top+(-tmp.y*0.5+0.5)*crect.height;
-      if(g.position.y>4.3) resetBalloon(g); });
     renderer.render(scene,cam);
   }
   requestAnimationFrame(anim);
@@ -2958,6 +2907,101 @@ const Cart=(function(){
   }
   btn.addEventListener('click', ()=>apply(!th));
   try{ if(localStorage.getItem('muudLang')==='th') setTimeout(()=>apply(true,true), 400); }catch(e){}
+})();
+
+/* ═══════════ 🎈 BALLOONS EVERYWHERE — float over the whole site, pop them anywhere ═══════════ */
+(function(){
+  if(typeof THREE==='undefined') return;
+  const cv=document.createElement('canvas'); cv.id='balloonGL'; document.body.appendChild(cv);
+  const renderer=new THREE.WebGLRenderer({canvas:cv, antialias:true, alpha:true});
+  const dprFor=()=>document.body.classList.contains('lite')?1:Math.min(devicePixelRatio||1,1.5);
+  let W=innerWidth, H=innerHeight;
+  const cam=new THREE.OrthographicCamera(-W/2,W/2,H/2,-H/2,-1000,1000); cam.position.z=100;
+  function size(){ W=innerWidth; H=innerHeight; renderer.setPixelRatio(dprFor()); renderer.setSize(W,H,false);
+    cam.left=-W/2; cam.right=W/2; cam.top=H/2; cam.bottom=-H/2; cam.updateProjectionMatrix(); }
+  size(); addEventListener('resize',size); addEventListener('muud-lite',size);
+  const scene=new THREE.Scene();
+  scene.add(new THREE.AmbientLight(0xffffff,.8));
+  const key=new THREE.DirectionalLight(0xffffff,.7); key.position.set(.4,.6,1); scene.add(key);
+
+  const BCOLS=['#FF3E9A','#06B6D4','#A855F7','#FB7185','#34D399'];
+  const sph=new THREE.SphereGeometry(1,20,20);
+  const knotG=new THREE.ConeGeometry(.2,.32,10), strG=new THREE.CylinderGeometry(.02,.02,2.6,4);
+  const strM=new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:.25});
+  const balloons=[]; let popCount=0;
+
+  function reset(g,init){
+    const u=g.userData;
+    u.golden=!init && Math.random()<0.1;
+    u.col=u.golden?'#FFD700':u.baseCol;
+    u.bm.color.set(u.col); u.bm.metalness=u.golden?.85:.15; u.bm.roughness=u.golden?.15:.3;
+    u.bm.emissive.set(u.golden?0x6b5200:0x000000);
+    u.r=24+Math.random()*26;
+    g.position.set(-W/2+Math.random()*W, init?(-H/2+Math.random()*H):(-H/2-u.r*4-Math.random()*260), 0);
+    u.sp=u.golden?1.5:0.5+Math.random()*0.55;
+    u.ph=Math.random()*6.28; u.vx=0; u.vy=0;
+    g.visible=true; u.alive=true;
+  }
+  for(let i=0;i<9;i++){
+    const g=new THREE.Group();
+    const bm=new THREE.MeshStandardMaterial({color:'#fff', roughness:.3, metalness:.15, transparent:true, opacity:.95});
+    const body=new THREE.Mesh(sph,bm); body.scale.set(1,1.22,1);
+    const knot=new THREE.Mesh(knotG,bm); knot.position.y=-1.32; knot.rotation.x=Math.PI;
+    const str=new THREE.Mesh(strG,strM); str.position.y=-2.7;
+    g.add(body,knot,str);
+    g.userData={bm, baseCol:BCOLS[i%5], col:BCOLS[i%5], golden:false, r:30, sp:1, ph:0, vx:0, vy:0, alive:true};
+    reset(g,true); scene.add(g); balloons.push(g);
+  }
+
+  // pop them anywhere (except on real controls)
+  document.addEventListener('click', e=>{
+    if(document.body.classList.contains('lite')) return;
+    if(e.target.closest('a,button,input,textarea,select,label,canvas')) return;
+    const cx=e.clientX-W/2, cy=H/2-e.clientY;
+    let hit=null, bd=1e9;
+    balloons.forEach(g=>{ const u=g.userData; if(!u.alive) return;
+      const d=Math.hypot(g.position.x-cx, g.position.y-cy);
+      if(d<u.r*1.5+14 && d<bd){ bd=d; hit=g; } });
+    if(!hit) return;
+    const u=hit.userData; u.alive=false; hit.visible=false; popCount++;
+    balloons.forEach(o=>{ if(o===hit||!o.userData.alive) return;               // 💥 shockwave pushes neighbours
+      const dx=o.position.x-hit.position.x, dy=o.position.y-hit.position.y, d=Math.hypot(dx,dy);
+      if(d<320 && d>1){ const f=(1-d/320)*10; o.userData.vx+=dx/d*f; o.userData.vy+=dy/d*f; } });
+    if(u.golden){
+      for(let i=0;i<3;i++) setTimeout(()=>burst(e.clientX+(Math.random()*90-45), e.clientY+(Math.random()*70-35), i%2?'#FFD700':'#FF3E9A'), i*150);
+      popSound(); fizzSound();
+      try{ localStorage.setItem('muudGold','1'); }catch(err){}
+      showToast('🏆 GOLDEN BALLOON! 10% off unlocked — applied at checkout 🤫', 4500);
+    } else {
+      burst(e.clientX, e.clientY, u.col); popSound();
+      let best=0; try{ best=+localStorage.getItem('muudPops')||0; }catch(err){}
+      if(popCount===1) showToast('🎈 POP! They float everywhere — one is golden…');
+      else if(popCount%5===0) showToast(popCount>best? `🎈 ${popCount} popped — NEW RECORD!` : `🎈 ${popCount} popped · best: ${best}`);
+      try{ if(popCount>best) localStorage.setItem('muudPops', String(popCount)); }catch(err){}
+    }
+    setTimeout(()=>reset(hit), 2200+Math.random()*2800);
+  }, true);
+
+  function loop(){
+    requestAnimationFrame(loop);
+    if(document.body.classList.contains('lite')) return;
+    const mx=(window.__m?window.__m.x:-1e5)-W/2, my=H/2-(window.__m?window.__m.y:-1e5);
+    balloons.forEach(g=>{ const u=g.userData; if(!u.alive) return;
+      u.ph+=0.01;
+      const dx=g.position.x-mx, dy=g.position.y-my, d=Math.hypot(dx,dy);   // shy of the cursor
+      if(d<130 && d>1){ const f=(1-d/130)*0.55; u.vx+=dx/d*f; u.vy+=dy/d*f; }
+      u.vx*=0.92; u.vy*=0.92;
+      g.position.x+=u.vx+Math.sin(u.ph)*0.25;
+      g.position.y+=u.vy+u.sp;
+      g.rotation.z=Math.sin(u.ph*1.2)*0.12;
+      g.scale.setScalar(u.r*(u.golden?1+Math.sin(u.ph*7)*0.06:1));
+      if(g.position.y>H/2+u.r*4) reset(g);
+      if(g.position.x<-W/2-70) g.position.x=W/2+60;
+      if(g.position.x> W/2+70) g.position.x=-W/2-60;
+    });
+    renderer.render(scene,cam);
+  }
+  requestAnimationFrame(loop);
 })();
 </script>
 </body>
