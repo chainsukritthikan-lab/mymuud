@@ -1118,6 +1118,10 @@
 <script>
 lucide.createIcons();
 
+/* the show starts at the top — always. no browser scroll-restoration surprises */
+if('scrollRestoration' in history) history.scrollRestoration='manual';
+scrollTo(0,0);
+
 /* ═══════════ STRIPE PAYMENT LINKS — paste yours here to turn on REAL payments ═══════════
    1) Create a Stripe account at https://stripe.com (Thailand supported)
    2) Dashboard → Product catalog → add 3 products (Single Can ฿45, 6-Pack ฿270, 12-Pack ฿499)
@@ -1159,7 +1163,7 @@ function ppPayload(id, amount){
 /* ===== Cinematic intro — drop → ripple → logo → claims → explosion → split ===== */
 (function(){
   const intro=document.getElementById('intro');
-  const unlock=()=>document.body.classList.remove('locked');
+  const unlock=()=>{ scrollTo(0,0); document.body.classList.remove('locked'); };   // doors open ON the can, always
   // intro always plays — this is the show
   const scenes=['is1','is2'].map(id=>document.getElementById(id));
   const timers=[]; let finished=false;
