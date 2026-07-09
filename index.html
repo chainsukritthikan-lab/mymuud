@@ -2909,6 +2909,25 @@ const Cart=(function(){
   try{ if(localStorage.getItem('muudLang')==='th') setTimeout(()=>apply(true,true), 400); }catch(e){}
 })();
 
+/* ═══════════ 🧠 FPS GUARDIAN — auto-enables Lite mode on struggling devices ═══════════ */
+(function(){
+  let last=performance.now(), acc=0, n=0, fired=false;
+  function tick(t){
+    requestAnimationFrame(tick);
+    const dt=t-last; last=t;
+    if(dt>0 && dt<500){ acc+=dt; n++; }
+    if(n>=150){
+      const fps=1000/(acc/n); acc=0; n=0;
+      if(!fired && fps<33 && !document.body.classList.contains('lite') && !document.hidden){
+        fired=true;                                            // once per visit — respect the user's choice after
+        const b=document.getElementById('liteBtn'); if(b) b.click();
+        setTimeout(()=>showToast('⚡ เปิดโหมดเบาให้อัตโนมัติเพื่อความลื่น — tap ⚡ to restore full effects', 4200), 700);
+      }
+    }
+  }
+  requestAnimationFrame(tick);
+})();
+
 /* ═══════════ 🎈 BALLOONS EVERYWHERE — float over the whole site, pop them anywhere ═══════════ */
 (function(){
   if(typeof THREE==='undefined') return;
@@ -2936,13 +2955,14 @@ const Cart=(function(){
     u.col=u.golden?'#FFD700':u.baseCol;
     u.bm.color.set(u.col); u.bm.metalness=u.golden?.85:.15; u.bm.roughness=u.golden?.15:.3;
     u.bm.emissive.set(u.golden?0x6b5200:0x000000);
-    u.r=24+Math.random()*26;
+    u.r=(W<640?17:24)+Math.random()*(W<640?16:26);
     g.position.set(-W/2+Math.random()*W, init?(-H/2+Math.random()*H):(-H/2-u.r*4-Math.random()*260), 0);
     u.sp=u.golden?1.5:0.5+Math.random()*0.55;
     u.ph=Math.random()*6.28; u.vx=0; u.vy=0;
     g.visible=true; u.alive=true;
   }
-  for(let i=0;i<9;i++){
+  const NB=innerWidth<640?5:9;                       // lighter on phones
+  for(let i=0;i<NB;i++){
     const g=new THREE.Group();
     const bm=new THREE.MeshStandardMaterial({color:'#fff', roughness:.3, metalness:.15, transparent:true, opacity:.95});
     const body=new THREE.Mesh(sph,bm); body.scale.set(1,1.22,1);
@@ -2994,6 +3014,7 @@ const Cart=(function(){
       g.position.x+=u.vx+Math.sin(u.ph)*0.25;
       g.position.y+=u.vy+u.sp;
       g.rotation.z=Math.sin(u.ph*1.2)*0.12;
+      g.children[2].rotation.z=Math.max(-.5, Math.min(.5, -u.vx*0.13 - Math.sin(u.ph)*0.05));   // string drags behind
       g.scale.setScalar(u.r*(u.golden?1+Math.sin(u.ph*7)*0.06:1));
       if(g.position.y>H/2+u.r*4) reset(g);
       if(g.position.x<-W/2-70) g.position.x=W/2+60;
