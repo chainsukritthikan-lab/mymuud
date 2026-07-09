@@ -176,6 +176,10 @@
   .carousel-gl{ width:min(760px,96vw); aspect-ratio:760/440; height:auto; touch-action:pan-y; cursor:grab; display:block; }
   .carousel-gl:active{ cursor:grabbing; }
 
+  /* The Mood Orb */
+  #orbGL{ width:min(230px,55vw); aspect-ratio:1; height:auto; display:block; cursor:grab; touch-action:pan-y; }
+  #orbGL:active{ cursor:grabbing; }
+
   /* Scroll-film hero */
   .film-track{ position:relative; z-index:10; }
   #canStage{ position:sticky; top:0; height:100svh; overflow:hidden; display:block; }
@@ -639,6 +643,11 @@
   <div class="max-w-4xl mx-auto px-5 sm:px-8">
     <div class="reveal relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04] backdrop-blur-xl p-8 sm:p-14 text-center">
       <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-80 h-80 rounded-full blur-3xl opacity-40" style="background:var(--accent)"></div>
+
+      <div class="relative flex flex-col items-center">
+        <canvas id="orbGL" data-hover></canvas>
+        <div class="-mt-1 mb-4 text-[11px] text-white/40 font-mono">🔮 แตะ / จิ้ม / หมุน มู้ดของคุณ · poke &amp; spin your mood</div>
+      </div>
 
       <div class="relative" id="quizAsk">
         <span class="text-sm font-semibold tracking-widest uppercase" style="color:var(--accent)">Mood Check · เช็คมู้ด</span>
@@ -2709,6 +2718,86 @@ const Cart=(function(){
     // choose a flavor ANYWHERE on the site → carousel spins to that can (still fully draggable)
     const _ap=applyMood;
     applyMood=m=>{ _ap(m); const i=moods.indexOf(m); if(i>=0){ ringTgt=nearestTgt(i); vel=0; } };
+  }
+})();
+
+/* ═══════════ THE MOOD ORB — a liquid mood you can touch ═══════════ */
+(function(){
+  const cv=document.getElementById('orbGL'); if(!cv||typeof THREE==='undefined') return;
+  let started=false;
+  const lazy=new IntersectionObserver(es=>{ if(es[0].isIntersecting){ lazy.disconnect(); start(); } },{threshold:.1});
+  lazy.observe(cv);
+
+  function start(){
+    if(started) return; started=true;
+    const W=300,H=300;
+    const renderer=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true});
+    const dprFor=()=>document.body.classList.contains('lite')?1:Math.min(devicePixelRatio||1,2);
+    renderer.setPixelRatio(dprFor()); renderer.setSize(W,H,false);
+    addEventListener('muud-lite',()=>{ renderer.setPixelRatio(dprFor()); renderer.setSize(W,H,false); });
+    const scene=new THREE.Scene();
+    const cam=new THREE.PerspectiveCamera(35,1,0.1,20); cam.position.z=3.4;
+    scene.add(new THREE.AmbientLight(0xffffff,.55));
+    const key=new THREE.DirectionalLight(0xffffff,.85); key.position.set(2,3,4); scene.add(key);
+    const rA=new THREE.PointLight(0x8B5CF6,1.1,12); rA.position.set(-3,1,2); scene.add(rA);
+    const rB=new THREE.PointLight(0x38BDF8,.9,12);  rB.position.set(3,-2,2); scene.add(rB);
+
+    const geo=new THREE.SphereGeometry(1,64,64);
+    const basePos=geo.attributes.position.array.slice();
+    const mat=new THREE.MeshStandardMaterial({color:0xFF3E9A, roughness:.16, metalness:.25, transparent:true, opacity:.96});
+    const orb=new THREE.Mesh(geo,mat); scene.add(orb);
+    const tgtCol=new THREE.Color(0xFF3E9A);
+
+    /* pokes = springy dents that ripple out and decay */
+    const pokes=[];
+    const ray=new THREE.Raycaster(), ndc=new THREE.Vector2(), vv=new THREE.Vector3();
+    function poke(cx,cy,amp){
+      const r=cv.getBoundingClientRect();
+      ndc.x=((cx-r.left)/r.width)*2-1; ndc.y=-((cy-r.top)/r.height)*2+1;
+      ray.setFromCamera(ndc,cam);
+      const hit=ray.intersectObject(orb)[0];
+      const dir=hit? orb.worldToLocal(hit.point.clone()).normalize()
+                   : new THREE.Vector3(ndc.x,ndc.y,.7).normalize();
+      pokes.push({dir, t0:performance.now(), amp:amp||.5});
+      if(pokes.length>5) pokes.shift();
+      if(amp!==.12 && typeof blip==='function') blip(280+Math.random()*320,.09,.05,'sine');
+    }
+    // answering the quiz makes the orb dance
+    window.__orbJoy=()=>{ for(let i=0;i<3;i++) setTimeout(()=>pokes.push(
+      {dir:new THREE.Vector3(Math.random()-.5,Math.random()-.5,Math.random()).normalize(), t0:performance.now(), amp:.65}), i*90); };
+    document.getElementById('quizOptions')?.addEventListener('click',()=>window.__orbJoy&&window.__orbJoy());
+
+    let dragging=false, px=0, spinV=0, spin=0;
+    cv.addEventListener('pointerdown',e=>{ dragging=true; px=e.clientX; poke(e.clientX,e.clientY,.55); });
+    addEventListener('pointermove',e=>{ if(dragging){ spinV=(e.clientX-px)*.01; spin+=spinV; px=e.clientX; } });
+    addEventListener('pointerup',()=>dragging=false);
+    cv.addEventListener('pointermove',e=>{ if(!dragging && Math.random()<.1) poke(e.clientX,e.clientY,.12); });
+
+    let vis=true; new IntersectionObserver(es=>vis=es[0].isIntersecting,{threshold:0}).observe(cv);
+    const pos=geo.attributes.position;
+    function loop(t){
+      requestAnimationFrame(loop);
+      if(!vis) return;
+      if(!dragging){ spin+=0.0045+spinV; spinV*=.94; }
+      orb.rotation.y=spin;
+      const m=window.__mood; if(m){ tgtCol.set(m.c2); mat.color.lerp(tgtCol,.06); rA.color.set(m.c1||'#8B5CF6'); rB.color.set(m.c3||'#38BDF8'); }
+      const now=performance.now();
+      for(let i=0;i<pos.count;i++){
+        const ox=basePos[i*3], oy=basePos[i*3+1], oz=basePos[i*3+2];
+        let d=0.035*Math.sin(ox*3+t*.0016)+0.03*Math.sin(oy*4+t*.0021)+0.025*Math.sin(oz*5+t*.0013);   // idle liquid
+        for(let j=0;j<pokes.length;j++){ const pk=pokes[j]; const dt=now-pk.t0; if(dt>900) continue;
+          vv.set(ox,oy,oz);
+          const dot=vv.dot(pk.dir); if(dot<=0) continue;
+          d+=pk.amp*Math.pow(dot,4)*Math.exp(-dt/280)*Math.cos(dt/70);                                   // springy dent
+        }
+        const s=1+d;
+        pos.array[i*3]=ox*s; pos.array[i*3+1]=oy*s; pos.array[i*3+2]=oz*s;
+      }
+      for(let j=pokes.length-1;j>=0;j--) if(now-pokes[j].t0>900) pokes.splice(j,1);
+      pos.needsUpdate=true; geo.computeVertexNormals();
+      renderer.render(scene,cam);
+    }
+    requestAnimationFrame(loop);
   }
 })();
 </script>
