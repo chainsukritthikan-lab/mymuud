@@ -1,12 +1,12 @@
-# MyMuuD — Drink Your Mood 🫧
+# MiiMuuD — Drink Your Mood 🫧
 
-A premium, single-file promotional website for **MyMuuD** (มาย มู้ด) sparkling mood water — *0 Sugar · 0 Calorie · pH Balance · 330 mL*.
+A premium, single-file promotional website for **MiiMuuD** (มี มู้ด) sparkling mood water — *0 Sugar · 0 Calorie · pH Balance · 250 mL*.
 
 **Live site:** https://chainsukritthikan-lab.github.io/mymuud-website/
 
 ## Highlights
 - 🎬 Cinematic intro (liquid drop → ripple → logo → explosion → screen split)
-- 🥫 Real **WebGL 3D can** (Three.js) — drag to spin, tap to pop the lid open, double-click to barrel-roll, tilt your phone to move it
+- 🥫 Real **WebGL 3D bottle** (Three.js) — drag to spin, tap to pop the lid open, double-click to barrel-roll, tilt your phone to move it
 - 📜 6-chapter **scroll-film** — the can stays pinned and rotates through the brand story as you scroll
 - 🫧 Interactive 3D bubbles that scatter from your cursor
 - 💗 **Mood Lab** — blend two moods, name your own flavor, download a shareable card
@@ -24,4 +24,4 @@ python -m http.server 8000
 # open http://localhost:8000
 ```
 
-© 2026 MyMuuD · มาย มู้ด — Drink Your Mood.
+© 2026 MiiMuuD · มี มู้ด — Drink Your Mood.
