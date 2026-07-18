@@ -25,8 +25,7 @@
   "name": "MiiMuuD PINK Sparkling Mood Water",
   "description": "The mood-changing sparkling aroma drink — a signature scent that lifts your mood. 0% sugar. 250 mL. Product of Thailand.",
   "brand": { "@type": "Brand", "name": "MiiMuuD" },
-  "offers": { "@type": "Offer", "price": "45", "priceCurrency": "THB", "availability": "https://schema.org/InStock" },
-  "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "2400" }
+  "offers": { "@type": "Offer", "price": "45", "priceCurrency": "THB", "availability": "https://schema.org/InStock" }
 }
 </script>
 <script type="application/ld+json">
@@ -144,7 +143,7 @@
   @keyframes fizzUp{0%{transform:translate(0,0) scale(.3);opacity:0}12%{opacity:1}100%{transform:translate(var(--ex),-100px) scale(1);opacity:0}}
 
   /* Aurora + canvas */
-  .aurora{ position:fixed; inset:-25%; z-index:0; filter:blur(80px); opacity:.5; pointer-events:none; transition:opacity .9s var(--ease); }
+  .aurora{ position:fixed; inset:-25%; z-index:0; filter:blur(80px); opacity:.3; pointer-events:none; transition:opacity .9s var(--ease); }
   .blob{ position:absolute; border-radius:50%; mix-blend-mode:screen; transition:background .9s var(--ease); }
   .b1{ width:55vw;height:55vw; background:var(--c2); top:-10%; left:-8%; animation:f1 20s ease-in-out infinite; }
   .b2{ width:48vw;height:48vw; background:var(--c1); top:18%; right:-8%; animation:f2 24s ease-in-out infinite; }
@@ -154,17 +153,15 @@
   @keyframes f3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(4vw,-6vh) scale(1.2)}}
   #bgCanvas{ position:fixed; inset:0; z-index:0; pointer-events:none; }
 
-  .grad-text{ background:linear-gradient(100deg,var(--c1),var(--c2) 40%,var(--c3) 70%,var(--c2)); background-size:200% 100%;
-    -webkit-background-clip:text; background-clip:text; color:transparent; animation:gradShift 7s ease-in-out infinite; }
-  @keyframes gradShift{ 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
+  .grad-text{ color:var(--accent); }
 
   .reveal{ opacity:0; transform:translateY(46px); transition:opacity .9s var(--ease),transform .9s var(--ease); }
   .reveal.show{ opacity:1; transform:none; }
 
-  .btn-glow{ position:relative; isolation:isolate; transition:transform .25s var(--ease),box-shadow .3s ease; }
-  .btn-glow::before{ content:""; position:absolute; inset:-2px; border-radius:inherit; z-index:-1; background:linear-gradient(100deg,var(--c1),var(--c2),var(--c3)); filter:blur(16px); opacity:.55; transition:opacity .3s; }
-  .btn-glow:hover{ box-shadow:0 12px 44px -8px var(--accent); }
-  .btn-glow:hover::before{ opacity:1; }
+  .btn-glow{ position:relative; isolation:isolate; background:var(--accent) !important;
+    transition:transform .25s var(--ease), box-shadow .3s ease, filter .2s ease; }
+  .btn-glow::before{ content:none; }
+  .btn-glow:hover{ filter:brightness(1.1); box-shadow:0 8px 22px -10px var(--accent); }
   .magnetic{ will-change:transform; transition:transform .3s var(--ease); }
 
   .mood{ transition:transform .25s var(--ease),border-color .3s,background .3s; }
@@ -549,9 +546,6 @@
             <span class="scramble" data-text="Drink Your">Drink Your</span> <span class="grad-text">Mood.</span><br/>
             <span class="scramble" data-text="Refresh Your">Refresh Your</span> <span class="grad-text">Mind.</span></h1>
           <p class="mt-4 text-white/70 text-base sm:text-lg">The world's first sparkling <b class="text-white">aroma drink</b> — a signature scent that switches your mood the moment you sip. 0% sugar. 🫧</p>
-          <div class="mt-5 flex items-center justify-center gap-2 text-xs text-white/55">
-            <span class="tracking-widest" style="color:var(--accent)">★★★★★</span>
-            <b class="text-white/80">4.9</b> — trusted by 2,400+ mood drinkers</div>
           <div class="mt-7 flex flex-wrap justify-center gap-3">
             <a href="#shop" data-hover data-magnetic class="interactive btn-glow rounded-2xl bg-gradient-to-r from-[var(--c1)] via-[var(--c2)] to-[var(--c3)] px-7 py-4 font-bold flex items-center gap-2">
               <i data-lucide="shopping-bag" class="w-5 h-5"></i> สั่งเลย — Shop ฿45</a>
@@ -631,22 +625,8 @@
   </div>
 </section>
 
-<div class="relative z-10 border-y border-white/10 bg-white/[0.03] py-4 overflow-hidden">
+<div class="hidden relative z-10 border-y border-white/10 bg-white/[0.03] py-4 overflow-hidden">
   <div class="marquee font-display font-bold text-white/25 text-lg uppercase tracking-widest" id="marquee"></div></div>
-
-<!-- PRESS -->
-<div class="relative z-10 py-12">
-  <div class="max-w-6xl mx-auto px-5 sm:px-8">
-    <div class="reveal text-center text-[11px] font-semibold tracking-[0.4em] text-white/30 uppercase">As featured in</div>
-    <div class="reveal mt-7 flex flex-wrap items-center justify-center gap-x-14 gap-y-5 font-display font-bold text-white/25 text-lg sm:text-xl">
-      <span class="hover:text-white/55 transition tracking-wide" data-hover>SIAM WELLNESS</span>
-      <span class="hover:text-white/55 transition tracking-wide" data-hover>BKK LIFESTYLE</span>
-      <span class="hover:text-white/55 transition tracking-wide" data-hover>URBAN TASTE</span>
-      <span class="hover:text-white/55 transition tracking-wide" data-hover>HEALTH+ ASIA</span>
-      <span class="hover:text-white/55 transition tracking-wide" data-hover>THE MORNING POST</span>
-    </div>
-  </div>
-</div>
 
 <!-- MOOD QUIZ -->
 <section id="quiz" class="relative z-10 py-24 sm:py-32">
@@ -829,10 +809,7 @@
   <div class="max-w-7xl mx-auto px-5 sm:px-8">
     <div class="reveal text-center max-w-2xl mx-auto">
       <span class="text-sm font-semibold tracking-widest uppercase" style="color:var(--accent)">The MuuD Fam</span>
-      <h2 class="mt-3 font-display font-extrabold text-4xl sm:text-5xl tracking-tight">Loved by <span class="grad-text">good moods</span> everywhere.</h2>
-      <div class="mt-6 inline-flex items-center gap-2.5 rounded-full border border-white/12 bg-white/5 px-5 py-2.5 text-sm backdrop-blur">
-        <span class="tracking-widest" style="color:var(--accent)">★★★★★</span>
-        <b>4.9 / 5</b><span class="text-white/45">from 2,400+ verified reviews</span></div>
+      <h2 class="mt-3 font-display font-extrabold text-4xl sm:text-5xl tracking-tight">First sips, <span class="grad-text">first feelings.</span></h2>
     </div>
     <div class="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
       <div class="reveal tilt-card relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-md p-7" data-tilt data-hover>
@@ -2393,22 +2370,7 @@ const Cart=(function(){
   });
 })();
 
-/* ===== Live purchase pings (social proof — first visit only) ===== */
-(function(){
-  let returning=false; try{ returning=localStorage.getItem('muudIntroSeen')==='1'; }catch(e){}
-  if(returning) return;
-  const names=['Ploy','Mark','Bew','Nan','Ice','Mild','Ton','Fern'];
-  const cities=['Bangkok','Chiang Mai','Phuket','Khon Kaen','Pattaya','Hat Yai'];
-  const what=['a PINK 6-pack','an AQUA 12-pack','a GRAPE 6-pack','a MINT single can','a CITRUS 6-pack'];
-  let shown=0;
-  function ping(){
-    if(shown>=4) return;
-    if(!document.hidden){ shown++;
-      showToast(`💗 ${names[(Math.random()*names.length)|0]} from ${cities[(Math.random()*cities.length)|0]} just grabbed ${what[(Math.random()*what.length)|0]}`, 3200); }
-    setTimeout(ping, 24000+Math.random()*14000);
-  }
-  setTimeout(ping, 14000);
-})();
+
 
 /* ===== Side dot navigation ===== */
 (function(){
