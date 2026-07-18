@@ -2072,24 +2072,27 @@ const Cart=(function(){
     tx.globalAlpha=1; tx.beginPath(); tx.arc(50,27,5.5,0,6.283); tx.fill(); tx.restore();
   }
   function drawFront(cx,m){
-    logoMark(cx,55,1.9);
-    tx.textBaseline='alphabetic'; ls('0px');
-    tx.font='800 84px Sora, sans-serif';
+    tx.textBaseline='alphabetic'; tx.textAlign='center';
+    // flavor box at the top — like the real label
+    ls('10px'); tx.font='800 46px Sora, sans-serif';
+    const bw=tx.measureText(m.key).width+76;
+    tx.strokeStyle='#12233d'; tx.lineWidth=5; rr(cx-bw/2,34,bw,76,12); tx.stroke();
+    tx.fillStyle='#12233d'; tx.fillText(m.key,cx+5,88); ls('0px');
+    logoMark(cx,122,1.5);
+    tx.font='800 76px Sora, sans-serif';
     const w1=tx.measureText('Mii').width, w2=tx.measureText('MuuD').width, x0=cx-(w1+w2)/2;
-    tx.fillStyle='#111'; tx.fillText('Mii',x0,320);
-    const g=tx.createLinearGradient(x0+w1,250,x0+w1+w2,330);
+    tx.textAlign='left';
+    tx.fillStyle='#12233d'; tx.fillText('Mii',x0,344);
+    const g=tx.createLinearGradient(x0+w1,275,x0+w1+w2,350);
     g.addColorStop(0,m.c1); g.addColorStop(.55,m.c2); g.addColorStop(1,m.c3);
-    tx.fillStyle=g; tx.fillText('MuuD',x0+w1,320);
+    tx.fillStyle=g; tx.fillText('MuuD',x0+w1,344);
     tx.textAlign='center';
-    tx.font='600 34px Outfit, sans-serif'; tx.fillStyle='rgba(17,17,17,.6)'; tx.fillText('— มี มู้ด —',cx,372);
-    ls('12px'); tx.font='700 26px Outfit, sans-serif'; tx.fillStyle='rgba(17,17,17,.55)'; tx.fillText('DRINK YOUR MOOD',cx,428); ls('0px');
-    // droplet
-    tx.fillStyle='#fff'; tx.beginPath(); tx.moveTo(cx,618);
-    tx.bezierCurveTo(cx+30,660,cx+26,700,cx,706); tx.bezierCurveTo(cx-26,700,cx-30,660,cx,618); tx.fill();
-    ls('18px'); tx.font='700 60px Sora, sans-serif'; tx.fillStyle='#fff'; tx.fillText(m.key,cx+9,796); ls('0px');
-    ls('4px'); tx.font='600 24px Outfit, sans-serif'; tx.fillStyle='rgba(255,255,255,.95)';
-    tx.fillText('AROMA DRINK  |  0% SUGAR  |  SPARKLING',cx,852); ls('0px');
-    tx.font='700 34px Outfit, sans-serif'; tx.fillText('250 mL',cx,908);
+    tx.font='600 30px Outfit, sans-serif'; tx.fillStyle='rgba(18,35,61,.6)'; tx.fillText('— มี มู้ด —',cx,392);
+    ls('12px'); tx.font='700 24px Outfit, sans-serif'; tx.fillStyle='rgba(18,35,61,.55)'; tx.fillText('DRINK YOUR MOOD',cx,444); ls('0px');
+    // inside the waves
+    ls('4px'); tx.font='700 27px Outfit, sans-serif'; tx.fillStyle='rgba(255,255,255,.97)';
+    tx.fillText('AROMA DRINK  ·  0% SUGAR',cx,812); ls('0px');
+    tx.font='800 40px Outfit, sans-serif'; tx.fillText('250 mL',cx,878);
     tx.textAlign='left';
   }
   function drawBack(cx){
@@ -2133,7 +2136,7 @@ const Cart=(function(){
   }
   function paint(){
     const m=window.__mood||{key:'CALM',c1:'#7DD3FC',c2:'#3B82F6',c3:'#22D3EE'};
-    const A=m.c2, wy=TH*0.44;
+    const A=m.c2, wy=TH*0.52;
     tx.textAlign='left'; ls('0px');
     tx.fillStyle='#fff'; tx.fillRect(0,0,TW,TH);
     const wave=(col,off,amp,ph)=>{ tx.fillStyle=col; tx.beginPath(); tx.moveTo(0,wy+off);
@@ -2144,8 +2147,10 @@ const Cart=(function(){
     const shade=tx.createLinearGradient(0,wy,0,TH);
     shade.addColorStop(0,'rgba(255,255,255,.18)'); shade.addColorStop(.4,'rgba(0,0,0,0)'); shade.addColorStop(1,'rgba(0,0,0,.16)');
     tx.fillStyle=shade; tx.fillRect(0,wy,TW,TH-wy);
-    drawFront(1024,m);
-    drawBack(0); drawBack(2048);          // back sits across the UV seam — draw both halves
+    const FX=1.46;                                                    // aspect fix for the slim wrap
+    const stretched=(cx,fn)=>{ tx.save(); tx.translate(cx,0); tx.scale(FX,1); tx.translate(-cx,0); fn(); tx.restore(); };
+    stretched(1024,()=>drawFront(1024,m));
+    stretched(0,()=>drawBack(0)); stretched(2048,()=>drawBack(2048)); // back sits across the UV seam
     tex.needsUpdate=true;
     // contact shadow tint
     sctx.clearRect(0,0,128,128);
@@ -2160,23 +2165,24 @@ const Cart=(function(){
   const _am=applyMood; applyMood=m=>{ _am(m); paint(); };
 
   /* ── geometry: body + tapered neck + chime + lid + pull tab ── */
-  const R=1, BODY=3.1;
+  const R=0.72, RB=0.64, BODY=3.35;   // slim tapered bottle like the real 250mL
   const bodyMat=new THREE.MeshStandardMaterial({map:tex, metalness:.45, roughness:.3});
   const metal  =new THREE.MeshStandardMaterial({color:0xd9d9e0, metalness:.95, roughness:.26, side:THREE.DoubleSide});
   const metalD =new THREE.MeshStandardMaterial({color:0x9b9ba3, metalness:.9,  roughness:.34, side:THREE.DoubleSide});
-  canG.add(new THREE.Mesh(new THREE.CylinderGeometry(R,R,BODY,72,1,true), bodyMat));
-  const neckPts=[]; for(let i=0;i<=10;i++){ const t=i/10; neckPts.push(new THREE.Vector2(R-0.55*Math.pow(t,1.25), BODY/2+0.62*t)); }
-  canG.add(new THREE.Mesh(new THREE.LatheGeometry(neckPts,72), metal));
-  const chPts=[]; for(let i=0;i<=6;i++){ const t=i/6; chPts.push(new THREE.Vector2(R-0.13*t, -BODY/2-0.16*t)); }
+  canG.add(new THREE.Mesh(new THREE.CylinderGeometry(R,RB,BODY,72,1,true), bodyMat));
+  const shoulderMat=new THREE.MeshStandardMaterial({color:0xf7fbff, roughness:.5, metalness:.04, side:THREE.DoubleSide});
+  const neckPts=[]; for(let i=0;i<=12;i++){ const t=i/12; neckPts.push(new THREE.Vector2(R-(R-0.29)*Math.pow(t,1.5), BODY/2+0.92*t)); }
+  canG.add(new THREE.Mesh(new THREE.LatheGeometry(neckPts,72), shoulderMat));
+  const chPts=[]; for(let i=0;i<=6;i++){ const t=i/6; chPts.push(new THREE.Vector2(RB-0.07*t, -BODY/2-0.11*t)); }
   canG.add(new THREE.Mesh(new THREE.LatheGeometry(chPts,72), metalD));
-  const bcap=new THREE.Mesh(new THREE.CircleGeometry(R-0.13,48), metalD);
-  bcap.rotation.x=Math.PI/2; bcap.position.y=-BODY/2-0.16; canG.add(bcap);
-  const lid=new THREE.Group(); lid.position.y=BODY/2+0.62;          // the bottle cap — pops off on tap
-  const capMat=new THREE.MeshStandardMaterial({color:0xeef4fb, roughness:.45, metalness:.05});
-  const cap=new THREE.Mesh(new THREE.CylinderGeometry(0.42,0.45,0.42,40), capMat); cap.position.y=0.21; lid.add(cap);
-  const capTop=new THREE.Mesh(new THREE.CylinderGeometry(0.42,0.42,0.05,40), capMat); capTop.position.y=0.44; lid.add(capTop);
-  const capRing=new THREE.Mesh(new THREE.TorusGeometry(0.445,0.025,10,40), metalD);
-  capRing.rotation.x=Math.PI/2; capRing.position.y=0.02; lid.add(capRing);
+  const bcap=new THREE.Mesh(new THREE.CircleGeometry(RB-0.07,48), metalD);
+  bcap.rotation.x=Math.PI/2; bcap.position.y=-BODY/2-0.11; canG.add(bcap);
+  const lid=new THREE.Group(); lid.position.y=BODY/2+0.92;          // the bottle cap — pops off on tap
+  const capMat=new THREE.MeshStandardMaterial({color:0xeaf3ff, roughness:.35, metalness:.05, transparent:true, opacity:.92});
+  const cap=new THREE.Mesh(new THREE.CylinderGeometry(0.27,0.30,0.52,40), capMat); cap.position.y=0.26; lid.add(cap);
+  const capTop=new THREE.Mesh(new THREE.CylinderGeometry(0.27,0.27,0.05,40), capMat); capTop.position.y=0.54; lid.add(capTop);
+  const capRing=new THREE.Mesh(new THREE.TorusGeometry(0.305,0.018,10,40), metalD);
+  capRing.rotation.x=Math.PI/2; capRing.position.y=0.03; lid.add(capRing);
   canG.add(lid);
   const shadow=new THREE.Mesh(new THREE.PlaneGeometry(3.4,3.4),
     new THREE.MeshBasicMaterial({map:shTex, transparent:true, depthWrite:false}));
@@ -2202,7 +2208,7 @@ const Cart=(function(){
       explodeAt=-1e9, rollAt=-1e9, tiltX=0, tiltY=0, tgtTiltX=0, tgtTiltY=0, gyroAsked=false, px=0, py=0,
       entranceAt=-1;
   const introEl=document.getElementById('intro');
-  const LID_Y=BODY/2+0.62;
+  const LID_Y=BODY/2+0.92;
   function askGyro(){ if(gyroAsked) return; gyroAsked=true;
     if(typeof DeviceOrientationEvent!=='undefined' && DeviceOrientationEvent.requestPermission)
       DeviceOrientationEvent.requestPermission().catch(()=>{}); }
@@ -2655,7 +2661,7 @@ const Cart=(function(){
   function bodyTex(m){
     const c=document.createElement('canvas'); c.width=256; c.height=512; const x=c.getContext('2d');
     x.fillStyle='#fff'; x.fillRect(0,0,256,512);
-    const wy=232; x.fillStyle=m.c2; x.beginPath(); x.moveTo(0,wy);
+    const wy=272; x.fillStyle=m.c2; x.beginPath(); x.moveTo(0,wy);
     for(let i=0;i<=256;i+=10) x.lineTo(i, wy+Math.sin(i/256*Math.PI*6)*12); x.lineTo(256,512); x.lineTo(0,512); x.closePath(); x.fill();
     const sh=x.createLinearGradient(0,wy,0,512); sh.addColorStop(0,'rgba(255,255,255,.15)'); sh.addColorStop(1,'rgba(0,0,0,.2)'); x.fillStyle=sh; x.fillRect(0,wy,256,280);
     const t=new THREE.CanvasTexture(c); t.anisotropy=2; return t;
@@ -2671,7 +2677,7 @@ const Cart=(function(){
     x.fillStyle='#111'; x.font='800 46px Sora,sans-serif'; x.fillText('MiiMuuD',180,214);
     x.fillStyle='rgba(17,17,17,.55)'; x.font='600 15px Outfit,sans-serif'; x.fillText('DRINK YOUR MOOD',180,244);
     x.fillStyle='#fff'; x.font='800 50px Sora,sans-serif'; x.fillText(m.key,180,420);
-    x.font='600 14px Outfit,sans-serif'; x.fillText('0 SUGAR · CALORIE 0 · pH',180,452);
+    x.font='600 14px Outfit,sans-serif'; x.fillText('AROMA DRINK · 0% SUGAR',180,452);
     x.font='700 22px Outfit,sans-serif'; x.fillText('250 mL',180,486);
     const t=new THREE.CanvasTexture(c); t.anisotropy=2; return t;
   }
@@ -2684,7 +2690,7 @@ const Cart=(function(){
     renderer.setPixelRatio(dprFor()); renderer.setSize(W,H,false);
     addEventListener('muud-lite', ()=>{ renderer.setPixelRatio(dprFor()); renderer.setSize(W,H,false); });
     const scene=new THREE.Scene();
-    const cam=new THREE.PerspectiveCamera(34,W/H,0.1,50); cam.position.set(0,0.5,7.6); cam.lookAt(0,-0.1,0);
+    const cam=new THREE.PerspectiveCamera(34,W/H,0.1,50); cam.position.set(0,0.35,8.7); cam.lookAt(0,-0.05,0);
     scene.add(new THREE.AmbientLight(0xffffff,0.75));
     const key=new THREE.DirectionalLight(0xffffff,0.9); key.position.set(2,4,5); scene.add(key);
     const pl=new THREE.PointLight(0xff3e9a,0.7,30); pl.position.set(-4,2,4); scene.add(pl);
@@ -2695,13 +2701,17 @@ const Cart=(function(){
     const capMat=new THREE.MeshStandardMaterial({color:0xcfcfd6, metalness:.92, roughness:.28});
     for(let i=0;i<N;i++){
       const g=new THREE.Group();
-      const body=new THREE.Mesh(new THREE.CylinderGeometry(0.72,0.72,2.5,48,1,true),
-        new THREE.MeshStandardMaterial({map:bodyTex(moods[i]), metalness:.35, roughness:.34}));
-      const top=new THREE.Mesh(new THREE.CylinderGeometry(0.62,0.62,0.08,40), capMat); top.position.y=1.29;
-      const bot=new THREE.Mesh(new THREE.CylinderGeometry(0.66,0.66,0.1,40), capMat); bot.position.y=-1.29;
-      const decal=new THREE.Mesh(new THREE.PlaneGeometry(1.15,2.3),
+      const body=new THREE.Mesh(new THREE.CylinderGeometry(0.52,0.46,2.4,48,1,true),
+        new THREE.MeshStandardMaterial({map:bodyTex(moods[i]), metalness:.12, roughness:.42}));
+      const shoulderPts=[]; for(let k=0;k<=8;k++){ const t2=k/8; shoulderPts.push(new THREE.Vector2(0.52-(0.52-0.125)*Math.pow(t2,1.5), 1.2+0.6*t2)); }
+      const top=new THREE.Mesh(new THREE.LatheGeometry(shoulderPts,40),
+        new THREE.MeshStandardMaterial({color:0xf7fbff, roughness:.5, metalness:.04, side:THREE.DoubleSide}));
+      const bot=new THREE.Mesh(new THREE.CylinderGeometry(0.46,0.46,0.06,40), capMat); bot.position.y=-1.22;
+      const capB=new THREE.Mesh(new THREE.CylinderGeometry(0.115,0.125,0.3,24),
+        new THREE.MeshStandardMaterial({color:0xeaf3ff, roughness:.35})); capB.position.y=1.93; g.add(capB);
+      const decal=new THREE.Mesh(new THREE.PlaneGeometry(0.92,2.15),
         new THREE.MeshBasicMaterial({map:decalTex(moods[i]), transparent:true, depthWrite:false}));
-      decal.position.z=0.735;
+      decal.position.z=0.545;
       g.add(body,top,bot,decal);
       const a=i*step; g.position.set(Math.sin(a)*RAD,0,Math.cos(a)*RAD); g.rotation.y=a;
       g.userData={i,a,body}; ring.add(g); cans.push(g); bodies.push(body);
@@ -2744,7 +2754,7 @@ const Cart=(function(){
         if(performance.now()-lastAct>3500) ringTgt+=0.0032; }         // idle showroom spin
       ringRot+=(ringTgt-ringRot)*0.12; ring.rotation.y=ringRot;
       const fi=frontIndex();
-      cans.forEach(g=>{ const s=g.userData.i===fi?1.13:0.9; g.scale.x+=(s-g.scale.x)*0.12; g.scale.y=g.scale.z=g.scale.x; });
+      cans.forEach(g=>{ const s=g.userData.i===fi?1.04:0.85; g.scale.x+=(s-g.scale.x)*0.12; g.scale.y=g.scale.z=g.scale.x; });
       renderer.render(scene,cam);
     }
     loop();
