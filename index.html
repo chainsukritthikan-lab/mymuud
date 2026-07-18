@@ -706,14 +706,14 @@
     <div class="reveal text-center max-w-2xl mx-auto">
       <span class="text-sm font-semibold tracking-widest uppercase" style="color:var(--accent)">The Lineup</span>
       <h2 class="mt-3 font-display font-extrabold text-4xl sm:text-5xl tracking-tight">Five moods. <span class="grad-text">One you.</span></h2>
-      <p class="mt-4 text-white/60">Tap a can — the whole world changes to match. เลือกมู้ดของคุณ 🫧</p>
+      <p class="mt-4 text-white/60">Tap a bottle — the whole world changes to match. เลือกมู้ดของคุณ 🫧</p>
     </div>
 
     <!-- Interactive 3D flavor carousel -->
     <div class="reveal mt-12 flex flex-col items-center">
       <canvas id="lineupGL" class="carousel-gl"></canvas>
       <div class="mt-2 text-xs text-white/40 font-mono flex items-center gap-2">
-        <i data-lucide="rotate-3d" class="w-4 h-4"></i> drag to spin the carousel · click a can to choose its mood</div>
+        <i data-lucide="rotate-3d" class="w-4 h-4"></i> drag to spin the carousel · click a bottle to choose its mood</div>
     </div>
 
     <div class="mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5">
@@ -721,31 +721,31 @@
         <div class="mini-can" style="background:linear-gradient(180deg,#fff 42%, #3B82F6 50%)"></div>
         <div class="mt-4 font-display font-bold">CALM</div>
         <div class="text-xs text-white/50 mt-0.5">Ocean Mist</div>
-        <div class="mt-2 text-[11px] font-bold" style="color:var(--accent)">฿45 / can</div>
+        <div class="mt-2 text-[11px] font-bold" style="color:var(--accent)">฿45 / bottle</div>
         <span class="qadd mt-3 inline-flex items-center gap-1 rounded-xl border border-white/15 bg-white/5 px-3 py-1.5 text-[11px] font-bold text-white/70 transition hover:bg-white/10 hover:text-white">＋ Quick add</span></button>
       <button data-lineup="1" data-hover class="lineup-card reveal rounded-3xl border border-white/10 bg-white/[0.04] p-6 text-center hover:bg-white/[0.07]">
         <div class="mini-can" style="background:linear-gradient(180deg,#fff 42%, #F59E0B 50%)"></div>
         <div class="mt-4 font-display font-bold">JOY</div>
         <div class="text-xs text-white/50 mt-0.5">Citrus Sunrise</div>
-        <div class="mt-2 text-[11px] font-bold" style="color:var(--accent)">฿45 / can</div>
+        <div class="mt-2 text-[11px] font-bold" style="color:var(--accent)">฿45 / bottle</div>
         <span class="qadd mt-3 inline-flex items-center gap-1 rounded-xl border border-white/15 bg-white/5 px-3 py-1.5 text-[11px] font-bold text-white/70 transition hover:bg-white/10 hover:text-white">＋ Quick add</span></button>
       <button data-lineup="2" data-hover class="lineup-card reveal rounded-3xl border border-white/10 bg-white/[0.04] p-6 text-center hover:bg-white/[0.07]">
         <div class="mini-can" style="background:linear-gradient(180deg,#fff 42%, #8B5CF6 50%)"></div>
         <div class="mt-4 font-display font-bold">RELAX</div>
         <div class="text-xs text-white/50 mt-0.5">Lavender Cloud</div>
-        <div class="mt-2 text-[11px] font-bold" style="color:var(--accent)">฿45 / can</div>
+        <div class="mt-2 text-[11px] font-bold" style="color:var(--accent)">฿45 / bottle</div>
         <span class="qadd mt-3 inline-flex items-center gap-1 rounded-xl border border-white/15 bg-white/5 px-3 py-1.5 text-[11px] font-bold text-white/70 transition hover:bg-white/10 hover:text-white">＋ Quick add</span></button>
       <button data-lineup="3" data-hover class="lineup-card reveal rounded-3xl border border-white/10 bg-white/[0.04] p-6 text-center hover:bg-white/[0.07]">
         <div class="mini-can" style="background:linear-gradient(180deg,#fff 42%, #34D399 50%)"></div>
         <div class="mt-4 font-display font-bold">FRESH</div>
         <div class="text-xs text-white/50 mt-0.5">Cool Mint Air</div>
-        <div class="mt-2 text-[11px] font-bold" style="color:var(--accent)">฿45 / can</div>
+        <div class="mt-2 text-[11px] font-bold" style="color:var(--accent)">฿45 / bottle</div>
         <span class="qadd mt-3 inline-flex items-center gap-1 rounded-xl border border-white/15 bg-white/5 px-3 py-1.5 text-[11px] font-bold text-white/70 transition hover:bg-white/10 hover:text-white">＋ Quick add</span></button>
       <button data-lineup="4" data-hover class="lineup-card reveal rounded-3xl border border-white/10 bg-white/[0.04] p-6 text-center hover:bg-white/[0.07]">
         <div class="mini-can" style="background:linear-gradient(180deg,#fff 42%, #F472B6 50%)"></div>
         <div class="mt-4 font-display font-bold">BLISS</div>
         <div class="text-xs text-white/50 mt-0.5">Sweet Blossom</div>
-        <div class="mt-2 text-[11px] font-bold" style="color:var(--accent)">฿45 / can</div>
+        <div class="mt-2 text-[11px] font-bold" style="color:var(--accent)">฿45 / bottle</div>
         <span class="qadd mt-3 inline-flex items-center gap-1 rounded-xl border border-white/15 bg-white/5 px-3 py-1.5 text-[11px] font-bold text-white/70 transition hover:bg-white/10 hover:text-white">＋ Quick add</span></button>
     </div>
   </div>
@@ -2375,8 +2375,8 @@ const Cart=(function(){
      'At 7-Eleven, Tops, Gourmet Market and Villa Market nationwide — or order online right here with free delivery on your first order.'],
     ['How fast is delivery?',
      'Bangkok: 1–2 days. Nationwide: 2–4 days. Every order ships cold-chain packed so your moods arrive ready to chill.'],
-    ['Is the can recyclable?',
-     '100% aluminum with a BPA-free lining — infinitely recyclable. Rinse it, crush it (satisfying), and bin it proudly. ♻'],
+    ['Is the packaging recyclable?',
+     'Designed fully recyclable and BPA-free. Rinse it and bin it proudly — good moods should be kind to the planet too. ♻'],
   ];
   const list=document.getElementById('faqList');
   list.innerHTML=faqs.map((f,i)=>`
@@ -2886,9 +2886,9 @@ const Cart=(function(){
     'Try again':'ลองใหม่','Share my mood':'แชร์มู้ดของฉัน','Sip this mood':'จิบมู้ดนี้เลย',
     '🔮 แตะ / จิ้ม / หมุน มู้ดของคุณ · poke & spin your mood':'🔮 แตะ จิ้ม หมุน — มู้ดของคุณเอง',
     // lineup + lab
-    'The Lineup':'รสชาติทั้งหมด','Tap a can — the whole world changes to match. เลือกมู้ดของคุณ 🫧':'แตะกระป๋อง — ทั้งเว็บจะเปลี่ยนตามมู้ดของคุณ 🫧',
-    'drag to spin the carousel · click a can to choose its mood':'ลากเพื่อหมุน · คลิกกระป๋องเพื่อเลือกมู้ด',
-    '฿45 / can':'฿45 / กระป๋อง','＋ Quick add':'＋ หยิบใส่ตะกร้า',
+    'The Lineup':'รสชาติทั้งหมด','Tap a bottle — the whole world changes to match. เลือกมู้ดของคุณ 🫧':'แตะกระป๋อง — ทั้งเว็บจะเปลี่ยนตามมู้ดของคุณ 🫧',
+    'drag to spin the carousel · click a bottle to choose its mood':'ลากเพื่อหมุน · คลิกกระป๋องเพื่อเลือกมู้ด',
+    '฿45 / bottle':'฿45 / กระป๋อง','＋ Quick add':'＋ หยิบใส่ตะกร้า',
     'The Mood Lab · ★ signature':'ห้องแล็บมู้ด · ★ ซิกเนเจอร์','Five moods, or':'ห้ามู้ด หรือ','infinite you.':'คุณแบบไม่จำกัด',
     "Blend two moods, name your own flavor, and we'll brew a one-of-a-kind MiiMuuD — with a card you can save & share. 🧪":'ผสมสองมู้ด ตั้งชื่อรสของคุณเอง แล้วรับการ์ดสวย ๆ ไว้เซฟและแชร์ 🧪',
     '◈ Your name':'◈ ชื่อของคุณ','◈ Base mood':'◈ มู้ดหลัก','◈ Splash of':'◈ ผสมกับ','Balance':'สัดส่วน',
@@ -2909,6 +2909,22 @@ const Cart=(function(){
     'Subscribe':'สมัครรับข่าว','🎬 Replay intro':'🎬 ดูอินโทรอีกครั้ง',
     'Premium sparkling mood water, crafted in Bangkok. Zero sugar, zero calories, perfectly pH-balanced — drink your mood.':'น้ำซ่าพรีเมียมจากกรุงเทพฯ ไม่มีน้ำตาล ไม่มีแคลอรี่ pH สมดุล — ดื่มมู้ดของคุณ',
   };
+  Object.assign(dict,{
+    'The promise':'คำสัญญา','The feel':'สัมผัส','The secret':'ความลับ','The planet':'โลกของเรา',
+    'Smell it.':'ได้กลิ่นปุ๊บ','Feel it.':'รู้สึกปั๊บ',
+    'Scent speaks straight to your brain — one signature blend, crafted to lift you. 🇹🇭 Made in Thailand.':'กลิ่นสื่อสารตรงถึงสมอง — หนึ่งกลิ่นเฉพาะตัวที่ปรุงมาเพื่อยกมู้ดของคุณ 🇹🇭 ผลิตในประเทศไทย',
+    'Recyclable packaging · BPA-free · good moods, kind to the planet. ♻':'บรรจุภัณฑ์รีไซเคิลได้ · ไม่มี BPA · มู้ดดีที่ดีต่อโลกด้วย ♻',
+    'Scent-Powered':'พลังแห่งกลิ่น','Signature Blends':'กลิ่นเฉพาะตัว','Mood Scents':'กลิ่นมู้ด',
+    'A signature aroma crafted to shift your mood the moment it reaches you.':'กลิ่นเอกลักษณ์ที่ออกแบบมาเพื่อเปลี่ยนอารมณ์คุณทันทีที่ได้สัมผัส',
+    "Five one-of-a-kind mood scents you won't find anywhere else — each built from calming botanicals.":'ห้ากลิ่นมู้ดหนึ่งเดียวที่หาจากที่ไหนไม่ได้ — สกัดจากพฤกษาที่ช่วยให้ผ่อนคลาย',
+    'Tap a bottle — the whole world changes to match. เลือกมู้ดของคุณ 🫧':'แตะขวด — ทั้งเว็บจะเปลี่ยนตามมู้ดของคุณ 🫧',
+    'drag to spin the carousel · click a bottle to choose its mood':'ลากเพื่อหมุน · คลิกขวดเพื่อเลือกมู้ด',
+    '฿45 / bottle':'฿45 / ขวด','Add my custom bottle — ฿45':'หยิบขวดของฉัน — ฿45',
+    'Ocean Mist':'โอเชียน มิสต์','Citrus Sunrise':'ซิตรัส ซันไรส์','Lavender Cloud':'ลาเวนเดอร์ คลาวด์','Cool Mint Air':'คูล มินต์ แอร์','Sweet Blossom':'สวีท บลอสซัม',
+    'The mood-changing sparkling aroma drink, crafted in Thailand. One signature scent to lift you — 0% sugar. Drink your mood.':'เครื่องดื่มซ่าเปลี่ยนอารมณ์ ผลิตในไทย หนึ่งกลิ่นเฉพาะตัวที่ช่วยยกมู้ดของคุณ — 0% น้ำตาล ดื่มมู้ดของคุณ',
+    'What is an aroma drink?':'Aroma Drink คืออะไร?',
+    'Is the packaging recyclable?':'บรรจุภัณฑ์รีไซเคิลได้ไหม?',
+  });
   let th=false;
   function walk(fn){
     const w=document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
