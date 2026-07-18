@@ -354,7 +354,7 @@
   #mobileMenu.open{ max-height:380px; opacity:1; border-color:rgba(255,255,255,.1); }
 
   /* Flavor lineup */
-  .mini-can{ clip-path:polygon(33% 0,67% 0,97% 100%,3% 100%); width:64px; height:128px; border-radius:12px/16px; position:relative; overflow:hidden; margin:0 auto;
+  .mini-can{ clip-path:polygon(16% 0,84% 0,97% 100%,3% 100%); width:64px; height:128px; border-radius:12px/16px; position:relative; overflow:hidden; margin:0 auto;
     box-shadow:0 14px 30px -12px rgba(0,0,0,.6), inset -9px 0 14px rgba(0,0,0,.25), inset 9px 0 14px rgba(0,0,0,.16);
     transition:transform .35s var(--ease); }
   .mini-can::before{ content:""; position:absolute; top:0; left:0; right:0; height:7px;
@@ -2078,6 +2078,9 @@ const Cart=(function(){
     const bw=tx.measureText(m.key).width+76;
     tx.strokeStyle='#12233d'; tx.lineWidth=5; rr(cx-bw/2,34,bw,76,12); tx.stroke();
     tx.fillStyle='#12233d'; tx.fillText(m.key,cx+5,88); ls('0px');
+    tx.strokeStyle='#12233d'; tx.lineWidth=4; tx.beginPath(); tx.arc(cx+322,150,52,0,6.283); tx.stroke();
+    tx.fillStyle='#12233d'; tx.font='800 32px Sora, sans-serif'; tx.fillText('0%',cx+322,144);
+    tx.font='600 19px Outfit, sans-serif'; tx.fillText('SUGAR',cx+322,174);
     logoMark(cx,122,1.5);
     tx.font='800 76px Sora, sans-serif';
     const w1=tx.measureText('Mii').width, w2=tx.measureText('MuuD').width, x0=cx-(w1+w2)/2;
@@ -2147,7 +2150,7 @@ const Cart=(function(){
     const shade=tx.createLinearGradient(0,wy,0,TH);
     shade.addColorStop(0,'rgba(255,255,255,.18)'); shade.addColorStop(.4,'rgba(0,0,0,0)'); shade.addColorStop(1,'rgba(0,0,0,.16)');
     tx.fillStyle=shade; tx.fillRect(0,wy,TW,TH-wy);
-    const FX=1.35;                                                    // aspect fix for the cone wrap
+    const FX=1.28;                                                    // aspect fix for the wrap
     const stretched=(cx,fn)=>{ tx.save(); tx.translate(cx,0); tx.scale(FX,1); tx.translate(-cx,0); fn(); tx.restore(); };
     stretched(1024,()=>drawFront(1024,m));
     stretched(0,()=>drawBack(0)); stretched(2048,()=>drawBack(2048)); // back sits across the UV seam
@@ -2165,24 +2168,26 @@ const Cart=(function(){
   const _am=applyMood; applyMood=m=>{ _am(m); paint(); };
 
   /* ── geometry: body + tapered neck + chime + lid + pull tab ── */
-  const R=0.34, RB=0.88, BODY=3.6;   // cone bottle: narrow top, wide base (user's sketch)
+  const R=0.66, RB=0.80, BODY=2.95;   // real bottle: subtle taper, label zone only (clear plastic above)
   const bodyMat=new THREE.MeshStandardMaterial({map:tex, metalness:.45, roughness:.3});
   const metal  =new THREE.MeshStandardMaterial({color:0xd9d9e0, metalness:.95, roughness:.26, side:THREE.DoubleSide});
   const metalD =new THREE.MeshStandardMaterial({color:0x9b9ba3, metalness:.9,  roughness:.34, side:THREE.DoubleSide});
   canG.add(new THREE.Mesh(new THREE.CylinderGeometry(R,RB,BODY,72,1,true), bodyMat));
-  const shoulderMat=new THREE.MeshStandardMaterial({color:0xf7fbff, roughness:.5, metalness:.04, side:THREE.DoubleSide});
-  const collar=new THREE.Mesh(new THREE.CylinderGeometry(0.30,R+0.01,0.14,48), shoulderMat); collar.position.y=BODY/2+0.07; canG.add(collar);
-  const neckR=new THREE.Mesh(new THREE.CylinderGeometry(0.22,0.245,0.20,40), shoulderMat); neckR.position.y=BODY/2+0.235; canG.add(neckR);
+  const clearMat=new THREE.MeshStandardMaterial({color:0xcfe8ff, transparent:true, opacity:0.20, roughness:0.1, metalness:0, side:THREE.DoubleSide, depthWrite:false});
+  const clearSeg=new THREE.Mesh(new THREE.CylinderGeometry(0.62,R,0.55,48,1,true), clearMat); clearSeg.position.y=BODY/2+0.275; canG.add(clearSeg);
+  const shPts=[]; for(let i=0;i<=10;i++){ const t=i/10; shPts.push(new THREE.Vector2(0.235+(0.62-0.235)*Math.pow(1-t,1.7), BODY/2+0.55+0.30*t)); }
+  canG.add(new THREE.Mesh(new THREE.LatheGeometry(shPts,48), clearMat));
+  const neckR=new THREE.Mesh(new THREE.CylinderGeometry(0.225,0.235,0.15,32,1,true), clearMat); neckR.position.y=BODY/2+0.925; canG.add(neckR);
   const chPts=[]; for(let i=0;i<=6;i++){ const t=i/6; chPts.push(new THREE.Vector2(RB-0.07*t, -BODY/2-0.11*t)); }
   canG.add(new THREE.Mesh(new THREE.LatheGeometry(chPts,72), metalD));
   const bcap=new THREE.Mesh(new THREE.CircleGeometry(RB-0.07,48), metalD);
   bcap.rotation.x=Math.PI/2; bcap.position.y=-BODY/2-0.11; canG.add(bcap);
-  const lid=new THREE.Group(); lid.position.y=BODY/2+0.36;          // the bottle cap — pops off on tap
-  const capMat=new THREE.MeshStandardMaterial({color:0xeaf3ff, roughness:.35, metalness:.05, transparent:true, opacity:.94});
-  const cap=new THREE.Mesh(new THREE.CylinderGeometry(0.285,0.26,0.24,40), capMat); cap.position.y=0.12; lid.add(cap);
-  const capTop=new THREE.Mesh(new THREE.CylinderGeometry(0.285,0.285,0.045,40), capMat); capTop.position.y=0.26; lid.add(capTop);
-  const capRing=new THREE.Mesh(new THREE.TorusGeometry(0.27,0.016,10,40), metalD);
-  capRing.rotation.x=Math.PI/2; capRing.position.y=0.005; lid.add(capRing);
+  const lid=new THREE.Group(); lid.position.y=BODY/2+1.0;           // clear ridged cap — pops off on tap
+  const capMat=new THREE.MeshStandardMaterial({color:0xdff0ff, roughness:.15, metalness:0, transparent:true, opacity:.42});
+  const cap=new THREE.Mesh(new THREE.CylinderGeometry(0.26,0.26,0.30,32), capMat); cap.position.y=0.15; lid.add(cap);
+  const capTop=new THREE.Mesh(new THREE.CylinderGeometry(0.26,0.26,0.04,32), capMat); capTop.position.y=0.31; lid.add(capTop);
+  for(let ri=0;ri<3;ri++){ const ring=new THREE.Mesh(new THREE.TorusGeometry(0.263,0.011,8,32), capMat);
+    ring.rotation.x=Math.PI/2; ring.position.y=0.06+ri*0.09; lid.add(ring); }
   canG.add(lid);
   const shadow=new THREE.Mesh(new THREE.PlaneGeometry(3.4,3.4),
     new THREE.MeshBasicMaterial({map:shTex, transparent:true, depthWrite:false}));
@@ -2208,7 +2213,7 @@ const Cart=(function(){
       explodeAt=-1e9, rollAt=-1e9, tiltX=0, tiltY=0, tgtTiltX=0, tgtTiltY=0, gyroAsked=false, px=0, py=0,
       entranceAt=-1;
   const introEl=document.getElementById('intro');
-  const LID_Y=BODY/2+0.36;
+  const LID_Y=BODY/2+1.0;
   function askGyro(){ if(gyroAsked) return; gyroAsked=true;
     if(typeof DeviceOrientationEvent!=='undefined' && DeviceOrientationEvent.requestPermission)
       DeviceOrientationEvent.requestPermission().catch(()=>{}); }
@@ -2701,16 +2706,16 @@ const Cart=(function(){
     const capMat=new THREE.MeshStandardMaterial({color:0xcfcfd6, metalness:.92, roughness:.28});
     for(let i=0;i<N;i++){
       const g=new THREE.Group();
-      const body=new THREE.Mesh(new THREE.CylinderGeometry(0.20,0.58,2.55,48,1,true),
+      const body=new THREE.Mesh(new THREE.CylinderGeometry(0.44,0.55,2.1,48,1,true),
         new THREE.MeshStandardMaterial({map:bodyTex(moods[i]), metalness:.12, roughness:.42}));
-      const top=new THREE.Mesh(new THREE.CylinderGeometry(0.165,0.205,0.1,32),
-        new THREE.MeshStandardMaterial({color:0xf7fbff, roughness:.5, metalness:.04})); top.position.y=1.32;
-      const bot=new THREE.Mesh(new THREE.CylinderGeometry(0.58,0.58,0.06,40), capMat); bot.position.y=-1.3;
-      const capB=new THREE.Mesh(new THREE.CylinderGeometry(0.175,0.155,0.2,24),
-        new THREE.MeshStandardMaterial({color:0xeaf3ff, roughness:.35})); capB.position.y=1.47; g.add(capB);
-      const decal=new THREE.Mesh(new THREE.PlaneGeometry(0.72,1.6),
+      body.position.y=-0.25;
+      const clr=new THREE.MeshStandardMaterial({color:0xcfe8ff, transparent:true, opacity:0.22, roughness:.1, metalness:0, side:THREE.DoubleSide, depthWrite:false});
+      const top=new THREE.Mesh(new THREE.CylinderGeometry(0.30,0.44,0.55,32,1,true), clr); top.position.y=1.07;
+      const bot=new THREE.Mesh(new THREE.CylinderGeometry(0.55,0.55,0.06,40), capMat); bot.position.y=-1.3;
+      const capB=new THREE.Mesh(new THREE.CylinderGeometry(0.17,0.17,0.24,24), clr); capB.position.y=1.46; g.add(capB);
+      const decal=new THREE.Mesh(new THREE.PlaneGeometry(0.74,1.7),
         new THREE.MeshBasicMaterial({map:decalTex(moods[i]), transparent:true, depthWrite:false}));
-      decal.position.z=0.42; decal.position.y=-0.3;
+      decal.position.z=0.44; decal.position.y=-0.25;
       g.add(body,top,bot,decal);
       const a=i*step; g.position.set(Math.sin(a)*RAD,0,Math.cos(a)*RAD); g.rotation.y=a;
       g.userData={i,a,body}; ring.add(g); cans.push(g); bodies.push(body);
