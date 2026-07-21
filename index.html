@@ -7,7 +7,7 @@
 <meta name="description" content="MiiMuuD (มี มู้ด) — the world's first mood-changing sparkling aroma drink. A signature scent that lifts you the moment you sip. 0% sugar · 250 mL · Drink Your Mood." />
 <link rel="canonical" href="https://chainsukritthikan-lab.github.io/mymuud/" />
 <meta property="og:url" content="https://chainsukritthikan-lab.github.io/mymuud/" />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='100' y2='100'%3E%3Cstop offset='0' stop-color='%237DD3FC'/%3E%3Cstop offset='1' stop-color='%233B82F6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg fill='url(%23g)'%3E%3Cellipse cx='37' cy='44' rx='16' ry='22' transform='rotate(-26 37 44)' opacity='.82'/%3E%3Cellipse cx='63' cy='44' rx='16' ry='22' transform='rotate(26 63 44)' opacity='.82'/%3E%3Cellipse cx='40' cy='68' rx='11' ry='15' transform='rotate(-42 40 68)' opacity='.6'/%3E%3Cellipse cx='60' cy='68' rx='11' ry='15' transform='rotate(42 60 68)' opacity='.6'/%3E%3Ccircle cx='50' cy='27' r='5.5'/%3E%3C/g%3E%3C/svg%3E" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='50' x2='100' y2='50' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%232DD4BF'/%3E%3Cstop offset='.5' stop-color='%23A3E635'/%3E%3Cstop offset='1' stop-color='%23FBBF24'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg stroke='url(%23g)' fill='none' stroke-linecap='round'%3E%3Cpath d='M12 42 Q30 24 50 40 T88 38' stroke-width='11'/%3E%3Cpath d='M18 66 Q34 52 50 64 T82 62' stroke-width='9' opacity='.6'/%3E%3C/g%3E%3C/svg%3E" />
 <meta property="og:title" content="MiiMuuD — Drink Your Mood" />
 <meta property="og:description" content="The mood-changing sparkling aroma drink. 0% Sugar · 250 mL · Five mood scents, one you. มี มู้ด" />
 <meta property="og:type" content="website" />
@@ -154,6 +154,7 @@
   #bgCanvas{ position:fixed; inset:0; z-index:0; pointer-events:none; }
 
   .grad-text{ color:var(--accent); }
+  .brandmark{ background:linear-gradient(95deg,#2DD4BF,#A3E635 52%,#FBBF24); -webkit-background-clip:text; background-clip:text; color:transparent; }
 
   .reveal{ opacity:0; transform:translateY(46px); transition:opacity .9s var(--ease),transform .9s var(--ease); }
   .reveal.show{ opacity:1; transform:none; }
@@ -449,7 +450,7 @@
   <filter id="goo"><feGaussianBlur in="SourceGraphic" stdDeviation="7" result="blur"/>
     <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -9" result="goo"/>
     <feBlend in="SourceGraphic" in2="goo"/></filter>
-  <linearGradient id="mg" x1="0" y1="0" x2="100" y2="100"><stop offset="0" stop-color="#7DD3FC"/><stop offset="1" stop-color="#3B82F6"/></linearGradient>
+  <linearGradient id="mg" x1="0" y1="50" x2="100" y2="50" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#2DD4BF"/><stop offset=".5" stop-color="#A3E635"/><stop offset="1" stop-color="#FBBF24"/></linearGradient>
 </defs></svg>
 
 <div id="intro">
@@ -462,8 +463,8 @@
   <div class="iscene" id="is1">
     <div class="text-center">
       <svg class="intro-draw mx-auto" width="96" height="96" viewBox="0 0 100 100" fill="none">
-        <g fill="url(#mg)"><ellipse cx="37" cy="44" rx="16" ry="22" transform="rotate(-26 37 44)" opacity=".82"/><ellipse cx="63" cy="44" rx="16" ry="22" transform="rotate(26 63 44)" opacity=".82"/><ellipse cx="40" cy="68" rx="11" ry="15" transform="rotate(-42 40 68)" opacity=".6"/><ellipse cx="60" cy="68" rx="11" ry="15" transform="rotate(42 60 68)" opacity=".6"/><circle cx="50" cy="27" r="5.5"/></g></svg>
-      <div class="intro-word mt-4 font-display font-extrabold text-3xl"><span>Mii<span class="grad-text">MuuD</span></span></div>
+        <g stroke="url(#mg)" fill="none" stroke-linecap="round"><path d="M12 42 Q30 24 50 40 T88 38" stroke-width="11"/><path d="M18 66 Q34 52 50 64 T82 62" stroke-width="9" opacity=".6"/></g></svg>
+      <div class="intro-word mt-4 font-display font-extrabold text-3xl"><span><span class="brandmark">MiiMuuD</span></span></div>
       <div class="intro-word mt-1 text-sm tracking-[0.4em] text-white/50"><span>มี มู้ด</span></div>
       <div class="intro-word mt-3 text-xs font-semibold tracking-[0.4em] text-white/70"><span>DRINK YOUR MOOD</span></div>
     </div>
@@ -497,8 +498,8 @@
     </div>
     <div id="navPill" class="mt-2 flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl px-2.5 sm:px-6 py-3 transition-all">
       <a href="#home" class="flex items-center gap-2.5" data-hover>
-        <svg width="32" height="32" viewBox="0 0 100 100" fill="none"><g fill="url(#mg)"><ellipse cx="37" cy="44" rx="16" ry="22" transform="rotate(-26 37 44)" opacity=".82"/><ellipse cx="63" cy="44" rx="16" ry="22" transform="rotate(26 63 44)" opacity=".82"/><ellipse cx="40" cy="68" rx="11" ry="15" transform="rotate(-42 40 68)" opacity=".6"/><ellipse cx="60" cy="68" rx="11" ry="15" transform="rotate(42 60 68)" opacity=".6"/><circle cx="50" cy="27" r="5.5"/></g></svg>
-        <span class="font-display font-extrabold text-xl tracking-tight">Mii<span class="grad-text">MuuD</span></span></a>
+        <svg width="32" height="32" viewBox="0 0 100 100" fill="none"><g stroke="url(#mg)" fill="none" stroke-linecap="round"><path d="M12 42 Q30 24 50 40 T88 38" stroke-width="11"/><path d="M18 66 Q34 52 50 64 T82 62" stroke-width="9" opacity=".6"/></g></svg>
+        <span class="font-display font-extrabold text-xl tracking-tight"><span class="brandmark">MiiMuuD</span></span></a>
       <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-white/70">
         <a href="#home" class="navlink hover:text-white transition" data-hover>Home</a>
         <a href="#quiz" class="navlink hover:text-white transition" data-hover>Mood Check</a>
@@ -700,7 +701,7 @@
       <button data-lineup="0" data-hover class="lineup-card reveal rounded-3xl border border-white/10 bg-white/[0.04] p-6 text-center hover:bg-white/[0.07]">
         <div class="mini-can" style="background:linear-gradient(180deg,#fff 42%, #3B82F6 50%)"></div>
         <div class="mt-4 font-display font-bold">CALM</div>
-        <div class="text-xs text-white/50 mt-0.5">Ocean Mist</div>
+        <div class="text-xs text-white/50 mt-0.5">Lavender</div>
         <div class="mt-2 text-[11px] font-bold" style="color:var(--accent)">฿45 / bottle</div>
         <span class="qadd mt-3 inline-flex items-center gap-1 rounded-xl border border-white/15 bg-white/5 px-3 py-1.5 text-[11px] font-bold text-white/70 transition hover:bg-white/10 hover:text-white">＋ Quick add</span></button>
       <button data-lineup="1" data-hover class="lineup-card reveal rounded-3xl border border-white/10 bg-white/[0.04] p-6 text-center hover:bg-white/[0.07]">
@@ -712,7 +713,7 @@
       <button data-lineup="2" data-hover class="lineup-card reveal rounded-3xl border border-white/10 bg-white/[0.04] p-6 text-center hover:bg-white/[0.07]">
         <div class="mini-can" style="background:linear-gradient(180deg,#fff 42%, #8B5CF6 50%)"></div>
         <div class="mt-4 font-display font-bold">RELAX</div>
-        <div class="text-xs text-white/50 mt-0.5">Lavender Cloud</div>
+        <div class="text-xs text-white/50 mt-0.5">Butterfly Pea</div>
         <div class="mt-2 text-[11px] font-bold" style="color:var(--accent)">฿45 / bottle</div>
         <span class="qadd mt-3 inline-flex items-center gap-1 rounded-xl border border-white/15 bg-white/5 px-3 py-1.5 text-[11px] font-bold text-white/70 transition hover:bg-white/10 hover:text-white">＋ Quick add</span></button>
       <button data-lineup="3" data-hover class="lineup-card reveal rounded-3xl border border-white/10 bg-white/[0.04] p-6 text-center hover:bg-white/[0.07]">
@@ -817,9 +818,9 @@
         <div class="ti relative">
           <div class="flex items-center gap-2.5 mb-4">
             <span class="w-3.5 h-3.5 rounded-full shrink-0" style="background:#3B82F6"></span>
-            <span class="font-display font-bold text-lg">CALM · Ocean Mist</span></div>
+            <span class="font-display font-bold text-lg">CALM · Lavender</span></div>
           <div class="text-sm text-white/55 leading-relaxed space-y-1.5">
-            <p><span class="text-white/80 font-semibold">Top</span> — sea breeze, bergamot</p>
+            <p><span class="text-white/80 font-semibold">Top</span> — french lavender, bergamot</p>
             <p><span class="text-white/80 font-semibold">Heart</span> — white lotus</p>
             <p><span class="text-white/80 font-semibold">Base</span> — soft musk</p>
           </div>
@@ -831,9 +832,9 @@
         <div class="ti relative">
           <div class="flex items-center gap-2.5 mb-4">
             <span class="w-3.5 h-3.5 rounded-full shrink-0" style="background:#8B5CF6"></span>
-            <span class="font-display font-bold text-lg">RELAX · Lavender Cloud</span></div>
+            <span class="font-display font-bold text-lg">RELAX · Butterfly Pea</span></div>
           <div class="text-sm text-white/55 leading-relaxed space-y-1.5">
-            <p><span class="text-white/80 font-semibold">Top</span> — french lavender</p>
+            <p><span class="text-white/80 font-semibold">Top</span> — butterfly pea, bergamot</p>
             <p><span class="text-white/80 font-semibold">Heart</span> — chamomile, tonka</p>
             <p><span class="text-white/80 font-semibold">Base</span> — warm woods</p>
           </div>
@@ -871,7 +872,7 @@
         <thead>
           <tr class="border-b border-white/10 text-left">
             <th class="p-5"></th>
-            <th class="p-5"><span class="inline-flex items-center rounded-full px-4 py-1.5 font-display font-bold" style="background:color-mix(in srgb,var(--accent) 18%,transparent); border:1px solid color-mix(in srgb,var(--accent) 45%,transparent)">Mii<span class="grad-text">MuuD</span></span></th>
+            <th class="p-5"><span class="inline-flex items-center rounded-full px-4 py-1.5 font-display font-bold" style="background:color-mix(in srgb,var(--accent) 18%,transparent); border:1px solid color-mix(in srgb,var(--accent) 45%,transparent)"><span class="brandmark">MiiMuuD</span></span></th>
             <th class="p-5 font-display font-bold text-white/55">Regular Soda</th>
             <th class="p-5 font-display font-bold text-white/55">Diet Soda</th>
           </tr>
@@ -954,8 +955,8 @@
     <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-10">
       <div class="lg:col-span-2">
         <div class="flex items-center gap-2.5">
-          <svg width="30" height="30" viewBox="0 0 100 100" fill="none"><g fill="url(#mg)"><ellipse cx="37" cy="44" rx="16" ry="22" transform="rotate(-26 37 44)" opacity=".82"/><ellipse cx="63" cy="44" rx="16" ry="22" transform="rotate(26 63 44)" opacity=".82"/><ellipse cx="40" cy="68" rx="11" ry="15" transform="rotate(-42 40 68)" opacity=".6"/><ellipse cx="60" cy="68" rx="11" ry="15" transform="rotate(42 60 68)" opacity=".6"/><circle cx="50" cy="27" r="5.5"/></g></svg>
-          <span class="font-display font-extrabold text-xl">Mii<span class="grad-text">MuuD</span></span>
+          <svg width="30" height="30" viewBox="0 0 100 100" fill="none"><g stroke="url(#mg)" fill="none" stroke-linecap="round"><path d="M12 42 Q30 24 50 40 T88 38" stroke-width="11"/><path d="M18 66 Q34 52 50 64 T82 62" stroke-width="9" opacity=".6"/></g></svg>
+          <span class="font-display font-extrabold text-xl"><span class="brandmark">MiiMuuD</span></span>
         </div>
         <p class="mt-4 text-sm text-white/45 leading-relaxed max-w-xs">
           The mood-changing sparkling aroma drink, crafted in Thailand. One signature scent to lift you — 0% sugar. Drink your mood.</p>
@@ -1060,7 +1061,7 @@
   <div class="exp-inner">
     <div class="exp-kicker" id="expKicker">close your eyes for a second…</div>
     <div class="exp-title" id="expTitle">CALM</div>
-    <div class="exp-flavor" id="expFlavor">Ocean Mist</div>
+    <div class="exp-flavor" id="expFlavor">Lavender</div>
     <div class="exp-tag">DRINK YOUR MOOD · มี มู้ด</div>
   </div>
   <div class="exp-hint">tap anywhere to continue</div>
@@ -1214,11 +1215,11 @@ window.__m = { x:innerWidth/2, y:innerHeight/2 };
 
 /* ===== MOOD ENGINE ===== */
 const moods = [
-  { key:'CALM',  name:'Calm',  flavor:'Ocean Mist',     c1:'#7DD3FC', c2:'#3B82F6', c3:'#22D3EE', ink:'#060A12' },
-  { key:'JOY',   name:'Joy',   flavor:'Citrus Sunrise', c1:'#FDE68A', c2:'#F59E0B', c3:'#FB7185', ink:'#0E0A04' },
-  { key:'RELAX', name:'Relax', flavor:'Lavender Cloud', c1:'#C4B5FD', c2:'#8B5CF6', c3:'#EC4899', ink:'#0A0610' },
-  { key:'FRESH', name:'Fresh', flavor:'Cool Mint Air',  c1:'#6EE7B7', c2:'#34D399', c3:'#22D3EE', ink:'#04100C' },
-  { key:'BLISS', name:'Bliss', flavor:'Sweet Blossom',  c1:'#F9A8D4', c2:'#F472B6', c3:'#A78BFA', ink:'#100609' },
+  { key:'CALM',  name:'Calm',  flavor:'Lavender',       th:'ผ่อนคลาย สบายใจ', c1:'#7DD3FC', c2:'#3B82F6', c3:'#22D3EE', ink:'#060A12' },
+  { key:'JOY',   name:'Joy',   flavor:'Citrus Sunrise', th:'สดใส อารมณ์ดี',    c1:'#FDE68A', c2:'#F59E0B', c3:'#FB7185', ink:'#0E0A04' },
+  { key:'RELAX', name:'Relax', flavor:'Butterfly Pea',  th:'นิ่ง ๆ ชิลล์ ๆ',     c1:'#C4B5FD', c2:'#8B5CF6', c3:'#EC4899', ink:'#0A0610' },
+  { key:'FRESH', name:'Fresh', flavor:'Cool Mint Air',  th:'สดชื่น เย็นใจ',     c1:'#6EE7B7', c2:'#34D399', c3:'#22D3EE', ink:'#04100C' },
+  { key:'BLISS', name:'Bliss', flavor:'Sweet Blossom',  th:'หวานละมุนใจ',      c1:'#F9A8D4', c2:'#F472B6', c3:'#A78BFA', ink:'#100609' },
 ];
 const root = document.documentElement.style;
 let bgHue = '#3B82F6';
@@ -1246,10 +1247,10 @@ moodBar.querySelectorAll('[data-mood]').forEach(btn=>{
 (function(){
   // feeling -> mood index + warm message
   const quiz = [
-    { emoji:'😩', label:'Stressed',  mood:0, tag:'Breathe out',    title:'MiiMuuD CALM',  msg:'Rough day? One sip of Ocean Mist and the tension starts to drift. Breathe. You’ve got this. 🌊' },
+    { emoji:'😩', label:'Stressed',  mood:0, tag:'Breathe out',    title:'MiiMuuD CALM',  msg:'Rough day? One sip of Lavender and the tension starts to drift. Breathe. You’ve got this. 🌊' },
     { emoji:'😴', label:'Tired',     mood:1, tag:'Wake up gently', title:'MiiMuuD JOY',   msg:'Running on empty? Citrus Sunrise pours light back into you — zero sugar, pure spark. ☀️' },
     { emoji:'😊', label:'Happy',     mood:4, tag:'Keep it going',  title:'MiiMuuD BLISS', msg:'Love that for you! Sweet Blossom keeps the good feelings blooming all day. 🌸' },
-    { emoji:'🧘', label:'Chill',     mood:2, tag:'Float on',       title:'MiiMuuD RELAX', msg:'In your soft era. Lavender Cloud wraps you up and lets the world go quiet. ☁️' },
+    { emoji:'🧘', label:'Chill',     mood:2, tag:'Float on',       title:'MiiMuuD RELAX', msg:'In your soft era. Butterfly Pea wraps you up and lets the world go quiet. ☁️' },
     { emoji:'🎯', label:'Focused',   mood:3, tag:'Clear mind',     title:'MiiMuuD FRESH', msg:'Locked in. Cool Mint Air sharpens the fog away — clear head, steady flow. 🍃' },
   ];
   const opts=document.getElementById('quizOptions');
@@ -1299,7 +1300,7 @@ const features = [
   { icon:'sparkles',    t:'Ultra Fizzy',   d:'Fine, lively carbonation that dances on your tongue — refreshment you can feel.',
     more:'Fine, dense bubbles and a silky, champagne-like fizz that lasts to the final sip instead of going flat halfway through the bottle.' },
   { icon:'leaf',        t:'Signature Blends', d:'Five one-of-a-kind mood scents you won\'t find anywhere else — each built from calming botanicals.',
-    more:'Every mood is layered like a fine fragrance — top, heart and base notes of sea breeze, yuzu, lavender, mint and blossom. Nothing heavy, nothing cloying. Just bright, honest refreshment.' },
+    more:'Every mood is layered like a fine fragrance — top, heart and base notes of lavender, yuzu, butterfly pea, mint and blossom. Nothing heavy, nothing cloying. Just bright, honest refreshment.' },
   { icon:'heart-pulse', t:'Mood Boost',    d:'Every bottle is designed to reset your mind and lift your mood, one crisp sip at a time.',
     more:'The cold snap, the fizz, the scent, the color — every sensory detail of MiiMuuD is tuned to trigger a tiny reset moment. It\'s not just a drink; it\'s a 250 mL pause button for your day. Drink your mood. 💗' },
 ];
@@ -1689,7 +1690,7 @@ const Cart=(function(){
   const SIZES=[{label:'Single Bottle',mult:1,price:45},{label:'6-Pack',mult:6,price:270},{label:'12-Pack Party',mult:12,price:499}];
   let items=[];
   try{ items=(JSON.parse(localStorage.getItem('muudCart')||'[]')||[]).map(i=>({
-    key:i.key||'CALM', flavor:i.flavor||'Ocean Mist', c:i.c||'#3B82F6',
+    key:i.key||'CALM', flavor:i.flavor||'Lavender', c:i.c||'#3B82F6',
     size: typeof i.size==='number' ? Math.min(i.size,2) : (i.pack?1:0), qty:Math.max(1,i.qty||1) })); }catch(e){ items=[]; }
   const drawer=document.getElementById('cartDrawer'), list=document.getElementById('cartItems'),
         total=document.getElementById('cartTotal'), count=document.getElementById('cartCount');
@@ -2046,41 +2047,35 @@ const Cart=(function(){
     if(tx.roundRect) tx.roundRect(x,y,w,h,r); else tx.rect(x,y,w,h); };
   const ls=v=>{ try{ tx.letterSpacing=v; }catch(e){} };
 
-  function logoMark(cx,y,s){
-    const g=tx.createLinearGradient(cx-50*s,y,cx+50*s,y+100*s);
-    g.addColorStop(0,'#7DD3FC'); g.addColorStop(1,'#3B82F6');
-    tx.save(); tx.translate(cx-50*s,y); tx.scale(s,s); tx.fillStyle=g;
-    const petal=(px,py,rx,ry,rot,al)=>{ tx.save(); tx.translate(px,py); tx.rotate(rot); tx.globalAlpha=al;
-      tx.beginPath(); tx.ellipse(0,0,rx,ry,0,0,6.283); tx.fill(); tx.restore(); };
-    petal(37,44,16,22,-.45,.82); petal(63,44,16,22,.45,.82);
-    petal(40,68,11,15,-.73,.6);  petal(60,68,11,15,.73,.6);
-    tx.globalAlpha=1; tx.beginPath(); tx.arc(50,27,5.5,0,6.283); tx.fill(); tx.restore();
-  }
+  function brandGrad(x0,x1,y){ const g=tx.createLinearGradient(x0,y,x1,y);
+    g.addColorStop(0,'#2DD4BF'); g.addColorStop(.5,'#A3E635'); g.addColorStop(1,'#FBBF24'); return g; }
+  function waveLine(cx,y,w,col,lw,alpha){ tx.save(); tx.globalAlpha=alpha; tx.strokeStyle=col; tx.lineWidth=lw; tx.lineCap='round';
+    tx.beginPath();
+    for(let i=0;i<=40;i++){ const x=cx-w/2+(w/40)*i, yy=y+Math.sin(i/40*Math.PI*3)*6; i?tx.lineTo(x,yy):tx.moveTo(x,yy); }
+    tx.stroke(); tx.restore(); }
   function drawFront(cx,m){
     tx.textBaseline='alphabetic'; tx.textAlign='center';
-    // flavor box at the top — like the real label
-    ls('10px'); tx.font='800 46px Sora, sans-serif';
-    const bw=tx.measureText(m.key).width+76;
-    tx.strokeStyle='#12233d'; tx.lineWidth=5; rr(cx-bw/2,34,bw,76,12); tx.stroke();
-    tx.fillStyle='#12233d'; tx.fillText(m.key,cx+5,88); ls('0px');
-    tx.strokeStyle='#12233d'; tx.lineWidth=4; tx.beginPath(); tx.arc(cx+322,150,52,0,6.283); tx.stroke();
-    tx.fillStyle='#12233d'; tx.font='800 32px Sora, sans-serif'; tx.fillText('0%',cx+322,144);
-    tx.font='600 19px Outfit, sans-serif'; tx.fillText('SUGAR',cx+322,174);
-    logoMark(cx,122,1.5);
-    tx.font='800 76px Sora, sans-serif';
-    const w1=tx.measureText('Mii').width, w2=tx.measureText('MuuD').width, x0=cx-(w1+w2)/2;
-    tx.textAlign='left';
-    tx.fillStyle='#12233d'; tx.fillText('Mii',x0,344);
-    const g=tx.createLinearGradient(x0+w1,275,x0+w1+w2,350);
-    g.addColorStop(0,m.c1); g.addColorStop(.55,m.c2); g.addColorStop(1,m.c3);
-    tx.fillStyle=g; tx.fillText('MuuD',x0+w1,344);
-    tx.textAlign='center';
-    tx.font='600 30px Outfit, sans-serif'; tx.fillStyle='rgba(18,35,61,.6)'; tx.fillText('— มี มู้ด —',cx,392);
-    ls('12px'); tx.font='700 24px Outfit, sans-serif'; tx.fillStyle='rgba(18,35,61,.55)'; tx.fillText('DRINK YOUR MOOD',cx,444); ls('0px');
-    // inside the waves
-    ls('4px'); tx.font='700 27px Outfit, sans-serif'; tx.fillStyle='rgba(255,255,255,.97)';
-    tx.fillText('AROMA DRINK  ·  0% SUGAR',cx,812); ls('0px');
-    tx.font='800 40px Outfit, sans-serif'; tx.fillText('250 mL',cx,878);
+    // mood name + thai tagline — like the real label (no box)
+    ls('14px'); tx.font='700 56px Sora, sans-serif'; tx.fillStyle=m.c2; tx.fillText(m.key,cx+7,96); ls('0px');
+    tx.globalAlpha=.8; tx.font='600 31px Outfit, sans-serif'; tx.fillText(m.th||'',cx,148); tx.globalAlpha=1;
+    // gradient wordmark — fixed brand colors
+    tx.font='800 92px Sora, sans-serif';
+    const ww=tx.measureText('MiiMuuD').width;
+    tx.fillStyle=brandGrad(cx-ww/2,cx+ww/2,270); tx.fillText('MiiMuuD',cx,290);
+    tx.globalAlpha=.85; tx.font='600 32px Outfit, sans-serif'; tx.fillStyle=m.c2; tx.fillText('มี มู้ด',cx,342); tx.globalAlpha=1;
+    waveLine(cx,368,190,m.c2,6,.75);
+    ls('12px'); tx.font='700 25px Outfit, sans-serif'; tx.fillStyle='rgba(18,35,61,.6)'; tx.fillText('DRINK YOUR MOOD',cx,428); ls('0px');
+    // 0% sugar badge with leaf
+    tx.strokeStyle=m.c2; tx.lineWidth=4; tx.beginPath(); tx.arc(cx+320,462,52,0,6.283); tx.stroke();
+    tx.save(); tx.translate(cx+352,418); tx.rotate(.5); tx.fillStyle=m.c2;
+    tx.beginPath(); tx.ellipse(0,0,7,14,0,0,6.283); tx.fill(); tx.restore();
+    tx.fillStyle=m.c2; tx.font='800 32px Sora, sans-serif'; tx.fillText('0%',cx+320,456);
+    tx.font='600 18px Outfit, sans-serif'; tx.fillText('SUGAR',cx+320,484);
+    // inside the waves — the scent + facts
+    ls('8px'); tx.font='800 46px Sora, sans-serif'; tx.fillStyle='rgba(255,255,255,.97)';
+    tx.fillText((m.flavor||'').toUpperCase(),cx+4,712); ls('0px');
+    ls('4px'); tx.font='700 26px Outfit, sans-serif'; tx.fillText('AROMA DRINK  ·  0% SUGAR',cx,772); ls('0px');
+    tx.font='800 38px Outfit, sans-serif'; tx.fillText('250 mL',cx,850);
     tx.textAlign='left';
   }
   function drawBack(cx){
@@ -2090,7 +2085,7 @@ const Cart=(function(){
     tx.textAlign='center'; tx.fillStyle='#111';
     tx.font='700 38px Sora, sans-serif'; tx.fillText('ข้อมูลโภชนาการ',cx,102);
     tx.font='400 20px Outfit, sans-serif'; tx.fillStyle='rgba(17,17,17,.6)';
-    tx.fillText('Serving size 1 can (250 mL)',cx,132);
+    tx.fillText('Serving size 1 bottle (250 mL)',cx,132);
     tx.fillStyle='#111'; tx.fillRect(cx-250,146,500,5);
     tx.textAlign='left'; tx.font='800 36px Outfit, sans-serif'; tx.fillText('Calories',cx-250,196);
     tx.textAlign='right'; tx.font='800 46px Outfit, sans-serif'; tx.fillText('0',cx+250,198);
@@ -2123,7 +2118,7 @@ const Cart=(function(){
     tx.font='800 22px Outfit, sans-serif'; tx.fillText('Net Content: 250 mL',cx+45,832);
   }
   function paint(){
-    const m=window.__mood||{key:'CALM',c1:'#7DD3FC',c2:'#3B82F6',c3:'#22D3EE'};
+    const m=window.__mood||moods[0];
     const A=m.c2, wy=TH*0.52;
     tx.textAlign='left'; ls('0px');
     tx.fillStyle='#fff'; tx.fillRect(0,0,TW,TH);
@@ -2168,8 +2163,8 @@ const Cart=(function(){
   canG.add(new THREE.Mesh(new THREE.LatheGeometry(chPts,72), metalD));
   const bcap=new THREE.Mesh(new THREE.CircleGeometry(RB-0.07,48), metalD);
   bcap.rotation.x=Math.PI/2; bcap.position.y=-BODY/2-0.11; canG.add(bcap);
-  const lid=new THREE.Group(); lid.position.y=BODY/2+1.06;          // clear cap — pops off on tap
-  const capMat=new THREE.MeshStandardMaterial({color:0xe4f2ff, roughness:.12, metalness:0, transparent:true, opacity:.5});
+  const lid=new THREE.Group(); lid.position.y=BODY/2+1.06;          // white ridged cap — pops off on tap
+  const capMat=new THREE.MeshStandardMaterial({color:0xf7fafc, roughness:.38, metalness:.05});
   const cap=new THREE.Mesh(new THREE.CylinderGeometry(0.262,0.252,0.26,32), capMat); cap.position.y=0.13; lid.add(cap);
   const capTop=new THREE.Mesh(new THREE.CylinderGeometry(0.262,0.262,0.04,32), capMat); capTop.position.y=0.27; lid.add(capTop);
   canG.add(lid);
@@ -2454,7 +2449,7 @@ const Cart=(function(){
 (function(){
   const manifest={ name:'MiiMuuD — Drink Your Mood', short_name:'MiiMuuD', start_url:'.', display:'standalone',
     background_color:'#08080C', theme_color:'#3B82F6', description:'The mood-changing sparkling aroma drink — 0% sugar · 250 mL.',
-    icons:[{ src:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2308080C'/%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='100' y2='100'%3E%3Cstop offset='0' stop-color='%237DD3FC'/%3E%3Cstop offset='1' stop-color='%233B82F6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg fill='url(%23g)'%3E%3Cellipse cx='37' cy='44' rx='16' ry='22' transform='rotate(-26 37 44)' opacity='.82'/%3E%3Cellipse cx='63' cy='44' rx='16' ry='22' transform='rotate(26 63 44)' opacity='.82'/%3E%3Cellipse cx='40' cy='68' rx='11' ry='15' transform='rotate(-42 40 68)' opacity='.6'/%3E%3Cellipse cx='60' cy='68' rx='11' ry='15' transform='rotate(42 60 68)' opacity='.6'/%3E%3Ccircle cx='50' cy='27' r='5.5'/%3E%3C/g%3E%3C/svg%3E",
+    icons:[{ src:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2308080C'/%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='50' x2='100' y2='50' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%232DD4BF'/%3E%3Cstop offset='.5' stop-color='%23A3E635'/%3E%3Cstop offset='1' stop-color='%23FBBF24'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg stroke='url(%23g)' fill='none' stroke-linecap='round'%3E%3Cpath d='M12 42 Q30 24 50 40 T88 38' stroke-width='11'/%3E%3Cpath d='M18 66 Q34 52 50 64 T82 62' stroke-width='9' opacity='.6'/%3E%3C/g%3E%3C/svg%3E",
       sizes:'any', type:'image/svg+xml' }] };
   try{
     const blob=new Blob([JSON.stringify(manifest)],{type:'application/manifest+json'});
@@ -2527,14 +2522,11 @@ const Cart=(function(){
     g.strokeStyle='rgba(255,255,255,.10)'; g.lineWidth=3; g.strokeRect(40,40,S-80,S-80);
     g.textAlign='center';
     // logo
-    g.save(); g.translate(S/2-40,96); g.scale(.8,.8);
-    const lg=g.createLinearGradient(0,0,100,100); lg.addColorStop(0,'#7DD3FC'); lg.addColorStop(1,'#3B82F6');
-    g.fillStyle=lg;
-    const lp=(px,py,rx,ry,rot,al)=>{ g.save(); g.translate(px,py); g.rotate(rot); g.globalAlpha=al;
-      g.beginPath(); g.ellipse(0,0,rx,ry,0,0,6.283); g.fill(); g.restore(); };
-    lp(37,44,16,22,-.45,.82); lp(63,44,16,22,.45,.82); lp(40,68,11,15,-.73,.6); lp(60,68,11,15,.73,.6);
-    g.globalAlpha=1; g.beginPath(); g.arc(50,27,5.5,0,6.283); g.fill(); g.restore();
-    g.fillStyle='#fff'; g.font='800 44px Sora, sans-serif'; g.fillText('MiiMuuD', S/2, 250);
+    g.font='800 64px Sora, sans-serif';
+    const lww=g.measureText('MiiMuuD').width;
+    const lg=g.createLinearGradient(S/2-lww/2,0,S/2+lww/2,0);
+    lg.addColorStop(0,'#2DD4BF'); lg.addColorStop(.5,'#A3E635'); lg.addColorStop(1,'#FBBF24');
+    g.fillStyle=lg; g.fillText('MiiMuuD', S/2, 230);
     g.fillStyle=A; g.font='700 22px Outfit, sans-serif'; g.letterSpacing='6px'; g.fillText('THE MOOD LAB · LIMITED EDITION', S/2, 300); g.letterSpacing='0px';
     // custom flavor name
     const fg=g.createLinearGradient(S*0.2,0,S*0.8,0); fg.addColorStop(0,C1); fg.addColorStop(.5,C2); fg.addColorStop(1,C3);
@@ -2643,16 +2635,19 @@ const Cart=(function(){
   function decalTex(m){
     const c=document.createElement('canvas'); c.width=360; c.height=560; const x=c.getContext('2d');
     x.textAlign='center';
-    x.fillStyle=m.c2;
-    const pt=(px,py,rx,ry,rot,al)=>{ x.save(); x.translate(px,py); x.rotate(rot); x.globalAlpha=al;
-      x.beginPath(); x.ellipse(0,0,rx,ry,0,0,6.283); x.fill(); x.restore(); };
-    pt(162,110,15,21,-.45,.85); pt(198,110,15,21,.45,.85); pt(167,140,10,13,-.7,.6); pt(193,140,10,13,.7,.6);
-    x.globalAlpha=1; x.beginPath(); x.arc(180,86,6,0,6.283); x.fill();
-    x.fillStyle='#111'; x.font='800 46px Sora,sans-serif'; x.fillText('MiiMuuD',180,214);
-    x.fillStyle='rgba(17,17,17,.55)'; x.font='600 15px Outfit,sans-serif'; x.fillText('DRINK YOUR MOOD',180,244);
-    x.fillStyle='#fff'; x.font='800 50px Sora,sans-serif'; x.fillText(m.key,180,420);
-    x.font='600 14px Outfit,sans-serif'; x.fillText('AROMA DRINK · 0% SUGAR',180,452);
-    x.font='700 22px Outfit,sans-serif'; x.fillText('250 mL',180,486);
+    x.fillStyle=m.c2; x.font='700 40px Sora,sans-serif'; x.fillText(m.key,180,72);
+    x.globalAlpha=.8; x.font='600 19px Outfit,sans-serif'; x.fillText(m.th||'',180,102); x.globalAlpha=1;
+    x.font='800 48px Sora,sans-serif';
+    const g=x.createLinearGradient(62,0,298,0); g.addColorStop(0,'#2DD4BF'); g.addColorStop(.5,'#A3E635'); g.addColorStop(1,'#FBBF24');
+    x.fillStyle=g; x.fillText('MiiMuuD',180,178);
+    x.fillStyle=m.c2; x.globalAlpha=.85; x.font='600 20px Outfit,sans-serif'; x.fillText('มี มู้ด',180,210); x.globalAlpha=1;
+    x.strokeStyle=m.c2; x.lineWidth=3; x.lineCap='round'; x.globalAlpha=.75; x.beginPath();
+    for(let i=0;i<=30;i++){ const px=120+(120/30)*i, py=226+Math.sin(i/30*Math.PI*3)*4; i?x.lineTo(px,py):x.moveTo(px,py); }
+    x.stroke(); x.globalAlpha=1;
+    x.fillStyle='rgba(17,17,17,.55)'; x.font='600 14px Outfit,sans-serif'; x.fillText('DRINK YOUR MOOD',180,256);
+    x.fillStyle='#fff'; x.font='800 30px Sora,sans-serif'; x.fillText((m.flavor||'').toUpperCase(),180,414);
+    x.font='600 14px Outfit,sans-serif'; x.fillText('AROMA DRINK · 0% SUGAR',180,448);
+    x.font='700 22px Outfit,sans-serif'; x.fillText('250 mL',180,484);
     const t=new THREE.CanvasTexture(c); t.anisotropy=2; return t;
   }
 
@@ -2681,7 +2676,7 @@ const Cart=(function(){
       const clr=new THREE.MeshStandardMaterial({color:0xd6ecff, transparent:true, opacity:0.15, roughness:.08, metalness:0, depthWrite:false});
       const top=new THREE.Mesh(new THREE.CylinderGeometry(0.24,0.435,0.44,32,1,true), clr); top.position.y=1.02;
       const bot=new THREE.Mesh(new THREE.CylinderGeometry(0.55,0.55,0.06,40), capMat); bot.position.y=-1.3;
-      const capB=new THREE.Mesh(new THREE.CylinderGeometry(0.145,0.14,0.17,24), clr); capB.position.y=1.32; g.add(capB);
+      const capB=new THREE.Mesh(new THREE.CylinderGeometry(0.145,0.14,0.17,24), new THREE.MeshStandardMaterial({color:0xf7fafc, roughness:.38, metalness:.05})); capB.position.y=1.32; g.add(capB);
       const decal=new THREE.Mesh(new THREE.PlaneGeometry(0.72,1.42),
         new THREE.MeshBasicMaterial({map:decalTex(moods[i]), transparent:true, depthWrite:false}));
       decal.position.z=0.565; decal.position.y=-0.42;
@@ -2888,7 +2883,7 @@ const Cart=(function(){
     'Tap a bottle — the whole world changes to match. เลือกมู้ดของคุณ 🫧':'แตะขวด — ทั้งเว็บจะเปลี่ยนตามมู้ดของคุณ 🫧',
     'drag to spin the carousel · click a bottle to choose its mood':'ลากเพื่อหมุน · คลิกขวดเพื่อเลือกมู้ด',
     '฿45 / bottle':'฿45 / ขวด','Add my custom bottle — ฿45':'หยิบขวดของฉัน — ฿45',
-    'Ocean Mist':'โอเชียน มิสต์','Citrus Sunrise':'ซิตรัส ซันไรส์','Lavender Cloud':'ลาเวนเดอร์ คลาวด์','Cool Mint Air':'คูล มินต์ แอร์','Sweet Blossom':'สวีท บลอสซัม',
+    'Lavender':'ลาเวนเดอร์','Citrus Sunrise':'ซิตรัส ซันไรส์','Butterfly Pea':'อัญชัน','Cool Mint Air':'คูล มินต์ แอร์','Sweet Blossom':'สวีท บลอสซัม',
     'The mood-changing sparkling aroma drink, crafted in Thailand. One signature scent to lift you — 0% sugar. Drink your mood.':'เครื่องดื่มซ่าเปลี่ยนอารมณ์ ผลิตในไทย หนึ่งกลิ่นเฉพาะตัวที่ช่วยยกมู้ดของคุณ — 0% น้ำตาล ดื่มมู้ดของคุณ',
     'What is an aroma drink?':'Aroma Drink คืออะไร?',
     'Is the packaging recyclable?':'บรรจุภัณฑ์รีไซเคิลได้ไหม?',
